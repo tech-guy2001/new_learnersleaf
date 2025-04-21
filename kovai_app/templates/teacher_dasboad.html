@@ -1,0 +1,2441 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6e8efb, #a777e3);
+            --primary-light: #9ab2fd;
+            --primary-dark: #8a5ed0;
+            --primary-text: #333;
+            --secondary-text: #666;
+            --border-color: #ddd;
+            --success-color: #4caf50;
+            --error-color: #f44336;
+            --background-color: #f9f7ff;
+            --card-background: #ffffff;
+            --shadow: 0 4px 6px rgba(106, 107, 228, 0.1);
+            --transition-speed: 0.3s;
+            --input-border: #e0e0e0;
+            --input-focus-border: #a777e3;
+            --disabled-bg: #f5f5f5;
+            --disabled-text: #999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .dashboard-container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .profile-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .user-role {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .sidebar-nav {
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .menu-item {
+            list-style: none;
+            margin-bottom: 5px;
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .menu-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .menu-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .menu-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .menu-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .menu-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .menu-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            margin: 0 8px;
+            width: calc(100% - 16px);
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-button:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: width 0.3s ease;
+        }
+
+        .menu-button:hover:after {
+            width: 100%;
+        }
+
+        .menu-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .active-menu {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .arrow.rotated {
+            transform: rotate(90deg);
+        }
+
+        .submenu {
+            max-height: 0;
+            overflow: hidden;
+            list-style: none;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin: 0 8px;
+            border-radius: 4px;
+            transition: max-height 0.4s ease-in-out;
+        }
+
+        .submenu.expanded {
+            max-height: 500px;
+        }
+
+        .submenu-item {
+            padding: 10px 16px 10px 30px;
+            cursor: pointer;
+            margin: 2px 0;
+            border-radius: 4px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .submenu-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .submenu-item.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: 500;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+
+        .content-section {
+            opacity: 0;
+            transform: translateY(20px);
+            display: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .content-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            border-radius: 3px;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 150;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-toggle:hover {
+            opacity: 0.9;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100%;
+                transform: translateX(-100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                padding: 20px;
+                width: 100%;
+            }
+
+            .dashboard-container {
+                display: block;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .content-section {
+                padding: 20px 15px;
+            }
+
+            .sidebar {
+                width: 260px;
+            }
+        }
+
+        /* Overlay for mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 90;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .profile-cover {
+            height: 180px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            width: 100%;
+            position: relative;
+        }
+
+        .profile-avatar {
+            position: absolute;
+            left: 50%;
+            top: 130px;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 4px solid white;
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            border: 2px solid white;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .edit-icon {
+            font-size: 14px;
+        }
+
+        .profile-name-container {
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .profile-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .profile-role {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Profile Info Cards */
+        .profile-info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h4 {
+            margin: 0;
+            color: #444;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: opacity 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .info-item {
+            margin-bottom: 12px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            width: 120px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #333;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .profile-info-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                top: 130px;
+            }
+
+            .profile-name-container {
+                margin-top: 60px;
+            }
+
+            .profile-cover {
+                height: 150px;
+            }
+
+            .info-label {
+                width: 100%;
+                margin-bottom: 4px;
+            }
+
+            .info-value {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .profile-avatar {
+                width: 90px;
+                height: 90px;
+                top: 120px;
+            }
+
+            .profile-name-container {
+                margin-top: 50px;
+            }
+
+            .profile-cover {
+                height: 120px;
+            }
+        }
+
+        /* Wallet Section Styles */
+        .wallet-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Wallet Summary Section */
+        .wallet-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            border-radius: 10px;
+            color: white;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(110, 142, 251, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .balance-card::after {
+            content: '';
+            position: absolute;
+            bottom: -70px;
+            left: -70px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .balance-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .balance-amount {
+            margin: 15px 0;
+            font-size: 42px;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        .currency {
+            font-size: 32px;
+            vertical-align: top;
+            margin-right: 2px;
+        }
+
+        .balance-actions {
+            display: flex;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wallet-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-icon {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Stats Cards */
+        .stats-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .income-card .stat-icon {
+            background-color: rgba(52, 195, 143, 0.2);
+            color: #34c38f;
+        }
+
+        .expense-card .stat-icon {
+            background-color: rgba(244, 106, 106, 0.2);
+            color: #f46a6a;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 13px;
+        }
+
+        .stat-change.positive {
+            color: #34c38f;
+        }
+
+        .stat-change.negative {
+            color: #f46a6a;
+        }
+
+        /* Transactions */
+        .transactions-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .transactions-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
+        }
+
+        .transactions-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #444;
+        }
+
+        .transaction-filter {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            color: #555;
+            background-color: white;
+        }
+
+        .transactions-list {
+            padding: 15px 20px;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-icon {
+            margin-right: 15px;
+        }
+
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transaction-item.income .icon-circle {
+            background-color: rgba(52, 195, 143, 0.2);
+            color: #34c38f;
+        }
+
+        .transaction-item.expense .icon-circle {
+            background-color: rgba(244, 106, 106, 0.2);
+            color: #f46a6a;
+        }
+
+        .transaction-details {
+            flex: 1;
+        }
+
+        .transaction-title {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .transaction-date {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .transaction-amount.income {
+            color: #34c38f;
+        }
+
+        .transaction-amount.expense {
+            color: #f46a6a;
+        }
+
+        .view-all-container {
+            padding: 15px 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        .view-all-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .view-all-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #444;
+        }
+
+        .add-method-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .add-method-btn:hover {
+            opacity: 0.9;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .payment-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-type {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .card-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .card-action-btn.edit {
+            color: #6e8efb;
+        }
+
+        .card-action-btn.delete {
+            color: #f46a6a;
+        }
+
+        .card-action-btn:hover {
+            opacity: 0.8;
+        }
+
+        .card-number {
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .wallet-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .balance-amount {
+                font-size: 34px;
+            }
+
+            .currency {
+                font-size: 26px;
+            }
+
+            .transaction-icon {
+                margin-right: 10px;
+            }
+
+            .icon-circle {
+                width: 36px;
+                height: 36px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .teacher-dashboard-sidebar-nav {
+            margin-top: 20px;
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 90px);
+            /* Adjust this value based on your profile section height */
+        }
+
+        @media (max-width: 576px) {
+            .transaction-item {
+                flex-wrap: wrap;
+            }
+
+            .transaction-details {
+                width: calc(100% - 55px);
+                margin-bottom: 5px;
+            }
+
+            .transaction-amount {
+                width: 100%;
+                text-align: right;
+                margin-left: 55px;
+            }
+        }
+
+        .photo-change-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .photo-change-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Photo containers */
+        .current-photo-container,
+        .upload-new-photo,
+        .photo-preview-container {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(106, 107, 228, 0.05);
+        }
+
+        .current-photo-h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        /* Current photo */
+        .current-photo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid transparent;
+            background: var(--primary-gradient);
+            background-clip: padding-box;
+            padding: 3px;
+        }
+
+        .current-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Upload area */
+        .upload-area {
+            border: 2px dashed #a777e3;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            background-color: rgba(174, 193, 250, 0.05);
+            transition: all var(--transition-speed);
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            background-color: rgba(174, 193, 250, 0.1);
+            border-color: #6e8efb;
+        }
+
+        .upload-area svg {
+            color: #8a5ed0;
+            margin-bottom: 15px;
+        }
+
+        .upload-area p {
+            margin-bottom: 15px;
+            color: var(--secondary-text);
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            box-shadow: 0 2px 5px rgba(106, 107, 228, 0.2);
+        }
+
+        .upload-btn:hover {
+            box-shadow: 0 4px 8px rgba(106, 107, 228, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .upload-hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 15px;
+        }
+
+        /* Preview section */
+        .photo-preview {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid transparent;
+            background: var(--primary-gradient);
+            background-clip: padding-box;
+            padding: 3px;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Preview controls */
+        .preview-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            color: var(--primary-dark);
+        }
+
+        .control-btn:hover {
+            background-color: rgba(174, 193, 250, 0.1);
+            border-color: #a777e3;
+        }
+
+        .control-btn svg {
+            color: #6e8efb;
+        }
+
+        /* Action buttons */
+        .photo-action-buttons {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cancel-btn {
+            padding: 10px 20px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            color: var(--secondary-text);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .cancel-btn:hover {
+            background-color: #f5f5f5;
+            color: var(--primary-text);
+        }
+
+        .save-btn {
+            padding: 10px 20px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(106, 107, 228, 0.2);
+        }
+
+        .save-btn:hover {
+            box-shadow: 0 4px 8px rgba(106, 107, 228, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Animation for upload feedback */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(167, 119, 227, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(167, 119, 227, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(167, 119, 227, 0);
+            }
+        }
+
+        .uploading {
+            animation: pulse 1.5s infinite;
+        }
+
+
+        /* Form container */
+        .contact-form-container {
+            width: 100%;
+        }
+
+        /* Form sections */
+        .form-section {
+            margin-bottom: 30px;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(106, 107, 228, 0.05);
+            border-left: 3px solid transparent;
+            background-image: linear-gradient(to right, rgba(174, 193, 250, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        /* Form groups */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-row {
+            margin-bottom: 15px;
+        }
+
+        .form-row.two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row.two-columns {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--primary-dark);
+            font-size: 14px;
+        }
+
+        /* Inputs */
+        input,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            font-size: 15px;
+            color: var(--primary-text);
+            transition: all var(--transition-speed);
+            outline: none;
+            background-color: var(--card-background);
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--input-focus-border);
+            box-shadow: 0 0 0 3px rgba(167, 119, 227, 0.1);
+        }
+
+        input:disabled {
+            background-color: var(--disabled-bg);
+            color: var(--disabled-text);
+            cursor: not-allowed;
+            border-color: var(--input-border);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a5ed0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+        }
+
+        /* Verification section */
+        .verification-section {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            background-color: rgba(174, 193, 250, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 3px solid #6e8efb;
+        }
+
+        .verification-text {
+            margin-bottom: 15px;
+            color: var(--secondary-text);
+            font-size: 14px;
+        }
+
+        /* Form actions */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cancel-btn {
+            padding: 12px 24px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            color: var(--secondary-text);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-weight: 500;
+        }
+
+        .cancel-btn:hover {
+            background-color: #f5f5f5;
+            color: var(--primary-text);
+        }
+
+        .save-btn {
+            padding: 12px 24px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(106, 107, 228, 0.2);
+        }
+
+        .save-btn:hover {
+            box-shadow: 0 4px 8px rgba(106, 107, 228, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Focus state styling */
+        input:focus,
+        select:focus {
+            border-color: #a777e3;
+            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.1);
+        }
+
+        /* Error state for form validation */
+        .form-group.error input {
+            border-color: var(--error-color);
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        /* Success indicator */
+        .form-group.success input {
+            border-color: var(--success-color);
+        }
+
+        /* Animation for save button feedback */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(167, 119, 227, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(167, 119, 227, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(167, 119, 227, 0);
+            }
+        }
+
+        .save-btn.submitting {
+            position: relative;
+            pointer-events: none;
+            animation: pulse 1.5s infinite;
+        }
+
+        .save-btn.submitting::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+            right: 15px;
+            top: calc(50% - 9px);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .teacher-dashboard-sidebar-nav {
+            margin-top: 20px;
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 90px);
+            /* Adjust this value based on your profile section height */
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        .coin-pack-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 20px;
+}
+
+.coin-pack-card {
+    background: linear-gradient(145deg, #1e1e2f, #2a2a40);
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    width: 280px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.coin-pack-card:hover {
+    transform: translateY(-10px);
+}
+
+.coin-pack-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    color: #00ffcc;
+}
+
+.coin-pack-card p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+.buy-button {
+    display: inline-block;
+    margin-top: 15px;
+    background-color: #00ffcc;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+    background-color: #00c9a7;
+}
+
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+   
+    <script>
+// Push current page into history
+history.pushState(null, null, window.location.href);
+
+// Detect back/forward button press
+window.addEventListener('popstate', function(event) {
+    // Redirect to another page (e.g., search page or homepage)
+    window.location.href = "http://127.0.0.1:8000/stu_login"; // Replace with your URL
+});
+       </script>
+
+
+   <script>
+        $(document).ready(function () {
+            $("#one").click(function () {
+
+                $(".one").fadeIn("slow");
+
+            });
+        });
+        $(document).ready(function () {
+            $("#two").click(function () {
+
+                $(".two").fadeIn("slow");
+
+            });
+        });
+        $(document).ready(function () {
+            $("#three").click(function () {
+
+                $(".three").fadeIn("slow");
+
+            });
+        });
+        function updateValue(value) {
+            document.getElementById('sliderValue').textContent = value;
+        }
+        function updateValue(value) {
+            document.getElementById('sliderValue').textContent = value;
+            // Update the button text dynamically
+            document.getElementById('buyCoinBtn').textContent = `Buy ${value} Coins`;
+            document.getElementById('buyCoinBtn').dataset.value = value; // Store the value in the button
+        }
+
+        function buyCoins(email) {
+            const coinValue = document.getElementById('buyCoinBtn').dataset.value || 100; // Default to 100 if not set
+            // Redirect or make a fetch/POST request to update balance on the server
+            window.location.href = `/buy_coin_teach/${email}/${coinValue}`;
+        }
+
+    </script>
+<script type="text/javascript">
+    function disableBack() { window.history.forward(); }
+    setTimeout("disableBack()", 0);
+    window.onunload = function () { null };
+    </script>
+
+</head>
+
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menu-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+    {% if messages %}
+    {% for message in messages %}
+
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{ message }}</strong>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <div class="profile-info">
+                    <div class="avatar"></div>
+                    <div>
+                        <div class="user-name">{{name|title}}</div>
+                        <div class="user-role">Tutor</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="sidebar-nav">
+                <ul>
+                    <!-- Dashboard Menu with Submenu -->
+                    <li class="menu-item">
+                        <button class="menu-button" id="dashboard-menu">
+                            <span>Dashboard</span>
+                            <span class="arrow">▶</span>
+                        </button>
+                        <ul class="submenu" id="dashboard-submenu">
+                            <li class="submenu-item" data-menu="my-profile">My Profile</li>
+                            <li class="submenu-item" data-menu="change-photo">Change Photo</li>
+                            <li class="submenu-item" data-menu="change-contact">Change Contact</li>
+                        </ul>
+                    </li>
+
+                    <!-- Wallet Menu -->
+                    <li class="menu-item">
+                        <button class="menu-button" data-menu="wallet">Wallet</button>
+                    </li>
+
+                    <!-- Find Job Menu -->
+                    <li class="menu-item">
+                        <a style="text-decoration: none;" href="/h_tutors_job"><button class="menu-button"
+                                data-menu="find-job">Find Job</button></a>
+                    </li>
+
+
+
+                    <li class="menu-item">
+                        <a style="text-decoration: none;" href="/logout/"> <button onclick="islogin()"
+                                class="menu-button">Logout</button></a>
+                    </li>
+                </ul>
+                <div class="teacher-dashboard-logo-bottom"
+                    style="margin-top: auto; padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.8); font-weight: 600; font-size: 16px; border-top: 1px solid rgba(255, 255, 255, 0.2);">
+                    <p style="font-size: 1.5rem;">Learnersleaf</p>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard-content">
+                <h2 class="content-title">Dashboard</h2>
+                <p>Welcome to your dashboard</p>
+            </div>
+
+            <!-- My Profile Section -->
+            <div class="content-section" id="my-profile-content">
+                <h2 class="content-title">My Profile</h2>
+
+                <div class="profile-container">
+                    <!-- Profile Header with Avatar and Cover -->
+                    <div class="profile-header">
+                        <div class="profile-cover"></div>
+                        <div class="profile-avatar">
+                        
+                            {% if tutor.profile_photo and tutor.profile_photo.name %}
+                            <img src="{{ tutor.profile_photo.url }}" alt="Profile Image">
+                        {% else %}
+                            <img src="{% static 'default-profile.png' %}" alt="Profile Image">
+                        {% endif %}
+                        
+                           
+
+                            <button class="edit-avatar-btn">
+                                <i class="edit-icon">✏️</i>
+                            </button>
+                        </div>
+                        <div class="profile-name-container">
+                            <h3 class="profile-name">{{name|title}}</h3>
+                            <span class="profile-role">Student</span>
+                        </div>
+                    </div>
+
+                    <!-- Profile Info Cards -->
+                    <div class="profile-info-cards">
+                        <!-- Personal Information -->
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Personal Information</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">Full Name:</span>
+                                    <span class="info-value">{{name|title}}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Birthday:</span>
+                                    {% for i in all %}
+                                    {% if i.date_of_birth %}
+                                    <span class="info-value">{{i.date_of_birth}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Gender:</span>
+
+                                    {% for i in all %}
+                                    {% if i.gender %}
+                                    <span class="info-value">{{i.gender}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Contact Information</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">{{email}}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Phone:</span>
+                                    {% for i in all %}
+                                    {% if i.phone %}
+                                    <span class="info-value">{{i.phone}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Address:</span>
+                                    {% for i in all %}
+                                    {% if i.location %}
+                                    <span class="info-value">{{i.location}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Education Information -->
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Education</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">University:</span>
+                                    {% for i in all %}
+                                    {% if i.institution_name %}
+                                    <span class="info-value">{{i.institution_name}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Degree Type:</span>
+                                    {% for i in all %}
+                                    {% if i.degree_type %}
+                                    <span class="info-value">{{i.degree_type}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Degree:</span>
+                                    {% for i in all %}
+                                    {% if i.degree_name %}
+                                    <span class="info-value">{{i.degree_name}}</span>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                        {% for i in all %}
+                        {% if i.institution_name_two %}
+                        <!-- Education Information -->
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Second Education</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">University:</span>
+
+                                    <span class="info-value">{{i.institution_name_two}}</span>
+
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Degree Type:</span>
+
+                                    <span class="info-value">{{i.degree_type_two}}</span>
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Degree:</span>
+
+                                    <span class="info-value">{{i.degree_name_two}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- experence Information -->
+
+                        {% for i in all %}
+                        {% if i.company_name %}
+
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Experience</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">Company :</span>
+
+                                    <span class="info-value">{{i.company_name}}</span>
+
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Role :</span>
+
+                                    <span class="info-value">{{i.job_roll}}</span>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% for i in all %}
+                        {% if i.company_name_two %}
+
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Experience</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">Company :</span>
+
+                                    <span class="info-value">{{i.company_name_two}}</span>
+
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Role :</span>
+
+                                    <span class="info-value">{{i.job_roll_two}}</span>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+
+                        {% for i in all %}
+                        {% if i.company_name_three %}
+
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Experience</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">Company :</span>
+
+                                    <span class="info-value">{{i.company_name_three}}</span>
+
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Role :</span>
+
+                                    <span class="info-value">{{i.job_roll_three}}</span>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+
+                        <!-- Skills -->
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Skills</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="skills-container">
+                                    {% for i in all %}
+                                    {% for subject in i.subject|parse_subjects %}
+
+                                    <span class="skill-tag">{{ subject }}</span>
+                                    {% endfor %}
+                                    {% endfor %}
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {% for i in all %}
+                        {% if i.willing_to_travel %}
+                        <!-- Education Information -->
+                        <div class="profile-card">
+                            <div class="card-header">
+                                <h4>Turtoring Details</h4>
+                                <!-- <button class="edit-btn">Edit</button> -->
+                            </div>
+                            <div class="card-content">
+                                <div class="info-item">
+                                    <span class="info-label">Classes:</span>
+
+                                    <span class="info-value">{{i.classes}}</span>
+
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Teaches online:</span>
+
+                                    <span class="info-value">{{i.available_for_online_teaching }}</span>
+
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Can Travel :</span>
+
+                                    <span class="info-value"> {{i.willing_to_travel|upper}}</span>
+
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Payment :</span>
+
+                                    <span class="info-value"> ₹{{i.min_fee}}-- ₹{{i.max_fee}} for
+                                        ({{i.i_charge}})</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wallet Section -->
+            <div class="content-section" id="wallet-content">
+                <h2 class="content-title">Wallet</h2>
+                <p>View your wallet balance and transactions</p>
+
+                <div class="wallet">
+                    {% for i in all %}
+                    {% if i.coin %}
+                    <h1> <i class="fa-solid fa-wallet" style="font-size: 40px;"></i>Balance Coin : <span
+                            style="font-weight: bold; font-size: 30px;">{{i.coin}}</span> </h1>
+                    {% else %}
+                    <h1> <i class="fa-solid fa-wallet" style="font-size: 40px;"></i>Balance Coin :000 </h1>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+
+                <!-- <div class="slider-container">
+                    <h1>Adjust the Range Coin</h1>
+                    <input type="range" id="rangeSlider" min="100" max="3000" value="100" step="50"
+                        oninput="updateValue(this.value)">
+                    <i class="fa-solid fa-coins" style="font-size: 48px;"></i> <span class="value"
+                        id="sliderValue">100</span>
+
+                </div> -->
+                <!-- <div class="buy_coin">
+               <a href="/buy_coin_teach/{{account.email}}/300">Buy Coins</a>
+              
+            
+             </div> <br> -->
+
+             <div class="coin-pack-container">
+                {% for pack in coin_packs %}
+                <div class="coin-pack-card">
+                    <h3>{{ pack.label }}</h3>
+                    <p><strong>Price:</strong> ₹{{ pack.amount }}</p>
+                    <p><strong>Coins:</strong> {{ pack.coins }}</p>
+                    <p><strong>Bonus Coins:</strong> {{ pack.bonus_coins }}</p>
+                    <p><strong>Total Coins:</strong> {{ pack.total_coins }}</p>
+                    <p><strong>Leads:</strong> {{ pack.leads }}</p>
+                    <p><strong>Effective ₹/Lead:</strong> ₹{{ pack.effective_rate }}</p>
+                    <a href="/buy_coin_teacher/{{pack.amount}}" class="buy-button">Buy Now</a>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+
+            <!-- Change Photo Section -->
+            <div class="content-section" id="change-photo-content">
+                <h2 class="content-title">Change Photo</h2>
+                <div class="photo-change-container">
+                    <div class="current-photo-container">
+                        <h3 class="current-photo-h3">Current Photo</h3>
+                        <div class="current-photo">
+                          
+                            {% if tutor.profile_photo and tutor.profile_photo.name %}
+                            <img src="{{ tutor.profile_photo.url }}" alt="Profile Image"  id="current-profile-photo">
+                        {% else %}
+                            <img src="{% static 'default-profile.png' %}" alt="Profile Image" id="current-profile-photo">
+                        {% endif %}
+                        
+                         
+
+                        </div>
+                    </div>
+
+                    <div class="upload-new-photo">
+                        <h3>Upload New Photo</h3>
+                        <div class="upload-area" id="upload-area">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            <form action="/t_photo/{{email}}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <p>Drag & drop your photo here or</p>
+                                <label for="file-upload" class="upload-btn">Choose File</label>
+                                <input type="file" id="file-upload" accept="image/*" name="profile" hidden>
+                                <p class="upload-hint">Maximum file size: 5MB. Supported formats: JPG, PNG, GIF</p>
+
+
+                                <input type="submit" value="Update">
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="photo-preview-container" id="photo-preview-container" style="display: none;">
+                        <h3>Preview</h3>
+                        <div class="photo-preview">
+                            <img src="/api/placeholder/200/200" alt="Preview" id="photo-preview">
+                        </div>
+                        <div class="preview-controls">
+                            <button class="control-btn rotate-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                </svg>
+                                Rotate
+                            </button>
+                            <button class="control-btn crop-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M6 2v14a2 2 0 0 0 2 2h14"></path>
+                                    <path d="M18 22V8a2 2 0 0 0-2-2H2"></path>
+                                </svg>
+                                Crop
+                            </button>
+                            <button class="control-btn reset-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 2v6h6"></path>
+                                    <path d="M21 12A9 9 0 0 0 6 5.3L3 8"></path>
+                                    <path d="M21 22v-6h-6"></path>
+                                    <path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"></path>
+                                </svg>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="photo-action-buttons">
+                        <button class="cancel-btn">Cancel</button>
+                        <button class="save-btn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Contact Section -->
+            <div class="content-section" id="change-contact-content">
+                <h2 class="content-title">Change Contact Information</h2>
+                <div class="contact-form-container">
+                    <form id="contact-form">
+                        <div class="form-section">
+                            <h3 class="section-subtitle">Email Address</h3>
+                            <div class="form-group">
+                                <label for="current-email">Current Email</label>
+                                <input type="email" id="current-email" value="johndoe@example.com" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-email">New Email</label>
+                                <input type="email" id="new-email" placeholder="Enter new email address">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-email">Confirm New Email</label>
+                                <input type="email" id="confirm-email" placeholder="Confirm new email address">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-subtitle">Phone Number</h3>
+                            <div class="form-group">
+                                <label for="current-phone">Current Phone</label>
+                                <input type="tel" id="current-phone" value="+1 (555) 123-4567" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-phone">New Phone</label>
+                                <input type="tel" id="new-phone" placeholder="Enter new phone number">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-subtitle">Address Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="street-address">Street Address</label>
+                                    <input type="text" id="street-address" value="123 Main Street">
+                                </div>
+                            </div>
+                            <div class="form-row two-columns">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" id="city" value="San Francisco">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" value="CA">
+                                </div>
+                            </div>
+                            <div class="form-row two-columns">
+                                <div class="form-group">
+                                    <label for="zip-code">Zip Code</label>
+                                    <input type="text" id="zip-code" value="94105">
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <select id="country">
+                                        <option value="US" selected>United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="section-subtitle">Emergency Contact</h3>
+                            <div class="form-row two-columns">
+                                <div class="form-group">
+                                    <label for="emergency-name">Contact Name</label>
+                                    <input type="text" id="emergency-name" value="Jane Doe">
+                                </div>
+                                <div class="form-group">
+                                    <label for="emergency-relation">Relationship</label>
+                                    <input type="text" id="emergency-relation" value="Sister">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency-phone">Phone Number</label>
+                                <input type="tel" id="emergency-phone" value="+1 (555) 987-6543">
+                            </div>
+                        </div>
+
+                        <div class="verification-section">
+                            <h3 class="section-subtitle">Verification</h3>
+                            <p class="verification-text">For security purposes, please enter your current password to
+                                save changes.</p>
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" placeholder="Enter your current password">
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancel</button>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Find Job Section -->
+            <div class="content-section" id="find-job-content">
+                <h2 class="content-title">Find Job</h2>
+                <p>Browse available job opportunities</p>
+            </div>
+
+            <!-- Find Tutor Section -->
+            <div class="content-section" id="find-tutor-content">
+                <h2 class="content-title">Find Tutor</h2>
+                <p>Search for tutors in various subjects</p>
+            </div>
+
+            <!-- Review Section -->
+            <div class="content-section" id="review-content">
+                <h2 class="content-title">Review</h2>
+                <p>Review your activities and submissions</p>
+            </div>
+
+            <!-- Edit Section -->
+            <div class="content-section" id="edit-content">
+                <h2 class="content-title">Edit</h2>
+                <p>Edit your account settings</p>
+            </div>
+
+            <!-- Massage Section -->
+            <div class="content-section" id="massage-content">
+                <h2 class="content-title">Massage</h2>
+                <p>Manage your messages and notifications</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Variables to keep track of active elements
+            let activeMenu = 'dashboard';
+            let expandedMenu = null;
+
+            // Dashboard toggle functionality
+            const dashboardMenu = document.getElementById('dashboard-menu');
+            const dashboardSubmenu = document.getElementById('dashboard-submenu');
+            const dashboardArrow = dashboardMenu.querySelector('.arrow');
+
+            dashboardMenu.addEventListener('click', function () {
+                if (expandedMenu === 'dashboard') {
+                    dashboardSubmenu.classList.remove('expanded');
+                    dashboardArrow.classList.remove('rotated');
+                    expandedMenu = null;
+                } else {
+                    dashboardSubmenu.classList.add('expanded');
+                    dashboardArrow.classList.add('rotated');
+                    expandedMenu = 'dashboard';
+                }
+            });
+
+            // Menu item click handlers
+            const menuButtons = document.querySelectorAll('.menu-button[data-menu]');
+            menuButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const menuName = this.getAttribute('data-menu');
+                    setActiveContent(menuName);
+
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            // Submenu item click handlers
+            const submenuItems = document.querySelectorAll('.submenu-item');
+            submenuItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    const menuName = this.getAttribute('data-menu');
+                    setActiveContent(menuName);
+
+                    // Update active submenu item
+                    submenuItems.forEach(subItem => {
+                        subItem.classList.remove('active');
+                    });
+                    this.classList.add('active');
+
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            function toggleMobileMenu() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+            }
+
+            menuToggle.addEventListener('click', toggleMobileMenu);
+            overlay.addEventListener('click', toggleMobileMenu);
+
+            // Function to set active content with animation
+            function setActiveContent(menuName) {
+                // Hide all content sections
+                const contentSections = document.querySelectorAll('.content-section');
+                contentSections.forEach(section => {
+                    if (section.classList.contains('active')) {
+                        section.style.opacity = '0';
+                        section.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            section.classList.remove('active');
+                        }, 300);
+                    }
+                });
+
+                // Show the selected content section with a delay for animation
+                setTimeout(() => {
+                    const selectedContent = document.getElementById(`${menuName}-content`);
+                    if (selectedContent) {
+                        selectedContent.classList.add('active');
+                    }
+                }, 300);
+
+                // Update active menu
+                activeMenu = menuName;
+
+                // Update menu button styles
+                menuButtons.forEach(button => {
+                    button.classList.remove('active-menu');
+                    if (button.getAttribute('data-menu') === menuName) {
+                        button.classList.add('active-menu');
+                    }
+                });
+            }
+
+            // Handle window resize for responsive behavior
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
+
+
+
+  
+  
+  <script>
+//     (function () {
+//       // Push initial state to history
+//       history.pushState(null, null, location.href);
+  
+//       // Alert flag using localStorage
+//       let alerted = localStorage.getItem('navigationAlerted');
+  
+//       // Always push a new state when trying to go back or forward
+//       window.addEventListener('popstate', function () {
+//         if (!alerted) {
+//           alert("Navigation is disabled on this page.");
+//           localStorage.setItem('navigationAlerted', 'true');
+//           alerted = true;
+//         }
+//         // Block back/forward by pushing state again
+//         history.pushState(null, null, location.href);
+//       });
+  
+//       // Reset alert on page reload
+//       window.addEventListener('load', function () {
+//         localStorage.removeItem('navigationAlerted');
+//       });
+//     })();
+
+ </script>
+</body>
+</html>

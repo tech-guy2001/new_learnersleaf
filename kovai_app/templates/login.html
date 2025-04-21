@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Platform - Login/Signup</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      /* background: linear-gradient(135deg, #6e8efb, #a777e3); */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+      position: relative;
+      overflow: hidden;
+      width: 850px;
+      max-width: 100%;
+      min-height: 550px;
+    }
+
+    .form-container {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .sign-in-container {
+      left: 0;
+      z-index: 2;
+    }
+
+    .sign-up-container {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .container.right-panel-active .sign-in-container {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .container.right-panel-active .sign-up-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+    }
+
+    form {
+      background: white;
+      display: flex;
+      flex-direction: column;
+      padding: 0 50px;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: bold;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 100;
+      line-height: 20px;
+      letter-spacing: 0.5px;
+      margin: 20px 0 30px;
+    }
+
+    .social-container {
+      margin: 20px 0;
+    }
+
+    .social-container a {
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 5px;
+      height: 40px;
+      width: 40px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    span {
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    a {
+      color: #333;
+      font-size: 14px;
+      text-decoration: none;
+      margin: 15px 0;
+    }
+
+    button {
+      border-radius: 20px;
+      border: 1px solid #6e8efb;
+      background: #6e8efb;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 12px 45px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: transform 80ms ease-in;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    button.ghost {
+      background: transparent;
+      border-color: white;
+    }
+
+    .role-selector {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .role-option {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .role-option.active {
+      background: #6e8efb;
+      color: white;
+      border-color: #6e8efb;
+    }
+
+    input {
+      background: #f6f5f7;
+      border: none;
+      padding: 12px 15px;
+      margin: 8px 0;
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .overlay-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.6s ease-in-out;
+      z-index: 100;
+    }
+
+    .container.right-panel-active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    .overlay {
+      background: linear-gradient(to right, #6e8efb, #a777e3);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 0 0;
+      color: white;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
+    .overlay-panel {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 40px;
+      text-align: center;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+
+    .container.right-panel-active .overlay-left {
+      transform: translateX(0);
+    }
+
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .container.right-panel-active .overlay-right {
+      transform: translateX(20%);
+    }
+
+    #forgotPasswordForm {
+      display: none;
+    }
+
+    .back-to-login {
+      font-size: 12px;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .container {
+        min-height: 650px;
+      }
+
+      .form-container {
+        width: 100%;
+      }
+
+      .sign-in-container,
+      .sign-up-container {
+        width: 100%;
+      }
+
+      .overlay-container {
+        display: none;
+      }
+
+      .container.mobile-signup .sign-in-container {
+        display: none;
+      }
+
+      .container.mobile-signup .sign-up-container {
+        opacity: 1;
+        z-index: 5;
+        animation: show 0.6s;
+      }
+
+      form {
+        padding: 0 20px;
+      }
+
+      .mobile-toggle {
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .mobile-toggle span {
+        font-size: 14px;
+        margin: 0 5px;
+      }
+
+      .mobile-toggle a {
+        margin: 0;
+        color: #6e8efb;
+        font-weight: bold;
+      }
+
+      .role-selector {
+        flex-direction: row;
+      }
+
+      .role-option {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+      }
+
+      button {
+        padding: 10px 35px;
+        font-size: 0.8rem;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        min-height: 570px;
+      }
+
+      form {
+        padding: 0 15px;
+      }
+
+      .role-selector {
+        flex-direction: row;
+      }
+
+      .role-option {
+        padding: 6px 12px;
+        margin: 0 5px;
+        font-size: 0.7rem;
+      }
+
+      input {
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+
+      button {
+        padding: 8px 25px;
+        font-size: 0.7rem;
+      }
+
+      h1 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+        margin: 15px 0 20px;
+      }
+
+      .social-container a {
+        height: 35px;
+        width: 35px;
+      }
+    }
+
+    @keyframes show {
+
+      0%,
+      49.99% {
+        opacity: 0;
+        z-index: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 1;
+        z-index: 5;
+      }
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .alert {
+      position: fixed;
+      top: 0;
+      left: 300px;
+      z-index: 10;
+
+      background-color: #f0ad4e;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0)
+    }
+  </style>
+</head>
+
+<body>
+  {% if msg %}
+  <div class="alert alert-success" role="alert">
+    {{ msg }}
+  </div>
+  {% endif %}
+  <div class="container" id="container">
+
+    <div class="form-container sign-up-container">
+      <form action="#" id="signupForm">
+        <h1 style="margin-bottom: 15px;">Create Account</h1>
+        <div class="role-selector" id="signupRoleSelector">
+          <a href="/tutor_request">
+            <div class="role-option active" data-role="learner" onclick="setSignupRole('learner')"> Sign Up as Learner
+            </div>
+          </a>
+          <a href="/teacher_reg">
+            <div class="role-option" data-role="tutor" onclick="setSignupRole('tutor')"> Sign Up as Tutor</div>
+          </a>
+        </div>
+        <!-- <input type="text" placeholder="Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <div id="tutorFields" style="display: none; width: 100%;">
+          <input type="text" placeholder="Specialization" />
+          <input type="text" placeholder="Years of Experience" />
+        </div> -->
+        <!-- <button type="submit">Sign Up</button> -->
+        <div class="social-container">
+          <a href="#" aria-label="Sign up with Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Sign up with Google"><i class="fab fa-google"></i></a>
+          <a href="#" aria-label="Sign up with LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="mobile-toggle">
+          <span>Already have an account?</span>
+          <a href="#" id="mobileSignIn">Sign In</a>
+        </div>
+      </form>
+    </div>
+    <div class="form-container sign-in-container">
+      <form action="/stu_login" method="POST" id="loginForm">
+        {% csrf_token %}
+        <h1 style="margin-bottom: 15px;">Sign In</h1>
+        <div class="role-selector" id="loginRoleSelector">
+          <div class="role-option active" data-role="learner" onclick="setLoginRole('learner')">Learner</div>
+          <div class="role-option" data-role="tutor" onclick="setLoginRole('tutor')">Tutor</div>
+        </div>
+        <input type="email" placeholder="Email" name="email" required />
+        <input type="password" placeholder="Password" name="password" required />
+
+        <input type="text" id="roles" name="login_type" value="learner" style="display: none;">
+        <a href="password_reset/">Forgot your password?</a>
+        <button type="submit" onclick="status()">Sign In</button>
+
+        <div class="social-container">
+          <a href="#" aria-label="Login with Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Login with Google"><i class="fab fa-google"></i></a>
+          <a href="#" aria-label="Login with LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="mobile-toggle">
+          <span>Don't have an account?</span>
+          <a href="#" id="mobileSignUp">Sign Up</a>
+        </div>
+      </form>
+
+
+      <form action="#" id="forgotPasswordForm">
+        <h1>Reset Password</h1>
+        <p>Enter your email and we'll send you a link to reset your password</p>
+        <input type="email" placeholder="Email" required />
+        <button type="submit">Send Reset Link</button>
+        <a href="#" class="back-to-login" onclick="hideForgetPassword()">Back to Login</a>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back!</h1>
+          <p>To keep connected with us please login with your personal info</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hello, Friend!</h1>
+          <p>Enter your personal details and start your journey with us</p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Font Awesome for Social Icons -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+  <script>
+    // Toggle between sign in and sign up panels
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const mobileSignUpButton = document.getElementById('mobileSignUp');
+    const mobileSignInButton = document.getElementById('mobileSignIn');
+    const container = document.getElementById('container');
+    const loginForm = document.getElementById('loginForm');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    let currentLoginRole = 'learner';
+    let currentSignupRole = 'learner';
+    let isMobile = false;
+
+    function checkScreenSize() {
+      isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        container.classList.remove('right-panel-active');
+      }
+    }
+
+    // Check on load and resize
+    window.addEventListener('load', checkScreenSize);
+    window.addEventListener('resize', checkScreenSize);
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add('right-panel-active');
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove('right-panel-active');
+    });
+
+    // Mobile toggles
+    mobileSignUpButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isMobile) {
+        container.classList.add('mobile-signup');
+      }
+    });
+
+    mobileSignInButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isMobile) {
+        container.classList.remove('mobile-signup');
+      }
+    });
+
+    // Show/hide forgot password form
+    function showForgotPassword() {
+      loginForm.style.display = 'none';
+      forgotPasswordForm.style.display = 'flex';
+    }
+
+    function hideForgetPassword() {
+      forgotPasswordForm.style.display = 'none';
+      loginForm.style.display = 'flex';
+    }
+
+    // Toggle role selection for login
+    function setLoginRole(role) {
+      currentLoginRole = role;
+      const options = document.querySelectorAll('#loginRoleSelector .role-option');
+      options.forEach(option => {
+        if (option.dataset.role === role) {
+          option.classList.add('active');
+          document.getElementById("roles").value = role
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
+
+    // Toggle role selection for signup
+    function setSignupRole(role) {
+      currentSignupRole = role;
+      const options = document.querySelectorAll('#signupRoleSelector .role-option');
+      options.forEach(option => {
+        if (option.dataset.role === role) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+
+      // Show additional fields for tutors
+      if (role === 'tutor') {
+        document.getElementById('tutorFields').style.display = 'block';
+      } else {
+        document.getElementById('tutorFields').style.display = 'none';
+      }
+    }
+
+    // // Form submissions
+    // document.getElementById('loginForm').addEventListener('submit', function(e) {
+    //   e.preventDefault();
+    //   alert(`Logging in as ${currentLoginRole}`);
+    //   // Handle login submission here
+    // });
+
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert(`Signing up as ${currentSignupRole}`);
+      // Handle signup submission here
+    });
+
+    document.getElementById('forgotPasswordForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Password reset link sent to your email');
+      hideForgetPassword();
+      // Handle forgot password submission here
+    });
+  </script>
+<script>
+  history.pushState(null, null, location.href);
+
+window.addEventListener("popstate", function (event) {
+  history.pushState(null, null, location.href);
+  alert("Back button is disabled on this page.");
+});
+</script>
+
+
+</body>
+
+</html>

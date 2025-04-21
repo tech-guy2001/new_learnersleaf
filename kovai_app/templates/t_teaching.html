@@ -1,0 +1,422 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            
+        }
+
+        
+
+              /* Navbar styles */
+.navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #0056b3;
+}
+.active{
+    background-color: #f3f5f7;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 4px;
+    
+}
+.nav-link {
+    font-size: 18px;
+    margin-right: 20px;
+    color: #0e0e0e;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #007bff;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+
+
+/* Post button styles */
+.post-btn {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.post-btn:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Section Heading */
+.section-heading {
+    margin: 40px 0 20px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+      body {
+    background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+h2 {
+    color: #0a0606;
+    font-weight: bold;
+}
+
+nav{
+    background: linear-gradient(45deg, #0048ff, #7ed6df);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.nav-item:hover {
+    color: #0048ff;
+    border-bottom: 3px solid #0048ff;
+    cursor: pointer;
+}
+        .dropdown-menu {
+            min-width: 160px;
+        }
+ 
+
+        .footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+    
+    margin-left: 0;
+}
+
+
+        .detail ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail li {
+            padding: 10px 0;
+            font-size: 18px;
+        }
+
+        .location {
+            margin-top: 20px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(0, 123, 255);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+        .detail{
+            background-color: azure;
+            border-radius: 10px;
+            margin-left: 300px;
+           
+            width: 600px;
+        }
+        .detail h4{
+            background-color: rgb(18, 213, 216);
+            margin-top: 40px;
+            cursor: pointer;
+          
+            
+            
+        }
+        .detail h4:hover{
+            background-color: #0056b3;
+            color: azure;
+        }
+        .one, .two, .three, .four, .five{
+            display: none;
+        }
+        form{
+            margin-left: 100px;
+            margin-top: 50px;
+        }
+        @media (max-width: 768px) {
+            form{
+            margin-left: 10px;
+            margin-top: 50px;
+        }
+    }
+    .footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+    
+    margin-left: 0;
+}
+    </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#one").click(function(){
+  
+    $(".one").fadeIn("slow");
+ 
+  });
+});
+$(document).ready(function(){
+  $("#two").click(function(){
+  
+    $(".two").fadeIn("slow");
+ 
+  });
+});
+$(document).ready(function(){
+  $("#three").click(function(){
+  
+    $(".three").fadeIn("slow");
+ 
+  });
+});
+
+</script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light " >
+        <div class="container-fluid">
+            <a class="navbar-brand " href="#"><h2 style="font-weight: bold; color: #f9f5f5; font-size: 36px;">Learnersleaf</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/teacher_dashboard/{{account.email}}">Dasboad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  " href="/t_wallet/{{account.email}}">Wallet</a>
+                    </li>
+                   
+                    <li class="nav-item ">
+                        <div class="dropdown av-link">
+                            <button type="button" class="btn   dropdown-toggle " data-bs-toggle="dropdown">
+                                Edit
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/t_basic/{{account.email}}">Detail</a></li>
+                                <li><a class="dropdown-item" href="/t_photo/{{account.email}}">Photo</a></li>
+                                <li><a class="dropdown-item" href="/t_subject/{{account.email}}">subject</a></li>
+                                <li><a class="dropdown-item" href="/t_contact/{{account.email}}">contact</a></li>
+                                <li><a class="dropdown-item" href="/t_teaching/{{account.email}}">Teaching Details</a></li>
+                                <li><a class="dropdown-item" href="/t_experience/{{account.email}}">Employ Details</a></li>
+                            </ul>
+                        </div>
+
+                    </li>
+                    
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" >
+                                Find job
+                            </button>
+                            
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">All Job</a></li>
+                                    <li><a class="dropdown-item" href="/tutor_online_job/{{account.email}}">Online Job</a></li>
+                                    <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">Home Teaching</a></li>
+                                    
+                                </ul>
+                           
+                        </div>
+                    </li>
+
+                    <li class="nav-item  ">
+                     <a href="/teacher_inbox/{{account.email}}" class="nav-link" > <i class="fa-solid fa-envelope"  ></i>&nbsp;Message</a>
+                </li>
+                <li class="nav-item">
+                <div class="dropdown nav-link "><div class="btn  dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 24px; font-weight: bold; color:  #f9f5f5;;" ><i class="fa-solid fa-id-badge"  ></i> {{account.name|title}}</div>
+        <ul class="dropdown-menu  ">
+            <li><a class="dropdown-item" href="/"> <i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+            <li><a class="dropdown-item" href="#"> <i class="fa-solid fa-gear"></i>Settings</a></li>
+           
+        </ul>
+    </div>
+            </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    {% if msg %}
+    <div class="alert alert-info alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{msg}}</strong> !!!!!!!
+    </div>
+    {% endif %}
+
+ 
+
+    <p class="section-heading">Update the value you need or leave blank</p>
+
+    <form action="/t_teaching/{{account.email}}" method="POST">
+        {% csrf_token %}
+        
+        <!-- Charging options -->
+        <label>I charge</label>
+        <select name="i_charge" id="i_charge">
+            <option value="per_hour">per hour</option>
+            <option value="per_month">per month</option>
+            <option value="per_year">per year</option>
+        </select><br><br>
+    
+        <!-- Fee fields -->
+        <input type="number" name="min_fee" placeholder="Min fee" value="{{account.min_fee}}">
+        <input type="number" name="max_fee" placeholder="Max fee" value="{{account.max_fee}}"><br><br>
+    
+        <!-- Experience fields -->
+        <label>Years of total experience (Teaching and other experience)</label><br>
+        <input type="number" name="total_experience" placeholder="Total experience" value="{{account.total_experience}}"><br><br>
+    
+        <label>Years of teaching experience (Offline+online)</label><br>
+        <input type="number" name="teaching_experience" placeholder="Teaching experience" value="{{account.teaching_experience}}"><br><br>
+    
+        <label>Years of online teaching experience</label><br>
+        <input type="number" name="online_experience" placeholder="Online experience" value="{{account.online_experience}}"><br><br>
+    
+        <!-- Radio buttons -->
+        <label>Are you willing to travel to Student?</label>
+        <input type="radio" name="travel" value="yes" {% if account.willing_to_travel == "yes" %}checked{% endif %}> <label>Yes</label>
+        <input type="radio" name="travel" value="no" {% if account.willing_to_travel == "no" %}checked{% endif %}> <label>No</label>
+        
+        <label>Available for online teaching?</label>
+        <input type="radio" name="online_teach" value="yes" {% if account.available_for_online_teaching == "yes" %}checked{% endif %}> <label>Yes</label>
+        <input type="radio" name="online_teach" value="no" {% if account.available_for_online_teaching == "no" %}checked{% endif %}> <label>No</label><br><br>
+    
+        <label>Do you help with homework and assignments?</label>
+        <input type="radio" name="homework" value="yes" {% if account.help_with_homework == "yes" %}checked{% endif %}> <label>Yes</label>
+        <input type="radio" name="homework" value="no" {% if account.help_with_homework == "no" %}checked{% endif %}> <label>No</label><br><br>
+    
+        <label>Are you currently a full-time teacher employed by a School/College?</label>
+        <input type="radio" name="full_time" value="yes" {% if account.full_time_teacher == "yes" %}checked{% endif %}> <label>Yes</label>
+        <input type="radio" name="full_time" value="no" {% if account.full_time_teacher == "no" %}checked{% endif %}> <label>No</label><br><br>
+    
+        <!-- Opportunities selection -->
+        <label>Opportunities you are interested in</label>
+        <select name="interested_in">
+            <option value="online_teaching" {% if account.interested_in == "online_teaching" %}selected{% endif %}>Online teaching</option>
+            <option value="offline_teaching" {% if account.interested_in == "offline_teaching" %}selected{% endif %}>Offline teaching</option>
+            <option value="full_time" {% if account.interested_in == "full_time" %}selected{% endif %}>Full Time</option>
+            <option value="part_time" {% if account.interested_in == "part_time" %}selected{% endif %}>Part Time</option>
+            <option value="both" {% if account.interested_in == "both" %}selected{% endif %}>Both</option>
+        </select><br><br>
+    
+       
+        
+        <!-- Submit button -->
+        <input type="submit" value="Save">
+    </form>
+    
+
+    <div class="footer">
+        <p>&copy; 2023 All rights reserved | This website is made with <i
+            class="fa-solid fa-heart"></i> by <a href="https://www.linkedin.com
+            /in/krishnachandra-9a8a3a1a5/"> call me</a>
+            </p>
+    </div>
+    <script>
+        // Preselect the i_charge dropdown value based on the account data
+        document.getElementById("i_charge").value = "{{account.i_charge}}";
+    </script>
+
+
+    
+      
+</body>
+</html>
+</body>
+</html>

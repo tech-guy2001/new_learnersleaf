@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+{% load static %}
+{% load custom_filters %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+     <style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  h1, h4 {
+    color: #004085;
+  }
+
+  p {
+    line-height: 1.6;
+    margin: 15px 0;
+  }
+
+  .subject, .experience, .education, .fees, .review {
+    background-color: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .subject i, .experience i, .education i, .fees i, .review i {
+    color: #007bff;
+    margin-right: 10px;
+  }
+
+  h4 {
+    margin: 10px 0;
+  }
+
+  .fees p {
+    color: #28a745;
+  }
+
+  img {
+    display: block;
+    margin: 20px auto;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    float: right;
+    
+   
+  }
+  i{
+    font-size: 20px;
+  }
+  .detail {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    position: fixed;
+    right: -50px;
+    top: 30px;
+    padding: 50px;
+
+
+  }
+  .main{
+    width: 800px;
+    margin-left: 20px;
+  }
+
+
+
+  .detail button {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 15px;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .detail button a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .detail button:hover {
+    background-color: #0056b3;
+  }
+
+  .detail ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  .detail ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .detail ul li i {
+    margin-right: 10px;
+    color: #6c757d;
+  }
+
+  .detail ul li i.fa-book, 
+  .detail ul li i.fa-wallet {
+    color: #28a745;
+  }
+
+  .detail ul li i.fa-wifi {
+    color: #17a2b8;
+  }
+
+  .detail ul li i.fa-venus-mars {
+    color: #ffc107;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .detail {
+      padding: 15px;
+    }
+
+    .detail ul li {
+      font-size: 14px;
+    }
+
+    .detail button {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .subject, .experience, .education, .fees, .review {
+      margin: 15px 5px;
+    }
+  }
+  .contact{
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .detail {
+        position: relative;
+        width: 100%;
+        top: 0;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: none;
+    }
+
+    .main {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+.detail:hover{
+  box-shadow: 0 0 10px  blue
+}
+.c_sub {
+        display: flex; /* Align items horizontally */
+        flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+        padding: 0;
+        list-style: none;
+        margin: 0;
+      position: relative;
+      left: 5px;
+      top: 5px;
+     gap: 15px;
+}
+
+
+</style>
+<script>
+  function showContact() {  
+    document.querySelector('.contact').style.display = 'block';
+    }
+</script>
+
+    
+</head>
+<body>
+  <div class="main" id="main">
+  <h1> {{ name|upper}}  ({{roll}})</h1>
+  <h4>Location :{{first.location}}</h4>
+  <p>About Us:
+    We are a leading tuition centre in {{first.location}}, committed to providing high-quality education and fostering a
+     love for learning among our students. Our centre is dedicated  
+    
+    to helping students develop critical thinking skills and achieve academic excellence through personalized attention and innovative teaching methods.
+    {% for i  in all %}
+    {% if i.filename %}
+     <img src="{% static i.filename %}" height="180px"  width="180px"  alt="Profile Image">
+     {% endif %}
+    {% endfor %}
+    </p>
+    <p>Position Overview:
+      We are looking for enthusiastic and knowledgeable programming tutors specializing in Java and Python to join our team. 
+      The ideal candidates will have a strong passion for coding, excellent technical skills, and the ability to effectively teach programming concepts to students of varying skill levels.
+       Tutors will be responsible for delivering engaging lessons, assessing student progress, and providing constructive feedback.
+      
+      Key Responsibilities:
+      
+      Teaching and Instruction:
+      
+      Deliver comprehensive and interactive lessons in Java and Python programming languages.
+      Use a variety of teaching methods and instructional materials to accommodate different learning styles and abilities.
+      Foster a positive and encouraging learning environment that motivates students to achieve their full potential.
+      Curriculum Development:
+      
+      Assist in the development and improvement of curriculum materials and teaching resources for programming courses.
+      Stay updated with the latest developments in Java and Python, as well as general programming trends and best practices.
+      Student Assessment and Feedback:
+      
+      Evaluate student performance through assignments, coding exercises, projects, and tests.
+      Provide timely and constructive feedback to students and parents on academic progress and areas for improvement.
+      Identify students' strengths and weaknesses and tailor teaching methods accordingly.
+      Classroom Management:
+      
+      Maintain discipline and create a respectful classroom atmosphere.
+      Address any student behavioral issues promptly and appropriately.
+      Ensure the safety and well-being of all students</p>
+
+      <div class="subject">
+        <i class="fa-solid fa-graduation-cap" style="font-size: 50px;"> <span style="font-size: 30px; font-family: Arial, Helvetica, sans-serif;">Subjects</span></i> 
+        <ul class="c_sub">
+          {% for i in all %}
+          {% for subject in i.subject|parse_subjects %}
+              <li class="subject-item"><i class="fa-solid fa-bullseye"></i> {{ subject }}</li>
+          {% endfor %}
+          {% endfor %}
+      </ul>
+        
+      </div>
+      
+
+      <div class="experience">
+        <i class="fa-solid fa-suitcase" style="font-size: 50px;"> <span style="font-size:30px ; font-family: Arial, Helvetica, sans-serif;">Experience</span></i>
+        {% for i in all %}
+       
+        
+        {% if i.company_name %}
+        <p><h5>{{i.job_roll}}</h5>at {{i.company_name}} for {{i.year_of_experience}} Year</p>
+        {% endif %}
+
+        {% if i.company_name_two %}
+        <p><h5>{{i.job_roll_two}}</h5>at {{i.company_name_two}} for {{i.year_of_experience_two}} Years</p>
+        {% endif %}
+        {% if i.company_name_three %}
+        <p><h5>{{i.job_roll_three}}</h5>at {{i.company_name_three}} for {{i.year_of_experience_three}} Year</p>
+        {% endif %}
+        {% if i.company_name_four %}
+        <p><h5>{{i.job_roll_four}}</h5>at {{i.company_name_four}} for {{i.year_of_experience_four}} Year</p>
+        {% endif %}
+        {% if i.company_name_five %}
+        <p><h5>{{i.job_roll_five}}</h5>at {{i.company_name_five}} for {{i.year_of_experience_five}} Year</p>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div class="education">
+        <i class="fa-solid fa-user-graduate" style="font-size: 50px;"><span style="font-size:30px ; font-family: Arial, Helvetica, sans-serif;">Education</span></i>
+        {% for i in all %}
+        {% if i.institution_name %}
+        <p><h5>{{i.degree_type}}</h5>({{i.degree_name}}) at {{i.institution_name}}</p>
+        {% endif %}
+        {% if i.institution_name_two %}
+        <p><h5>{{i.degree_type_two}}</h5>({{i.degree_name_two}}) at {{i.institution_name_two}}</p>
+        {% endif %}
+
+        {% if i.institution_nam_three %}
+        <p><h5>{{i.degree_type_three}}</h5>({{i.degree_name_three}}) at {{i.institution_name_three}}</p>
+        {% endif %}
+
+        {% if i.institution_name_four %}
+        <p><h5>{{i.degree_type_four}}</h5>({{i.degree_name_four}}) at {{i.institution_name_four}}</p>
+        {% endif %}
+
+        {% if i.institution_name_five %}
+        <p><h5>{{i.degree_type_five}}</h5>({{i.degree_name_five}}) at {{i.institution_name_five}}</p>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="fees">
+        <i class="fa-solid fa-wallet" style="font-size: 50px;"> <span style="font-size:30px ; font-family: Arial, Helvetica, sans-serif;">Fees details</span></i>
+        {% for i in all %}
+        {% if i.min_fee %}
+        <p>₹{{i.min_fee}}-- ₹{{i.max_fee}} for ({{i.i_charge}})</p>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="review">
+        <i class="fa-solid fa-thumbs-up"  style="font-size: 50px;"> <span style="font-size:30px ; font-family: Arial, Helvetica, sans-serif;">Review</span></i>
+      </div>
+
+  </div>
+
+    
+
+
+      
+      <div class="detail" id="main">
+        <button><a  href="/stu_login"><i class="fa-solid fa-message" style="font-size: 20px;"></i>&nbsp;&nbsp;Message</a></button>
+        <button ><a href="/stu_login"><i class="fa-solid fa-square-phone" style="font-size: 20px;"></i>&nbsp;&nbsp;Contact</a></button><br> <br>
+        
+
+  <script>
+     function contactWhatsApp() {
+    window.open("https://wa.me/+91{{ first.phone }}?text=Hello, I'd like to contact you!", "_blank");
+}
+
+  </script>
+       {% if option %}
+       <div class="option">
+        <p>you want use coin</p>
+        <button><a href="/use_coin_view_contant_stu/{{s_email}}/{{first.email}}/{{first.id}}"><i class="fa-solid fa-coin" style="font-size: 20px;"></i>
+          &nbsp;&nbsp;Use Coin</a></button>
+       </div>
+       {% endif %}
+       {% if email %}
+        <p><i class="fa-solid fa-square-phone" style="font-size: 20px;"></i> : {{first.phone}}</p>
+        
+        <p><i class="fa-solid fa-envelope" style="font-size: 20px;"></i> : {{first.email}}</p>
+        {% endif %}
+      
+        <ul>
+          <li> <i class="fa-solid fa-graduation-cap" style="font-size: 20px; "></i>
+            <strong>Class: </strong>{{first.classes}} </li>
+          <li><i class="fa-solid fa-location-dot" style="font-size: 20px;"></i> {{first.location}}</li>
+          {% for i in all %}
+          {% if i.willing_to_travel %}
+          <li><i class="fa-solid fa-car" style="font-size: 20px;"></i> Can Travel: {{i.willing_to_travel|upper}}</li>
+       
+      <li><i class="fa-solid fa-venus-mars"></i>Gender: {{i.gender}}</li>
+      <li><i class="fa-solid fa-wifi"></i>Teaches online: {{i.available_for_online_teaching }} </li>
+    
+    
+     
+      
+      <li><i class="fa-solid fa-message"></i>  Language: {{i.language}}</li>
+      <li><i class="fa-solid fa-wallet"></i>  Fees :₹{{i.min_fee}}-- ₹{{i.max_fee}} for ({{i.i_charge}})</li>
+      {% endif %}
+      {% endfor %}
+        </ul>
+      </div>
+
+
+
+
+     
+</body>
+</html>

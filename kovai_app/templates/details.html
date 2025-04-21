@@ -1,0 +1,2795 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experience Profile</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <style>
+        :root {
+          --exp-primary: #4361ee;
+              --exp-primary-light: #4895ef;
+              --exp-secondary: #3f37c9;
+              --exp-accent: #f72585;
+              --exp-bg: #f8f9fa;
+              --exp-text: #333;
+              --exp-light-gray: #e9ecef;
+              --exp-card-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+              --primary-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              --primary-gradient: linear-gradient(135deg, #6e8efb, #a777e3);
+              --primary-color: #6e8efb;
+              --secondary-color: #a777e3;
+              --text-color: #333;
+              --light-text: #fff;
+              --border-radius: 10px;
+              --transition-speed: 0.3s;
+              --box-shadow: 0 8px 20px rgba(110, 142, 251, 0.2);
+        }
+  
+        body {
+          background-color: var(--exp-bg);
+        }
+  
+        .exp-container {
+          max-width: 800px;
+          margin: 2rem auto;
+          padding: 0 1.5rem;
+        }
+  
+        /* Multi-step progress bar styles */
+        .exp-steps-wrapper {
+          margin-bottom: 2.5rem;
+        }
+  
+        .exp-steps {
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+          margin-bottom: 2rem;
+        }
+  
+        .exp-steps:before {
+          content: "";
+          position: absolute;
+          top: 20px;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background-color: var(--exp-light-gray);
+          z-index: 1;
+        }
+  
+        .exp-step {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 16.66%; /* 1/6 of space for each step */
+        }
+  
+        .exp-step-icon {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background-color: white;
+          border: 2px solid var(--exp-light-gray);
+          margin-bottom: 0.5rem;
+          color: #6c757d;
+          font-weight: 600;
+          transition: all 0.3s;
+        }
+  
+        .exp-step.active .exp-step-icon {
+          background-color: var(--exp-primary);
+          border-color: var(--exp-primary);
+          color: white;
+          box-shadow: 0 0 0 5px rgba(67, 97, 238, 0.2);
+        }
+  
+        .exp-step.completed .exp-step-icon {
+          background-color: var(--exp-primary-light);
+          border-color: var(--exp-primary-light);
+          color: white;
+        }
+  
+        .exp-step-text {
+          font-size: 0.8rem;
+          color: #6c757d;
+          text-align: center;
+          max-width: 80px;
+          transition: all 0.3s;
+        }
+  
+        .exp-step.active .exp-step-text {
+          color: var(--exp-primary);
+          font-weight: 600;
+        }
+  
+        .exp-step.completed .exp-step-text {
+          color: var(--exp-primary-light);
+        }
+  
+        .exp-progress-info {
+          text-align: center;
+          font-size: 0.9rem;
+          color: var(--exp-text);
+          margin-bottom: 1rem;
+        }
+  
+        .exp-progress-info strong {
+          color: var(--exp-primary);
+        }
+  
+        .exp-header {
+          text-align: center;
+          margin-bottom: 2.5rem;
+          position: relative;
+        }
+  
+        .exp-title {
+          font-weight: 700;
+          color: var(--exp-primary);
+          margin-bottom: 0.5rem;
+          font-size: 2rem;
+        }
+  
+        .exp-subtitle {
+          font-weight: 400;
+          color: #6c757d;
+          font-size: 1rem;
+        }
+  
+        .exp-card {
+          background-color: white;
+          border-radius: 20px;
+          box-shadow: var(--exp-card-shadow);
+          padding: 2rem;
+          margin-bottom: 2rem;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+  
+        .exp-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+  
+        .exp-card-number {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(
+            135deg,
+            var(--exp-primary),
+            var(--exp-primary-light)
+          );
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: 700;
+          font-size: 1.2rem;
+          opacity: 0.8;
+        }
+  
+        .exp-form-group {
+          margin-bottom: 1.5rem;
+        }
+  
+        .exp-label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: var(--exp-text);
+        }
+  
+        .exp-input {
+          width: 100%;
+          padding: 0.8rem 1rem;
+          border: 2px solid var(--exp-light-gray);
+          border-radius: 10px;
+          font-size: 1rem;
+          transition: all 0.3s;
+        }
+  
+        .exp-input:focus {
+          border-color: var(--exp-primary);
+          box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+          outline: none;
+        }
+  
+        .exp-input::placeholder {
+          color: #adb5bd;
+        }
+  
+        .exp-textarea {
+          width: 100%;
+          padding: 0.8rem 1rem;
+          border: 2px solid var(--exp-light-gray);
+          border-radius: 10px;
+          font-size: 1rem;
+          min-height: 120px;
+          resize: vertical;
+          transition: all 0.3s;
+        }
+  
+        .exp-textarea:focus {
+          border-color: var(--exp-primary);
+          box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+          outline: none;
+        }
+  
+        .exp-btn {
+          padding: 0.8rem 1.5rem;
+          border-radius: 10px;
+          font-weight: 600;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+  
+        .exp-btn-add {
+          background-color: white;
+          color: var(--exp-primary);
+          border: 2px solid var(--exp-primary);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+  
+        .exp-btn-add:hover {
+          background-color: var(--exp-primary);
+          color: white;
+        }
+  
+        .exp-btn-add i {
+          font-size: 1rem;
+        }
+  
+        .exp-btn-primary {
+          background: linear-gradient(
+            135deg,
+            var(--exp-primary),
+            var(--exp-primary-light)
+          );
+          color: white;
+          border: none;
+          margin-right: 1rem;
+        }
+  
+        .exp-btn-primary:hover {
+          background: linear-gradient(
+            135deg,
+            var(--exp-primary-light),
+            var(--exp-primary)
+          );
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+  
+        .exp-btn-secondary {
+          background-color: white;
+          color: #6c757d;
+          border: 2px solid #dee2e6;
+        }
+  
+        .exp-btn-secondary:hover {
+          background-color: #f8f9fa;
+          color: var(--exp-text);
+        }
+  
+        .exp-actions {
+          display: flex;
+          margin-top: 2rem;
+        }
+  
+        .exp-form-step {
+          display: none;
+          animation: fadeIn 0.5s ease;
+        }
+  
+
+        /* location css */
+        #search {
+      width: 100%;
+      padding: 10px;
+    }
+
+    #results {
+      margin-top: 10px;
+    }
+
+    .result-item {
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .result-item:hover {
+      background-color: #f0f0f0;
+    }
+
+        .exp-form-step.active {
+          display: block;
+        }
+  
+        .exp-section {
+          display: none;
+          animation: fadeIn 0.5s ease;
+          position: relative;
+        }
+  
+        .exp-section-first {
+          display: block;
+        }
+  
+        .exp-divider {
+          margin: 2rem 0;
+          height: 1px;
+          background-color: var(--exp-light-gray);
+          position: relative;
+        }
+  
+        .exp-divider-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: white;
+          padding: 0 1rem;
+          font-size: 0.9rem;
+          color: #6c757d;
+        }
+  
+        .exp-remove-btn {
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: #dc3545;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1.2rem;
+          opacity: 0.7;
+          transition: all 0.3s;
+        }
+  
+        .exp-remove-btn:hover {
+          opacity: 1;
+          transform: scale(1.1);
+        }
+  
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+  
+        .exp-alert {
+          border-left: 4px solid var(--exp-primary);
+          background-color: rgba(67, 97, 238, 0.1);
+          padding: 1rem;
+          border-radius: 0 10px 10px 0;
+          margin-bottom: 2rem;
+          animation: slideIn 0.3s ease;
+        }
+  
+        @keyframes slideIn {
+          from {
+            transform: translateX(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+  
+        .exp-alert-icon {
+          color: var(--exp-primary);
+          margin-right: 0.5rem;
+        }
+  
+        .exp-counter {
+          position: absolute;
+          bottom: 0.8rem;
+          right: 1rem;
+          font-size: 0.75rem;
+          color: #6c757d;
+        }
+  
+        .exp-input-wrapper {
+          position: relative;
+        }
+  
+        .exp-skill-tag {
+          display: inline-block;
+          padding: 0.5rem 1rem;
+          background-color: rgba(67, 97, 238, 0.1);
+          color: var(--exp-primary);
+          border-radius: 50px;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+  
+        .exp-skill-tag:hover {
+          background-color: rgba(67, 97, 238, 0.2);
+        }
+  
+        .exp-skill-tag i {
+          margin-left: 0.5rem;
+          font-size: 0.8rem;
+        }
+  
+        .exp-skills-container {
+          margin-top: 1rem;
+        }
+  
+        /* Custom checkbox styling */
+        .exp-checkbox-wrapper {
+          display: block;
+          position: relative;
+          padding-left: 30px;
+          margin-bottom: 12px;
+          cursor: pointer;
+          font-size: 1rem;
+          user-select: none;
+        }
+  
+        .exp-checkbox-wrapper input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+        }
+  
+        .exp-checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 20px;
+          width: 20px;
+          background-color: white;
+          border: 2px solid var(--exp-light-gray);
+          border-radius: 4px;
+          transition: all 0.2s;
+        }
+  
+        .exp-checkbox-wrapper:hover input ~ .exp-checkmark {
+          border-color: var(--exp-primary-light);
+        }
+  
+        .exp-checkbox-wrapper input:checked ~ .exp-checkmark {
+          background-color: var(--exp-primary);
+          border-color: var(--exp-primary);
+        }
+  
+        .exp-checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+        }
+  
+        .exp-checkbox-wrapper input:checked ~ .exp-checkmark:after {
+          display: block;
+        }
+  
+        .exp-checkbox-wrapper .exp-checkmark:after {
+          left: 6px;
+          top: 2px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+  
+        /* Summary table styling */
+        .exp-summary-table {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0 8px;
+          margin-bottom: 1.5rem;
+        }
+  
+        .exp-summary-table th {
+          text-align: left;
+          color: #6c757d;
+          font-weight: 600;
+          padding: 0.5rem 1rem;
+          border-bottom: 1px solid var(--exp-light-gray);
+        }
+  
+        .exp-summary-table td {
+          padding: 1rem;
+          background-color: rgba(248, 249, 250, 0.8);
+          border-radius: 10px;
+        }
+  
+        .exp-summary-table tr:hover td {
+          background-color: rgba(248, 249, 250, 1);
+        }
+  
+        .exp-summary-table td:first-child {
+          font-weight: 600;
+          color: var(--exp-primary);
+          width: 35%;
+        }
+  
+        .exp-summary-section {
+          margin-bottom: 2.5rem;
+        }
+  
+        .exp-summary-section-title {
+          font-weight: 700;
+          color: var(--exp-text);
+          margin-bottom: 1rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 2px solid var(--exp-light-gray);
+        }
+  
+        .exp-success-message {
+          text-align: center;
+          padding: 3rem;
+        }
+  
+        .exp-success-icon {
+          font-size: 5rem;
+          color: #28a745;
+          margin-bottom: 1.5rem;
+        }
+  
+        .exp-success-title {
+          font-size: 2rem;
+          font-weight: 700;
+          color: var(--exp-text);
+          margin-bottom: 1rem;
+        }
+  
+        .exp-success-text {
+          font-size: 1.1rem;
+          color: #6c757d;
+          margin-bottom: 2rem;
+        }
+  
+        .exp-upload-zone {
+          border: 2px dashed var(--exp-light-gray);
+          border-radius: 10px;
+          padding: 2rem;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+  
+        .exp-upload-zone:hover {
+          border-color: var(--exp-primary-light);
+          background-color: rgba(67, 97, 238, 0.05);
+        }
+  
+        .exp-upload-icon {
+          font-size: 2.5rem;
+          color: var(--exp-primary);
+          margin-bottom: 1rem;
+        }
+  
+        .exp-upload-text {
+          font-size: 1rem;
+          color: #6c757d;
+        }
+  
+        .exp-upload-help {
+          font-size: 0.8rem;
+          color: #adb5bd;
+          margin-top: 0.5rem;
+        }
+  
+        .language-entry {
+              background-color: #f9f9f9;
+              border-radius: var(--border-radius);
+              padding: 20px;
+              margin-bottom: 15px;
+              transition: all var(--transition-speed);
+              animation: fadeIn 0.5s ease-out;
+          }
+  
+          .language-entry:hover {
+              box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+          }
+  
+          .language-res-box {
+              position: absolute;
+              width: 100%;
+              background: white;
+              border-radius: 0 0 var(--border-radius) var(--border-radius);
+              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+              z-index: 1000;
+              max-height: 200px;
+              overflow-y: auto;
+          }
+  
+         .language-res-box ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+          }
+  
+         .language-res-box li {
+              padding: 10px 15px;
+              cursor: pointer;
+              transition: background-color var(--transition-speed);
+          }
+  
+          .language-res-box li:hover {
+              background-color: #f0f0f0;
+              color: var(--primary-color);
+          }
+  
+          .check {
+              display: flex;
+              gap: 20px;
+              margin-top: 15px;
+              flex-wrap: wrap;
+          }
+  
+          .checkbox-wrapper {
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              user-select: none;
+          }
+  
+          .checkbox-wrapper input[type="checkbox"] {
+              position: absolute;
+              opacity: 0;
+              cursor: pointer;
+              height: 0;
+              width: 0;
+          }
+  
+          .checkmark {
+              position: relative;
+              display: inline-block;
+              width: 20px;
+              height: 20px;
+              margin-right: 10px;
+              background-color: #fff;
+              border: 2px solid #e1e1e1;
+              border-radius: 4px;
+              transition: all var(--transition-speed);
+          }
+  
+          .checkbox-wrapper:hover input ~ .checkmark {
+              border-color: var(--primary-color);
+          }
+  
+          .checkbox-wrapper input:checked ~ .checkmark {
+              background-color: var(--primary-color);
+              border-color: var(--primary-color);
+          }
+  
+          .checkmark:after {
+              content: "";
+              position: absolute;
+              display: none;
+          }
+  
+          .checkbox-wrapper input:checked ~ .checkmark:after {
+              display: block;
+          }
+  
+          .checkbox-wrapper .checkmark:after {
+              left: 6px;
+              top: 2px;
+              width: 5px;
+              height: 10px;
+              border: solid white;
+              border-width: 0 2px 2px 0;
+              transform: rotate(45deg);
+          }
+  
+          @media (max-width: 768px) {
+              .check {
+                  gap: 10px;
+              }
+          }
+  
+           @media (max-width: 576px) {
+  
+              .language-entry {
+                  padding: 15px;
+              }
+  
+              .check {
+                  flex-direction: column;
+                  gap: 5px;
+              }
+          }
+  
+        .add-btn-prof {
+              background: none;
+              color: var(--primary-color);
+              border: 2px dashed var(--primary-color);
+              margin-bottom: 25px;
+              width: 100%;
+              border-radius: var(--border-radius);
+              padding: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              cursor: pointer;
+              transition: all var(--transition-speed);
+          }
+  
+          .add-btn-prof:hover {
+              background-color: rgba(110, 142, 251, 0.05);
+          }
+  
+          .subject-add-btn {
+              background: linear-gradient(135deg, #6e8efb, #a777e3);
+              color: white;
+              border: none;
+              padding: 15px 25px;
+              border-radius: 8px;
+              font-size: 16px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-top: 15px;
+              box-shadow: 0 4px 10px rgba(110, 142, 251, 0.2);
+              width: 100%;
+          }
+          
+          .subject-add-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 15px rgba(110, 142, 251, 0.3);
+          }
+          
+          .subject-add-btn i {
+              margin-right: 8px;
+          }
+          
+          /* Checkbox Styles */
+          .level-selectors {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 15px;
+              margin-top: 20px;
+          }
+          
+          .level-checkbox {
+              display: none;
+          }
+          
+          .level-label {
+              display: flex;
+              align-items: center;
+              padding: 12px 20px;
+              border-radius: 8px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              background-color: #f0f2f5;
+              font-weight: 500;
+              border: 2px solid transparent;
+          }
+          
+          .level-label:hover {
+              background-color: #e8eaf6;
+          }
+          
+          .level-checkbox:checked + .level-label {
+              background: linear-gradient(135deg, #6e8efb, #a777e3);
+              color: white;
+              border-color: rgba(255, 255, 255, 0.3);
+              box-shadow: 0 4px 10px rgba(110, 142, 251, 0.2);
+          }
+          
+          .level-icon {
+              margin-right: 8px;
+              font-size: 18px;
+          }
+          
+          /* List Styles */
+          .subjects-list {
+              list-style-type: none;
+              padding: 0;
+              margin: 25px 0;
+          }
+          
+          .subject-item {
+              background: #f9f9f9;
+              border-radius: 10px;
+              padding: 15px 20px;
+              margin-bottom: 12px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              animation: slideIn 0.4s ease-out;
+          }
+          
+          .subject-name {
+              font-weight: 500;
+              font-size: 16px;
+              color: #444;
+          }
+          
+          .subject-levels {
+              display: flex;
+              gap: 5px;
+          }
+          
+          .level-badge {
+              font-size: 12px;
+              padding: 4px 10px;
+              border-radius: 20px;
+              background: linear-gradient(135deg, #6e8efb, #a777e3);
+              color: white;
+          }
+          
+          /* Submit Button */
+          .submit-btn {
+              background: linear-gradient(135deg, #6e8efb, #a777e3);
+              color: white;
+              border: none;
+              padding: 16px 30px;
+              border-radius: 8px;
+              font-size: 18px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              width: 100%;
+              margin-top: 20px;
+              font-weight: 600;
+              box-shadow: 0 4px 15px rgba(110, 142, 251, 0.3);
+          }
+          
+          .submit-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 20px rgba(110, 142, 251, 0.4);
+          }
+          
+          /* Autocomplete Results */
+          .autocomplete-results {
+              position: absolute;
+              z-index: 1000;
+              width: 100%;
+              max-height: 200px;
+              overflow-y: auto;
+              background-color: white;
+              border-radius: 0 0 8px 8px;
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+              border: 1px solid #e0e0e0;
+              transition: all 0.3s ease;
+              opacity: 0;
+              transform: translateY(-10px);
+              visibility: hidden;
+          }
+          
+          .autocomplete-results.visible {
+              opacity: 1;
+              transform: translateY(0);
+              visibility: visible;
+          }
+          
+          .autocomplete-results ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+          }
+          
+          .autocomplete-results li {
+              padding: 12px 15px;
+              cursor: pointer;
+              transition: background 0.2s ease;
+              font-size: 14px;
+          }
+          
+          .autocomplete-results li:hover {
+              background-color: #f0f2f5;
+          }
+          
+          /* Animations */
+          @keyframes fadeIn {
+              0% {
+                  opacity: 0;
+                  transform: translateY(20px);
+              }
+              100% {
+                  opacity: 1;
+                  transform: translateY(0);
+              }
+          }
+          
+          @keyframes slideIn {
+              0% {
+                  opacity: 0;
+                  transform: translateX(-20px);
+              }
+              100% {
+                  opacity: 1;
+                  transform: translateX(0);
+              }
+          }
+          
+          /* Hide elements but keep them in DOM */
+          .hidden {
+              display: none;
+          }
+          
+          /* Responsive Design */
+          @media (max-width: 768px) {
+              .level-selectors {
+                  flex-direction: column;
+                  gap: 10px;
+              }
+              
+              .level-label {
+                  width: 100%;
+                  justify-content: center;
+              }
+              
+              .step {
+                  width: 30px;
+                  height: 30px;
+                  font-size: 12px;
+              }
+              
+              .step-line {
+                  width: 25px;
+              }
+          }
+      </style>
+  </head>
+
+  <body>
+    <div class="exp-container">
+      <!-- Multi-step Progress Bar -->
+      <div class="exp-steps-wrapper">
+        <div class="exp-progress-info">
+          <strong id="step-count">Step 1 of 6:</strong>
+          <span id="step-title">Personal Information</span>
+        </div>
+
+        <div class="exp-steps">
+          <div class="exp-step active" id="step-indicator-1">
+            <div class="exp-step-icon">1</div>
+            <div class="exp-step-text">Personal Info</div>
+          </div>
+
+          <div class="exp-step" id="step-indicator-2">
+            <div class="exp-step-icon">2</div>
+            <div class="exp-step-text">Education</div>
+          </div>
+
+          <div class="exp-step" id="step-indicator-3">
+            <div class="exp-step-icon">3</div>
+            <div class="exp-step-text">Skills</div>
+          </div>
+
+          <div class="exp-step" id="step-indicator-4">
+            <div class="exp-step-icon">4</div>
+            <div class="exp-step-text">Experience</div>
+          </div>
+
+          <div class="exp-step" id="step-indicator-5">
+            <div class="exp-step-icon">5</div>
+            <div class="exp-step-text">Projects</div>
+          </div>
+
+          <div class="exp-step" id="step-indicator-6">
+            <div class="exp-step-icon">6</div>
+            <div class="exp-step-text">Summary</div>
+          </div>
+        </div>
+      </div>
+
+      <form    action="details" id="experienceForm"  enctype="multipart/form-data"   method="POST">
+        <!-- Step 1: Personal Information -->
+        <div class="exp-form-step active" id="step-1">
+          <div class="exp-header">
+            <h1 class="exp-title">Personal Information</h1>
+            <p class="exp-subtitle">Let's start with your basic information</p>
+          </div>
+
+          <div class="exp-card">
+          
+              {% csrf_token %}
+
+              <div class="exp-form-group">
+                <label for="strength" class="exp-label"
+                  >Strength (Optional)</label
+                >
+                <input
+                  type="text"
+                  name="strength"
+                  id="strength"
+                  class="exp-input"
+                  placeholder="e.g., Strength, Current role, or other relevant information"
+                />
+              </div>
+
+              <div class="exp-form-group">
+                <label for="gender" class="exp-label">Gender</label>
+                <select name="gender" id="gender" class="exp-input">
+                  <option value="">Select Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="exp-form-group">
+                <label for="language-box" class="exp-label">Languages</label>
+                <div id="languages-container">
+                  <div class="language-entry">
+                    <div class="exp-form-group mb-3">
+                      <input
+                        type="text"
+                        placeholder="e.g., Tamil or English or Hindi"
+                        id="language-box"
+                        autocomplete="off"
+                        name="language"
+                        class="exp-input language-input"
+                      />
+                      <div class="language-res-box"></div>
+                    </div>
+                    <div class="check">
+                      <label class="checkbox-wrapper">
+                        <input type="checkbox" id="speak" name="speak" />
+                        <span class="checkmark"></span>
+                        Speak
+                      </label>
+                      <label class="checkbox-wrapper">
+                        <input type="checkbox" id="read" name="read" />
+                        <span class="checkmark"></span>
+                        Read
+                      </label>
+                      <label class="checkbox-wrapper">
+                        <input type="checkbox" id="write" name="write" />
+                        <span class="checkmark"></span>
+                        Write
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  id="add-language-btn"
+                  class="add-btn-prof"
+                >
+                  <i class="fas fa-plus"></i> Add Another Language
+                </button>
+              </div>
+
+              <div class="exp-form-group">
+                <label for="location-box" class="exp-label">Location</label>
+                <input
+                  type="text"
+                  placeholder="Enter the location"
+                  id="search"
+                  autocomplete="off"
+                  name="location"
+                  class="exp-input form-control"
+                />
+                <div id="results" class="res_box"></div>
+              </div>
+
+              <div class="exp-form-group">
+                <label for="dates" class="exp-label">Date of Birth</label>
+                <input type="date" name="dates" id="dates" class="exp-input" />
+              </div>
+
+              <div class="exp-form-group">
+                <label for="post_code" class="exp-label">Postal code</label>
+                <input
+                  type="text"
+                  name="post_code"
+                  id="post_code"
+                  class="exp-input"
+                  placeholder="Enter your postal code"
+                />
+              </div>
+
+              <!-- <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                                <i class="fas fa-arrow-left me-2"></i> Back
+                            </button>
+                            <button type="submit" class="btn">
+                                <i class="fas fa-save me-2"></i> Save & Continue
+                            </button>
+                        </div> -->
+           
+          </div>
+
+          <div class="exp-actions">
+            <button type="button" class="exp-btn exp-btn-primary next-step">
+              Next: Education
+            </button>
+          </div>
+        </div>
+
+
+        
+        <!-- Step 2: Education -->
+        <div class="exp-form-step" id="step-2">
+            <div class="exp-header">
+              <h1 class="exp-title">Educational Background</h1>
+              <p class="exp-subtitle">
+                Tell us about your educational qualifications
+              </p>
+            </div>
+  
+            <div class="exp-card exp-section-first">
+              <div class="exp-card-number">1</div>
+              <div class="exp-form-group">
+                <label for="institution" class="exp-label"
+                  >Institution Name</label
+                >
+                <div class="exp-input-wrapper">
+                  <input
+                    type="text"
+                    name="institution_name"
+                    id="institution"
+                    class="exp-input"
+                    placeholder="University of Example"
+                    required
+                  />
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label for="degree" class="exp-label">Graduation</label>
+                <div class="exp-input-wrapper">
+                  <select name="degree_type" id="graduation" class="exp-input">
+                    <option value="Diploma">Diploma</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Postgraduate">Postgraduate</option>
+                    <option value="Doctorate">Doctorate</option>
+                  </select>
+                </div>
+              </div>
+  
+              <!-- <div class="exp-form-group">
+                          <label for="edu_year" class="exp-label">Year of Graduation</label>
+                          <div class="exp-input-wrapper">
+                              <input type="number" name="edu_year" id="edu_year" class="exp-input" placeholder="e.g. 2020" min="1950" max="2030" required>
+                          </div>
+                      </div> -->
+  
+              <div class="exp-form-group">
+                <label for="institution" class="exp-label">Degree</label>
+                <div class="exp-input-wrapper">
+                  <input
+                    type="text"
+                    name="degree"
+                    id="degree"
+                    class="exp-input"
+                    placeholder="Bsc Computer Science"
+                    required
+                  />
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label for="Subject_Specialisation" class="exp-label"
+                  >Subject Specialisation</label
+                >
+                <div class="exp-input-wrapper">
+                  <input
+                    type="text"
+                    name="Subject Specialisation"
+                    id="Subject_Specialisation"
+                    class="exp-input"
+                    placeholder="Enter Subject Specialisation"
+                    required
+                  />
+                </div>
+              </div>
+  
+              <button type="button" class="exp-btn exp-btn-add" id="show-edu-two">
+                <i class="fas fa-plus-circle"></i> Add Another Education
+              </button>
+            </div>
+  
+            <div class="exp-section" id="exp-section-edu-two">
+              <div class="exp-card">
+                <button type="button" class="exp-remove-btn" id="remove-edu-two">
+                  <i class="fas fa-times-circle"></i>
+                </button>
+                <div class="exp-card-number">2</div>
+                <div class="exp-form-group">
+                  <label for="institution_two" class="exp-label"
+                    >Institution Name</label
+                  >
+                  <div class="exp-input-wrapper">
+                    <input
+                      type="text"
+                      name="institution_name_two"
+                      id="institution_two"
+                      class="exp-input"
+                      placeholder="University of Example"
+                    />
+                  </div>
+                </div>
+  
+                <div class="exp-form-group">
+                  <label for="graduation_two" class="exp-label">Graduation</label>
+                  <div class="exp-input-wrapper">
+                    <select name="degree_type_two" id="graduation_two" class="exp-input">
+                      <option value="Diploma">Diploma</option>
+                      <option value="Undergraduate">Undergraduate</option>
+                      <option value="Postgraduate">Postgraduate</option>
+                      <option value="Doctorate">Doctorate</option>
+                    </select>
+                  </div>
+                </div>
+  
+                <div class="exp-form-group">
+                  <label for="degree_two" class="exp-label">Degree</label>
+                  <div class="exp-input-wrapper">
+                    <input
+                      type="text"
+                      name="degree_two"
+                      id="degree_two"
+                      class="exp-input"
+                      placeholder="Master of Science in Data Science"
+                    />
+                  </div>
+                </div>
+  
+                <div class="exp-form-group">
+                  <label for="Subject_Specialisation_two" class="exp-label"
+                    >Subject Specialisation</label
+                  >
+                  <div class="exp-input-wrapper">
+                    <input
+                      type="text"
+                      name="Subject_Specialisation_two"
+                      id="Subject_Specialisation_two"
+                      class="exp-input"
+                      placeholder="Enter Subject Specialisation"
+                   
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="exp-actions">
+              <button type="button" class="exp-btn exp-btn-primary next-step">
+                Next: Skills
+              </button>
+              <button type="button" class="exp-btn exp-btn-secondary prev-step">
+                Back
+              </button>
+            </div>
+          </div>
+  
+
+   
+  
+    
+
+      <!-- Step 3: Skills -->
+      <div class="exp-form-step" id="step-3">
+        <div class="exp-header">
+          <h1 class="exp-title">Academic Expertise</h1>
+          <p class="exp-subtitle">Add subjects you're knowledgeable in and your proficiency level</p>
+        </div>
+
+        <div class="exp-card">
+          <div class="exp-form-group">
+            <label class="exp-label">Subject</label>
+            <!-- <div class="input-container"> -->
+                <input type="text" name="subject"   id="subject" placeholder="Search or enter subject name" class="exp-input">
+                <div class="autocomplete-results res_boxs"></div>
+            <!-- </div> -->
+            
+            <!-- Level Selection -->
+            <div class="level-selectors">
+                <input type="checkbox" id="beginner" name="Beginner" class="level-checkbox">
+                <label for="beginner" class="level-label">
+                    <i class="fas fa-seedling level-icon"></i>Beginner
+                </label>
+                
+                <input type="checkbox" id="intermediate" name="Intermediate" class="level-checkbox">
+                <label for="intermediate" class="level-label">
+                    <i class="fas fa-book level-icon"></i>Intermediate
+                </label>
+                
+                <input type="checkbox" id="expert" name="Expert" class="level-checkbox">
+                <label for="expert" class="level-label">
+                    <i class="fas fa-star level-icon"></i>Expert
+                </label>
+            </div>
+            
+            <button type="button" class="subject-add-btn" onclick="add()">
+                <i class="fas fa-plus"></i>Add Subject
+            </button>
+        </div>
+        
+        <!-- Subjects List -->
+        <ul id="list" class="subjects-list"></ul>
+        </div>
+
+        <div class="exp-actions">
+          <button type="button" class="exp-btn exp-btn-primary next-step">
+            Next: Experience
+          </button>
+          <button type="button" class="exp-btn exp-btn-secondary prev-step">
+            Back
+          </button>
+        </div>
+      </div>
+    
+
+       <!-- Step 4: Experience -->
+       <div class="exp-form-step" id="step-4">
+        <div class="exp-header">
+          <h1 class="exp-title">Professional Experience</h1>
+          <p class="exp-subtitle">
+            Tell us about your work history and professional background
+          </p>
+        </div>
+
+        <div class="exp-card exp-section-first">
+          <div class="exp-card-number">1</div>
+          <div class="exp-form-group">
+            <label for="company_name" class="exp-label"
+              >Institution/Organization</label
+            >
+            <div class="exp-input-wrapper">
+              <input
+                type="text"
+                name="company_name"
+                id="company_name"
+                class="exp-input"
+                placeholder="XYZ Corporation"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="exp-form-group">
+            <label for="job_role" class="exp-label">Job Role</label>
+            <div class="exp-input-wrapper">
+              <input
+                type="text"
+                name="job_roll"
+                id="job_role"
+                class="exp-input"
+                placeholder="Senior Software Engineer"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- <div class="exp-form-group">
+                      <label for="exp_duration" class="exp-label">Duration</label>
+                      <div class="exp-input-wrapper">
+                          <input type="text" name="exp_duration" id="exp_duration" class="exp-input" placeholder="Jan 2020 - Present" required>
+                      </div>
+                  </div> -->
+
+          <div class="exp-form-group">
+            <label for="exp_duration" class="exp-label"
+              >Year of Experience</label
+            >
+            <div class="exp-input-wrapper">
+              <input
+                type="text"
+                name="exp_duration"
+                id="exp_duration"
+                class="exp-input"
+                placeholder="e.g. 5 years"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="button" class="exp-btn exp-btn-add" id="show-exp-two">
+            <i class="fas fa-plus-circle"></i> Add Another Experience
+          </button>
+        </div>
+
+        <div class="exp-section" id="exp-section-exp-two">
+          <div class="exp-card">
+            <button type="button" class="exp-remove-btn" id="remove-exp-two">
+              <i class="fas fa-times-circle"></i>
+            </button>
+            <div class="exp-card-number">2</div>
+            <div class="exp-form-group">
+              <label for="company_name_two" class="exp-label"
+                >Institution/Organization</label
+              >
+              <div class="exp-input-wrapper">
+                <input
+                  type="text"
+                  name="company_name_two"
+                  id="company_name_two"
+                  class="exp-input"
+                  placeholder="ABC Inc."
+                />
+              </div>
+            </div>
+
+            <div class="exp-form-group">
+              <label for="job_role_two" class="exp-label">Job Role</label>
+              <div class="exp-input-wrapper">
+                <input
+                  type="text"
+                  name="job_roll_two"
+                  id="job_role_two"
+                  class="exp-input"
+                  placeholder="Software Developer"
+                />
+              </div>
+            </div>
+
+            <div class="exp-form-group">
+              <label for="exp_duration_two" class="exp-label"
+                >Year of Experience</label
+              >
+              <div class="exp-input-wrapper">
+                <input
+                  type="text"
+                  name="exp_duration_two"
+                  id="exp_duration_two"
+                  class="exp-input"
+                  placeholder="e.g. 5 years"
+                  
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="exp-actions">
+          <button type="button" class="exp-btn exp-btn-primary next-step">
+            Next: Projects
+          </button>
+          <button type="button" class="exp-btn exp-btn-secondary prev-step">
+            Back
+          </button>
+        </div>
+      </div>
+
+
+        <!-- Step 5: Teaching Preferences & Availability -->
+        <div class="exp-form-step" id="step-5">
+            <div class="exp-header">
+              <h1 class="exp-title">Teaching Preferences & Availability</h1>
+              <p class="exp-subtitle">
+                Tell us about your teaching preferences and availability
+              </p>
+            </div>
+  
+            <div class="exp-card">
+              <div class="exp-form-group">
+                <label for="charge" class="exp-label">I charge (INR)</label>
+                <div class="exp-input-wrapper" style="display: flex; gap: 10px">
+                  <select
+                    name="i_charge"
+                    id="charge_type"
+                    class="exp-input"
+                    style="width: 30%"
+                  >
+                    <option value="">Select Type</option>
+                    <option value="Per Hour">Per Hour</option>
+                    <option value="Per Month">Per Month</option>
+                    <option value="Per Year">Per Year</option>
+                  </select>
+                  <input
+                    type="number"
+                    name="min_fee"
+                    id="charge"
+                    class="exp-input"
+                    placeholder="Min fee"
+                    style="width: 35%"
+                  />
+                  <input
+                    type="number"
+                    name="max_fee"
+                    id="max_charge"
+                    class="exp-input"
+                    placeholder="Max fee"
+                    style="width: 35%"
+                  />
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label for="prefer_to_teach" class="exp-label"
+                  >Prefer to Teach</label
+                >
+                <div class="exp-input-wrapper">
+                  <label class="exp-checkbox-wrapper">
+                    <input type="checkbox" name="classes" value="I - V" />
+                    <span class="exp-checkmark"></span>
+                    I - V
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input
+                      type="checkbox"
+                      name="classes"
+                      value="VI - VIII"
+                    />
+                    <span class="exp-checkmark"></span>
+                    VI - VIII
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input
+                      type="checkbox"
+                      name="classes"
+                      value="IX - X"
+                    />
+                    <span class="exp-checkmark"></span>
+                    IX - X
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input
+                      type="checkbox"
+                      name="classes"
+                      value="XI - XII"
+                    />
+                    <span class="exp-checkmark"></span>
+                    XI - XII
+                  </label>
+                </div>
+                <div class="exp-form-group">
+                  <label for="prefer_to_teach_others" class="exp-label"
+                    >Others</label
+                  >
+                  <div class="exp-input-wrapper">
+                    <input
+                      type="text"
+                      name="other_subject"
+                      id="prefer_to_teach_others"
+                      class="exp-input"
+                      placeholder="e.g., UG, PG, ENG, NEET, JEE, JAM..."
+                    />
+                  </div>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label for="curriculum" class="exp-label">Curriculum</label>
+                <div class="exp-input-wrapper">
+                  <select name="curriculum" id="curriculum" class="exp-input">
+                    <option value="">Select Curriculum</option>
+                    <option value="ICSE">ICSE</option>
+                    <option value="CBSE">CBSE</option>
+                    <option value="IGCSE">IGCSE</option>
+                    <option value="IB">IB</option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label for="language" class="exp-label">Language</label>
+                <div class="exp-input-wrapper">
+                  <select name="language" id="language" class="exp-input">
+                    <option value="">Select Language</option>
+                    <option value="English">English</option>
+                    <option value="Hindi">Hindi</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label class="exp-label"
+                  >Are you willing to travel to the student place?</label
+                >
+                <div class="exp-input-wrapper">
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="willing_to_travel" value="Yes" />
+                    <span class="exp-checkmark"></span>
+                    Yes
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="willing_to_travel" value="No" />
+                    <span class="exp-checkmark"></span>
+                    No
+                  </label>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label class="exp-label">Available for online teaching?</label>
+                <div class="exp-input-wrapper">
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="available_for_online_teaching" value="Yes" />
+                    <span class="exp-checkmark"></span>
+                    Yes
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="available_for_online_teaching" value="No" />
+                    <span class="exp-checkmark"></span>
+                    No
+                  </label>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label class="exp-label"
+                  >Do you help with homework and assignments?</label
+                >
+                <div class="exp-input-wrapper">
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="help_with_homework" value="Yes" />
+                    <span class="exp-checkmark"></span>
+                    Yes
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="help_with_homework" value="No" />
+                    <span class="exp-checkmark"></span>
+                    No
+                  </label>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label class="exp-label"
+                  >Are you currently a full-time teacher employed by a
+                  school/college?</label
+                >
+                <div class="exp-input-wrapper">
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="full_time_teacher" value="Yes" />
+                    <span class="exp-checkmark"></span>
+                    Yes
+                  </label>
+                  <label class="exp-checkbox-wrapper">
+                    <input type="radio" name="full_time_teacher" value="No" />
+                    <span class="exp-checkmark"></span>
+                    No
+                  </label>
+                </div>
+              </div>
+  
+              <div class="exp-form-group">
+                <label for="availability" class="exp-label">Availability</label>
+                <div class="exp-input-wrapper">
+                  <select name="availability" id="availability" class="exp-input">
+                    <option value="">Select Availability</option>
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="exp-form-group">
+            <label for="profile_description"  class="exp-label">Profile Description</label>
+            <textarea
+         class="exp-input"
+            
+            id="sprofile_description"
+            name="profile_description"
+            rows="10"
+            cols="50"
+            placeholder="I have not shared any contact details (Email, Phone, Skype, Website, etc)"
+        ></textarea><br>
+            </div>
+           
+       
+    
+                 
+       
+        
+            <label for="id_proof" class="exp-label" >Upload ID Proof</label>
+            <input type="file"   class="exp-input" name="id_proof" required><br><br>
+    
+         
+        
+    
+            <label for="profile"  class="exp-label">Upload Profile Photo</label>
+            <input type="file"   class="exp-input" name="profile" required><br><br>
+    
+           
+  
+            <div class="exp-actions">
+              <button type="button" class="exp-btn exp-btn-primary next-step">
+                Next: Summary
+              </button>
+              <button type="button" class="exp-btn exp-btn-secondary prev-step">
+                Back
+              </button>
+            </div>
+          </div>
+
+
+       
+       <!-- Inside Step 6: Summary -->
+<div class="exp-form-step" id="step-6">
+    <div class="exp-header">
+      <h1 class="exp-title">Experience Profile Summary</h1>
+      <p class="exp-subtitle">Review your information</p>
+    </div>
+  
+    <div class="exp-card">
+      <div class="exp-alert">
+        <i class="fas fa-info-circle exp-alert-icon"></i>
+        Please review your information before submitting.
+      </div>
+  
+      <div class="exp-summary-section">
+        <h3 class="exp-summary-section-title">Personal Information</h3>
+        <table class="exp-summary-table">
+          
+          <tr>
+            <td>Strength</td>
+            <td id="summary_strength">-</td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td id="summary_gender">-</td>
+          </tr>
+          <tr>
+            <td>Languages</td>
+            <td id="summary_languages">-</td>
+          </tr>
+          <tr>
+            <td>Additional Languages</td>
+            <td id="summary_additional_languages">-</td>
+          </tr>
+          <tr>
+            <td>Location</td>
+            <td id="summary_location">-</td>
+          </tr>
+          <tr>
+            <td>Date of Birth</td>
+            <td id="summary_date_of_birth">-</td>
+          </tr>
+          <tr>
+            <td>Postal Code</td>
+            <td id="summary_postal_code">-</td>
+          </tr>
+        </table>
+      </div>
+  
+      <div class="exp-summary-section">
+        <h3 class="exp-summary-section-title">Education</h3>
+        <table class="exp-summary-table">
+          <tr>
+            <td>Primary Institution</td>
+            <td id="summary_institution">-</td>
+          </tr>
+          <tr>
+            <td>Graduation</td>
+            <td id="summary_graduation">-</td>
+          </tr>
+          <tr>
+            <td>Degree</td>
+            <td id="summary_degree">-</td>
+          </tr>
+          <tr>
+            <td>Subject Specialisation</td>
+            <td id="summary_subject_specialisation">-</td>
+          </tr>
+          <tr id="summary_additional_education_row" style="display: none;">
+            <td>Additional Education</td>
+            <td id="summary_additional_education">-</td>
+          </tr>
+        </table>
+      </div>
+  
+      <div class="exp-summary-section">
+        <h3 class="exp-summary-section-title">Academic Expertise</h3>
+        <table class="exp-summary-table">
+          <tr>
+            <td>Primary Subjects</td>
+            <td id="summary_academic_subjects">-</td>
+          </tr>
+          <tr id="summary_additional_subjects_row" style="display: none;">
+            <td>Additional Subjects</td>
+            <td id="summary_additional_subjects">-</td> <!-- New field for additional subjects -->
+          </tr>
+        </table>
+      </div>
+  
+      <div class="exp-summary-section">
+        <h3 class="exp-summary-section-title">Experience</h3>
+        <table class="exp-summary-table">
+          <tr>
+            <td>Primary Company</td>
+            <td id="summary_company_name">-</td>
+          </tr>
+          <tr>
+            <td>Role</td>
+            <td id="summary_job_role">-</td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td id="summary_exp_duration">-</td>
+          </tr>
+          <tr id="summary_additional_experience_row" style="display: none;">
+            <td>Additional Experience</td>
+            <td id="summary_additional_experience">-</td> <!-- New field for additional experience -->
+          </tr>
+        </table>
+      </div>
+  
+      <div class="exp-summary-section">
+        <h3 class="exp-summary-section-title">
+          Teaching Preferences & Availability
+        </h3>
+        <table class="exp-summary-table">
+          
+          
+          <tr>
+            <td>Prefer to Teach</td>
+            <td id="summary_prefer_to_teach">-</td>
+          </tr>
+          <tr>
+            <td>Others (Teaching Preferences)</td>
+            <td id="summary_prefer_to_teach_others">-</td>
+          </tr>
+          <tr>
+            <td>Curriculum</td>
+            <td id="summary_curriculum">-</td>
+          </tr>
+          <tr>
+            <td>Language</td>
+            <td id="summary_language">-</td>
+          </tr>
+          <tr>
+            <td>Willing to Travel</td>
+            <td id="summary_travel_to_student">-</td>
+          </tr>
+          <tr>
+            <td>Online Teaching</td>
+            <td id="summary_online_teaching">-</td>
+          </tr>
+          <tr>
+            <td>Help with Homework</td>
+            <td id="summary_help_with_homework">-</td>
+          </tr>
+          <tr>
+            <td>Full-Time Teacher</td>
+            <td id="summary_full_time_teacher">-</td>
+          </tr>
+          <tr>
+            <td>Availability</td>
+            <td id="summary_availability">-</td>
+          </tr>
+        </table>
+      </div>
+  
+      <div class="exp-form-group">
+        <label class="exp-checkbox-wrapper">
+          <input type="checkbox" id="terms_checkbox" required />
+          <span class="exp-checkmark"></span>
+          I confirm that all the information provided is accurate and complete.
+        </label>
+      </div>
+    </div>   
+  
+      <div class="exp-actions">
+        <input type="submit"  value=" Submit Profile
+        " class="exp-btn exp-btn-primary">
+         
+        <button type="button" class="exp-btn exp-btn-secondary prev-step">
+          Back
+        </button>
+      </div>
+    </div>
+
+        <!-- Success Message (will show after submission) -->
+        <div id="success-message" style="display: none">
+          <div class="exp-card">
+            <div class="exp-success-message">
+              <i class="fas fa-check-circle exp-success-icon"></i>
+              <h2 class="exp-success-title">Profile Submitted Successfully!</h2>
+              <p class="exp-success-text">
+                Thank you for completing your experience profile. We will review
+                your information.
+              </p>
+              <button
+                type="button"
+                class="exp-btn exp-btn-primary"
+                onclick="window.location.reload()"
+              >
+                Create Another Profile
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script>
+
+let a = [];
+let v = [];
+      $(document).ready(function () {
+        // Step navigation
+        $(".next-step").click(function () {
+          let currentStep = $(this).closest(".exp-form-step");
+          let currentStepId = currentStep.attr("id").split("-")[1];
+          let nextStepId = parseInt(currentStepId) + 1;
+
+          if (validateStep(currentStepId)) {
+            currentStep.removeClass("active");
+            $("#step-" + nextStepId).addClass("active");
+
+            // Update step indicators
+            $(".exp-step").removeClass("active");
+            $(".exp-step").removeClass("completed");
+
+            // Mark previous steps as completed
+            for (let i = 1; i < nextStepId; i++) {
+              $("#step-indicator-" + i).addClass("completed");
+            }
+
+            // Mark current step as active
+            $("#step-indicator-" + nextStepId).addClass("active");
+
+            // Update step title and counter
+            updateStepInfo(nextStepId);
+
+            // If going to summary step, populate summary
+            if (nextStepId === 6) {
+              populateSummary();
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+          }
+        });
+
+        $(".prev-step").click(function () {
+          let currentStep = $(this).closest(".exp-form-step");
+          let currentStepId = currentStep.attr("id").split("-")[1];
+          let prevStepId = parseInt(currentStepId) - 1;
+
+          currentStep.removeClass("active");
+          $("#step-" + prevStepId).addClass("active");
+
+          // Update step indicators
+          $(".exp-step").removeClass("active");
+          $(".exp-step").removeClass("completed");
+
+          // Mark previous steps as completed
+          for (let i = 1; i < prevStepId; i++) {
+            $("#step-indicator-" + i).addClass("completed");
+          }
+
+          // Mark current step as active
+          $("#step-indicator-" + prevStepId).addClass("active");
+
+          // Update step title and counter
+          updateStepInfo(prevStepId);
+
+          // Scroll to top
+          window.scrollTo(0, 0);
+        });
+
+        // Skills management
+        $("#add_skill").click(function () {
+          let skillInput = $("#skill_input");
+          let skill = skillInput.val().trim();
+
+          if (skill) {
+            addSkill(skill);
+            skillInput.val("");
+          }
+        });
+
+        $("#skill_input").keypress(function (e) {
+          if (e.which === 13) {
+            e.preventDefault();
+            $("#add_skill").click();
+          }
+        });
+
+        // Add/Remove additional sections
+        $("#show-edu-two").click(function () {
+          $("#exp-section-edu-two").show();
+          $(this).hide();
+        });
+
+        $("#remove-edu-two").click(function () {
+          $("#exp-section-edu-two").hide();
+          $("#show-edu-two").show();
+
+          // Clear fields
+          $("#institution_two").val("");
+          $("#degree_two").val("");
+          $("#edu_year_two").val("");
+        });
+
+        $("#show-exp-two").click(function () {
+          $("#exp-section-exp-two").show();
+          $(this).hide();
+        });
+
+        $("#remove-exp-two").click(function () {
+          $("#exp-section-exp-two").hide();
+          $("#show-exp-two").show();
+
+          // Clear fields
+          $("#company_name_two").val("");
+          $("#job_role_two").val("");
+          $("#exp_duration_two").val("");
+          $("#job_description_two").val("");
+        });
+
+        $("#show-proj-two").click(function () {
+          $("#exp-section-proj-two").show();
+          $(this).hide();
+        });
+
+        $("#remove-proj-two").click(function () {
+          $("#exp-section-proj-two").hide();
+          $("#show-proj-two").show();
+
+          // Clear fields
+          $("#project_name_two").val("");
+          $("#project_description_two").val("");
+          $("#project_url_two").val("");
+        });
+      });
+
+      // Function to add a skill to the container
+      function addSkill(skill) {
+        let skillTag = $(
+          '<span class="exp-skill-tag">' +
+            skill +
+            ' <i class="fas fa-times"></i></span>'
+        );
+
+        skillTag.find("i").click(function () {
+          $(this).parent().remove();
+          updateSkillsHidden();
+        });
+
+        $("#skills_container").append(skillTag);
+        updateSkillsHidden();
+      }
+
+      // Function to update the hidden skills input
+      function updateSkillsHidden() {
+        let skills = [];
+        $(".exp-skill-tag").each(function () {
+          skills.push($(this).text().trim());
+        });
+
+        $("#skills_hidden").val(JSON.stringify(skills));
+      }
+
+      // Function to update step title and counter
+      function updateStepInfo(stepId) {
+        let titles = {
+          1: "Personal Information",
+          2: "Education",
+          3: "Skills & Expertise",
+          4: "Professional Experience",
+          5: "Projects & Portfolio",
+          6: "Experience Profile Summary",
+        };
+
+        $("#step-count").text("Step " + stepId + " of 6:");
+        $("#step-title").text(titles[stepId]);
+      }
+
+      // Function to validate each step
+      function validateStep(stepId) {
+  let isValid = true;
+
+  // Validation for previous steps (Steps 1-5)
+  // Assuming you already have validation for Steps 1-5 similar to the previous example
+  if (stepId === "1") {
+    // Example validation for Step 1 (Personal Information)
+    // Adjust based on your actual fields
+    if (1==2) {
+      alert("Please select your type (Individual Teaching or Teaching Company)");
+      isValid = false;
+    } else if (!$("#gender").val()) {
+      alert("Please select your gender");
+      isValid = false;
+    } else if (!$("#language-box").val().trim()) {
+      alert("Please enter at least one language");
+      isValid = false;
+    } else if (!$("#search").val().trim()) {
+      alert("Please enter your location");
+      isValid = false;
+    } else if (!$("#dates").val()) {
+      alert("Please enter your date of birth");
+      isValid = false;
+    } else if (!$("#post_code").val().trim()) {
+      alert("Please enter your postal code");
+      isValid = false;
+    }
+  } else if (stepId === "2") {
+    // Example validation for Step 2 (Education)
+    if (!$("#institution").val().trim()) {
+      alert("Please enter your institution name");
+      isValid = false;
+    } else if (!$("#degree").val().trim()) {
+      alert("Please enter your degree");
+      isValid = false;
+    } else if (!$("#Subject_Specialisation").val().trim()) {
+      alert("Please enter your subject specialisation");
+      isValid = false;
+    }
+  } else if (stepId === "3") {
+    // Example validation for Step 3 (Skills)
+        // Validate subjects
+        if (!a || a.length === 0) {
+            alert("Please add at least one subject with its proficiency levels");
+            return false;
+        }
+        
+        // Optional: Additional validations
+        // Example: Limit maximum number of subjects
+        if (a.length > 10) {
+            alert("You can add a maximum of 10 subjects");
+            return false;
+        }
+        
+        // Validate levels
+        if (!v || v.length === 0) {
+            alert("Please select proficiency levels for your subjects");
+            return false;
+        }
+        
+        // Optional: Check for duplicate subjects
+        const uniqueSubjects = new Set(a);
+        if (uniqueSubjects.size !== a.length) {
+            alert("You have duplicate subjects. Please remove duplicates.");
+            return false;
+        }
+  } else if (stepId === "4") {
+    // Example validation for Step 4 (Experience)
+    if (!$("#company_name").val().trim()) {
+      alert("Please enter your company/organization name");
+      isValid = false;
+    } else if (!$("#job_role").val().trim()) {
+      alert("Please enter your job role");
+      isValid = false;
+    } else if (!$("#exp_duration").val().trim()) {
+      alert("Please enter your experience duration");
+      isValid = false;
+    }
+  } else if (stepId === "5") {
+    // Validation for Step 5 (Teaching Preferences & Availability)
+    if (!$("#charge_type").val()) {
+      alert("Please select the charge type (Per Hour, Per Month, or Per Year)");
+      isValid = false;
+    } else if (!$("#charge").val().trim() && !$("#max_charge").val().trim()) {
+      alert("Please enter your charge range");
+      isValid = false;
+    } else if ($("input[name='prefer_to_teach']:checked").length === 0 && !$("#prefer_to_teach_others").val().trim()) {
+      alert("Please select at least one class level you prefer to teach or specify in 'Others'");
+      isValid = false;
+    } else if (!$("#curriculum").val()) {
+      alert("Please select a curriculum");
+      isValid = false;
+    } else if (!$("#language").val()) {
+      alert("Please select a language");
+      isValid = false;
+    } else if (!$("input[name='willing_to_travel']:checked").val()) {
+      alert("Please specify if you are willing to travel to the student place");
+      isValid = false;
+    } else if (!$("input[name='available_for_online_teaching']:checked").val()) {
+      alert("Please specify if you are available for online teaching");
+      isValid = false;
+    } else if (!$("input[name='help_with_homework']:checked").val()) {
+      alert("Please specify if you help with homework and assignments");
+      isValid = false;
+    } else if (!$("input[name='full_time_teacher']:checked").val()) {
+      alert("Please specify if you are a full-time teacher");
+      isValid = false;
+    } else if (!$("#availability").val()) {
+      alert("Please select your availability");
+      isValid = false;
+    }
+   
+      else if (!$("#sprofile_description").val()) {
+            alert("Profile Description cannot be empty");
+            isValid = false;
+        } else if (/\d/.test($("#sprofile_description").val())) {
+            alert("Profile Description should not contain numbers");
+            isValid = false;
+        }
+
+        // Validate ID Proof Upload
+       
+       else if (!$("input[name='id_proof']").val()) {
+            alert("Please upload your ID Proof");
+            isValid = false;
+        }
+
+        // Validate Profile Photo Upload
+       
+       else if (!$("input[name='profile']").val()) {
+            alert("Please upload your Profile Photo");
+            isValid = false;
+        }
+
+
+  } else if (stepId === "6") {
+    // Validation for Step 6 (Summary)
+    if (!$("#terms_checkbox").is(":checked")) {
+      alert("Please confirm that your information is accurate and complete");
+      isValid = false;
+    }
+  }
+
+  return isValid;
+}
+
+      // Function to populate the summary
+      function populateSummary() {
+  // Step 1: Personal Information
+  $("#summary_types").text($("#types").val() || "-");
+  $("#summary_strength").text($("#strength").val() || "-");
+  $("#summary_gender").text($("#gender").val() || "-");
+
+  // Primary Language (first language entry)
+  $("#summary_languages").text(
+    $("#language-box").val()
+      ? $("#language-box").val() +
+          ($("#speak").is(":checked") ? " (Speak)" : "") +
+          ($("#read").is(":checked") ? " (Read)" : "") +
+          ($("#write").is(":checked") ? " (Write)" : "")
+      : "-"
+  );
+
+  // Additional Languages (dynamically added)
+  let additionalLanguages = [];
+  $("#languages-container .language-entry").each(function (index) {
+    if (index > 0) { // Skip the first entry
+      let languageInput = $(this).find(".language-input").val();
+      if (languageInput) {
+        let proficiency = [];
+        if ($(this).find("input[name='speak[]']").is(":checked")) proficiency.push("Speak");
+        if ($(this).find("input[name='read[]']").is(":checked")) proficiency.push("Read");
+        if ($(this).find("input[name='write[]']").is(":checked")) proficiency.push("Write");
+        additionalLanguages.push(
+          languageInput + (proficiency.length ? " (" + proficiency.join(", ") + ")" : "")
+        );
+      }
+    }
+  });
+  $("#summary_additional_languages").text(
+    additionalLanguages.length > 0 ? additionalLanguages.join("; ") : "-"
+  );
+
+  $("#summary_location").text($("#location-box").val() || "-");
+  $("#summary_date_of_birth").text($("#dates").val() || "-");
+  $("#summary_postal_code").text($("#post_code").val() || "-");
+
+  // Step 2: Education
+  $("#summary_institution").text($("#institution").val() || "-");
+  $("#summary_graduation").text($("#graduation").val() || "-");
+  $("#summary_degree").text($("#degree").val() || "-");
+  $("#summary_subject_specialisation").text($("#Subject_Specialisation").val() || "-");
+
+  // Additional Education
+  let additionalEdu = [];
+  let institutionTwo = $("#institution_two").val();
+  let graduationTwo = $("#gender_two").val(); // Note: This should be corrected to $("#graduation_two") if an ID is added
+  let degreeTwo = $("#degree_two").val();
+  let subjectSpecTwo = $("#Subject_Specialisation_two").val();
+
+  // Check if the second education section has any data, regardless of visibility
+  if (institutionTwo || graduationTwo || degreeTwo || subjectSpecTwo) {
+    additionalEdu.push(
+      (institutionTwo || "-") +
+        ", " +
+        (graduationTwo || "-") +
+        ", " +
+        (degreeTwo || "-") +
+        ", " +
+        (subjectSpecTwo || "-")
+    );
+    $("#summary_additional_education").text(additionalEdu.join("; "));
+    $("#summary_additional_education_row").show();
+  } else {
+    $("#summary_additional_education").text("-");
+    $("#summary_additional_education_row").hide();
+  }
+
+  // Step 3: Academic Expertise (Subjects)
+  if (a && a.length > 0 && v && v.length > 0) {
+    let primarySubjects = [];
+    let additionalSubjects = [];
+    for (let i = 0; i < a.length; i++) {
+      let subjectLevels = [];
+      let startIndex = i * 3; // Assuming max 3 levels per subject
+      if (v[startIndex]) subjectLevels.push(v[startIndex]);
+      if (v[startIndex + 1]) subjectLevels.push(v[startIndex + 1]);
+      if (v[startIndex + 2]) subjectLevels.push(v[startIndex + 2]);
+      let subjectString = `${a[i]} (${subjectLevels.join(", ")})`;
+      console.log(subjectString)
+
+
+      
+      
+      if (i === 0) {
+        primarySubjects.push(subjectString); // First subject as primary
+      } else {
+        additionalSubjects.push(subjectString); // Rest as additional
+      }
+    }
+    
+    $("#summary_academic_subjects").text(primarySubjects.join("; ") || "-");
+    if (additionalSubjects.length > 0) {
+      $("#summary_additional_subjects").text(additionalSubjects.join("; "));
+      $("#summary_additional_subjects_row").show();
+    } else {
+      $("#summary_additional_subjects").text("-");
+      $("#summary_additional_subjects_row").hide();
+    }
+  } else {
+    $("#summary_academic_subjects").text("-");
+    $("#summary_additional_subjects").text("-");
+    $("#summary_additional_subjects_row").hide();
+  }
+
+  // Step 4: Experience
+  $("#summary_company_name").text($("#company_name").val() || "-");
+  $("#summary_job_role").text($("#job_role").val() || "-");
+  $("#summary_exp_duration").text($("#exp_duration").val() || "-");
+
+  // Additional Experience
+  let additionalExp = [];
+  let companyTwo = $("#company_name_two").val();
+  let roleTwo = $("#job_role_two").val();
+  let durationTwo = $("#exp_duration_two").val();
+
+  // Check if the second experience section has any data, regardless of visibility
+  if (companyTwo || roleTwo || durationTwo) {
+    additionalExp.push(
+      (companyTwo || "-") + ", " + (roleTwo || "-") + ", " + (durationTwo || "-")
+    );
+    $("#summary_additional_experience").text(additionalExp.join("; "));
+    $("#summary_additional_experience_row").show();
+  } else {
+    $("#summary_additional_experience").text("-");
+    $("#summary_additional_experience_row").hide();
+  }
+
+  // Step 5: Teaching Preferences & Availability
+  $("#summary_charge_type").text($("#i_charge").val() || "-");
+  $("#summary_charge").text(
+    $("#charge").val() && $("#max_fee").val()
+      ? `${$("#charge").val()} - ${$("#max_fee").val()}`
+      : $("#charge").val() || $("#max_fee").val() || "-"
+  );
+  $("#summary_prefer_to_teach").text(
+    $("input[name='prefer_to_teach']:checked")
+      .map(function () {
+        return $(this).val();
+      })
+      .get()
+      .join(", ") || "-"
+  );
+  $("#summary_prefer_to_teach_others").text($("#prefer_to_teach_others").val() || "-");
+  $("#summary_curriculum").text($("#curriculum").val() || "-");
+  $("#summary_language").text($("#language").val() || "-");
+  $("#summary_travel_to_student").text(
+    $("input[name='travel_to_student']:checked").val() || "-"
+  );
+  $("#summary_available_for_online_teaching").text(
+    $("input[name='available_for_online_teaching']:checked").val() || "-"
+  );
+  $("#summary_help_with_homework").text(
+    $("input[name='help_with_homework']:checked").val() || "-"
+  );
+  $("#summary_full_time_teacher").text(
+    $("input[name='full_time_teacher']:checked").val() || "-"
+  );
+  $("#summary_availability").text($("#availability").val() || "-");
+
+  // Debugging: Log values to console to verify data
+  console.log("Additional Education:", {
+    institutionTwo,
+    graduationTwo,
+    degreeTwo,
+    subjectSpecTwo
+  });
+  console.log("Additional Experience:", {
+    companyTwo,
+    roleTwo,
+    durationTwo
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const locationBox = document.getElementById('location-box');
+    const resBox = document.querySelector('.res_box');
+    const languageBox = document.getElementById('language-box');
+    const languageResBox = document.querySelector('.language-res-box');
+    const addLanguageBtn = document.getElementById('add-language-btn');
+    const languagesContainer = document.getElementById('languages-container');
+    
+    let languageCount = 1;
+
+    // Location suggestions - using the predefined locations array
+  
+
+    // Language suggestions - using the predefined languages array
+    const languages = [
+    "English", "Mandarin Chinese", "Spanish", "Hindi", "Arabic", "Portuguese", "Bengali", 
+    "Russian", "Japanese", "Punjabi", "German", "Javanese", "Korean", "French", "Telugu", 
+    "Vietnamese", "Marathi", "Tamil", "Urdu", "Turkish", "Italian", "Persian", "Gujarati", 
+    "Polish", "Ukrainian", "Malay/Indonesian", "Kannada", "Odia", "Bhojpuri", "Maithili", 
+    "Hausa", "Swahili", "Yoruba", "Tagalog", "Romanian", "Dutch", "Greek", "Hungarian", 
+    "Czech", "Serbo-Croatian", "Finnish", "Slovak", "Hebrew", "Amharic", "Nepali", "Sinhala", 
+    "Zulu", "Xhosa", "Igbo", "Pashto", "Farsi", "Kurdish", "Azerbaijani", "Bulgarian", 
+    "Croatian", "Albanian", "Armenian", "Georgian", "Lithuanian", "Latvian", "Estonian", 
+    "Bosnian", "Mongolian", "Kazakh", "Uzbek", "Turkmen", "Tajik", "Kyrgyz", "Khmer", 
+    "Lao", "Burmese", "Thai", "Filipino", "Malayalam", "Sinhala", "Assamese", "Sundanese", 
+    "Madurese", "Acehnese", "Hokkien", "Hakka", "Wu (Shanghainese)", "Min Nan", "Cantonese", 
+    "Mandinka", "Wolof", "Tswana", "Sesotho", "Shona", "Sango", "Chichewa", "Luganda", 
+    "Tigrinya", "Somali", "Danish", "Swedish", "Norwegian", "Icelandic", "Latvian", "Finnish", 
+    "Slovenian", "Macedonian", "Belarusian", "Luxembourgish", "Galician", "Basque", "Catalan", 
+    "Breton", "Welsh", "Scottish Gaelic", "Irish", "Cornish", "Manx", "Esperanto"
+    ];
+
+  
+    // Language auto-suggestion
+    languageBox.addEventListener('input', function() {
+        const query = this.value.trim();
+        if (query.length > 0) {
+            // Filter languages that match the input
+            const result = languages.filter(language => 
+                language.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            // Display results
+            if (result.length > 0) {
+                const content = result.map(language => 
+                    `<li onclick="selectLanguage(this)">${language}</li>`
+                ).join('');
+                languageResBox.innerHTML = `<ul>${content}</ul>`;
+                languageResBox.style.display = 'block';
+            } else {
+                languageResBox.style.display = 'none';
+            }
+        } else {
+            languageResBox.style.display = 'none';
+        }
+    });
+    
+    // Add new language entry
+    addLanguageBtn.addEventListener('click', function() {
+        languageCount++;
+        
+        const languageEntry = document.createElement('div');
+        languageEntry.className = 'language-entry';
+        languageEntry.innerHTML = `
+            <div class="form-group mb-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <input type="text" placeholder="e.g., Tamil or English or Hindi" 
+                        autocomplete="off" name="language_${languageCount}" class="form-control language-input">
+                    <button type="button" class="btn-close ms-2 remove-language"></button>
+                </div>
+                <div class="language-res-box"></div>
+            </div>
+            <div class="check">
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="speak-${languageCount}" name="speak[]">
+                    <span class="checkmark"></span>
+                    Speak
+                </label>
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="read-${languageCount}" name="read[]">
+                    <span class="checkmark"></span>
+                    Read
+                </label>
+                <label class="checkbox-wrapper">
+                    <input type="checkbox" id="write-${languageCount}" name="write[]">
+                    <span class="checkmark"></span>
+                    Write
+                </label>
+            </div>
+        `;
+        languagesContainer.appendChild(languageEntry);
+        
+        // Setup event listener for new language input
+        const newLanguageInput = languageEntry.querySelector('.language-input');
+        const newLanguageResBox = languageEntry.querySelector('.language-res-box');
+        
+        newLanguageInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length > 0) {
+                const result = languages.filter(language => 
+                    language.toLowerCase().includes(query.toLowerCase())
+                );
+                
+                if (result.length > 0) {
+                    const content = result.map(language => 
+                        `<li onclick="selectNewLanguage(this)">${language}</li>`
+                    ).join('');
+                    newLanguageResBox.innerHTML = `<ul>${content}</ul>`;
+                    newLanguageResBox.style.display = 'block';
+                } else {
+                    newLanguageResBox.style.display = 'none';
+                }
+            } else {
+                newLanguageResBox.style.display = 'none';
+            }
+        });
+
+        // Setup event listener for remove button
+        const removeBtn = languageEntry.querySelector('.remove-language');
+        removeBtn.addEventListener('click', function() {
+            languagesContainer.removeChild(languageEntry);
+        });
+    });
+
+    // Close suggestion boxes when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!locationBox.contains(e.target) && !resBox.contains(e.target)) {
+            resBox.style.display = 'none';
+        }
+
+        if (!e.target.classList.contains('language-input') && 
+            !e.target.classList.contains('language-res-box')) {
+            const resBoxes = document.querySelectorAll('.language-res-box');
+            resBoxes.forEach(box => {
+                box.style.display = 'none';
+            });
+        }
+    });
+
+    // Selection helper functions (need to be global)
+    window.selectLocation = function(listItem) {
+        locationBox.value = listItem.textContent;
+        resBox.style.display = 'none';
+    };
+
+    window.selectLanguage = function(listItem) {
+        languageBox.value = listItem.textContent;
+        languageResBox.style.display = 'none';
+    };
+    
+    window.selectNewLanguage = function(listItem) {
+        // Find the closest language input field to this list item
+        const parentResBox = listItem.closest('.language-res-box');
+        const inputField = parentResBox.previousElementSibling.querySelector('input') || 
+                          parentResBox.parentElement.querySelector('.language-input');
+        
+        inputField.value = listItem.textContent;
+        parentResBox.style.display = 'none';
+    };
+});
+
+
+// Add subjects to the list
+function add() {
+            let name = document.getElementById("subject").value;
+            
+            if (name) {
+                // Get selected levels
+                let selectedLevels = [];
+                document.querySelectorAll('.level-checkbox:checked').forEach((checkbox) => {
+                    selectedLevels.push(checkbox.name);
+                });
+                
+                if (selectedLevels.length === 0) {
+                    alert("Please select at least one proficiency level");
+                    return;
+                }
+                
+                a.push(name);
+                
+                // Add selected levels to v array
+                selectedLevels.forEach(level => {
+                    v.push(level);
+                });
+                
+                // Create a new list item
+                let listItem = document.createElement("li");
+                listItem.className = "subject-item";
+                
+                // Subject name
+                let nameSpan = document.createElement("span");
+                nameSpan.className = "subject-name";
+                nameSpan.textContent = name;
+                
+                // Level badges container
+                let levelsDiv = document.createElement("div");
+                levelsDiv.className = "subject-levels";
+                
+                // Add level badges
+                selectedLevels.forEach(level => {
+                    let badge = document.createElement("span");
+                    badge.className = "level-badge";
+                    badge.textContent = level;
+                    levelsDiv.appendChild(badge);
+                });
+                
+                // Append elements to list item
+                listItem.appendChild(nameSpan);
+                listItem.appendChild(levelsDiv);
+                
+                // Add the list item to the list
+                document.getElementById("list").appendChild(listItem);
+                
+                // Clear input and selections
+                document.getElementById("subject").value = "";
+                document.querySelectorAll('.level-checkbox').forEach((checkbox) => {
+                    checkbox.checked = false;
+                });
+                
+                // Update hidden fields
+                document.getElementById("subject").value = a.join(',');
+                console.log(a.join(','))
+            } else {
+                alert("Please enter a subject.");
+            }
+        }
+        
+        // Autocomplete functionality
+        window.onload = function () {
+            const subjects = [
+                "Mathematics", "Physics", "Chemistry", "Biology", "Computer Science", "Statistics", 
+                "Data Science", "Artificial Intelligence", "Machine Learning", "Information Technology", 
+                "Software Engineering", "Electrical Engineering", "Mechanical Engineering", 
+                "Civil Engineering", "Chemical Engineering", "Aerospace Engineering", "Environmental Science", 
+                "Geology", "Astronomy", "Oceanography", "Zoology", "Botany", "Genetics", "Microbiology", 
+                "Biotechnology", "Biomedical Engineering", "Neuroscience", "Psychology", "Sociology", 
+                "Anthropology", "Philosophy", "Political Science", "International Relations", "Law", 
+                "Criminology", "Economics", "Finance", "Accounting", "Business Administration", 
+                "Marketing", "Human Resource Management", "Entrepreneurship", "Supply Chain Management", 
+                "Management Information Systems", "Project Management", "Public Administration", 
+                "History", "Geography", "Archaeology", "Linguistics", "Literature", "Creative Writing", 
+                "English", "French", "Spanish", "German", "Chinese", "Japanese", "Russian", 
+                "Italian", "Latin", "Music", "Art", "Drama", "Theater", "Film Studies", "Dance", 
+                "Graphic Design", "Fashion Design", "Interior Design", "Architecture", "Urban Planning", 
+                "Medicine", "Nursing", "Dentistry", "Pharmacy", "Public Health", "Nutrition", 
+                "Veterinary Science", "Kinesiology", "Sports Science", "Education", "Teaching Methods", 
+                "Special Education", "Early Childhood Education", "Library Science", "Ethics", 
+                "Religious Studies", "Theology", "Cultural Studies", "Gender Studies", 
+                "Communication Studies", "Journalism", "Media Studies", "Photography", "Film Production", 
+                "Game Design", "Animation", "Culinary Arts", "Hospitality Management", "Tourism", 
+                "Event Management", "Agriculture", "Horticulture", "Forestry", "Environmental Studies", 
+                "Sustainable Development", "Marine Biology", "Hydrology", "Physics", "Theoretical Physics", 
+                "Quantum Mechanics", "Thermodynamics", "Fluid Mechanics", "Solid State Physics", 
+                "Electronics", "Circuit Design", "Signal Processing", "Robotics", "Control Systems", 
+                "Nanotechnology", "Materials Science", "Renewable Energy", "Meteorology", 
+                "Climatology", "Ecology", "Evolutionary Biology", "Bioinformatics", "Biophysics", 
+                "Pathology", "Immunology", "Pharmacology", "Toxicology", "Anatomy", "Physiology", 
+                "Dermatology", "Ophthalmology", "Radiology", "Surgery", "Orthopedics", "Cardiology", 
+                "Psychiatry", "Neurology", "Geriatrics", "Pediatrics", "Obstetrics and Gynecology", 
+                "Radiation Therapy", "Genomic Studies", "Molecular Biology", "Virology", 
+                "Cybersecurity", "Network Engineering", "Database Management", "Software Testing", 
+                "Programming", "Web Development", "Mobile App Development", "Cloud Computing", 
+                "Blockchain Technology", "Artificial Neural Networks", "Big Data Analysis"
+            ];
+            
+            function attachAutoComplete(input_box_id, result_box_class) {
+                const input_box = document.getElementById(input_box_id);
+                const result_box = document.querySelector(result_box_class);
+                
+                input_box.addEventListener('focus', function() {
+                    if (this.value.length > 0) {
+                        showResults();
+                    }
+                });
+                
+                input_box.addEventListener('keyup', function() {
+                    let result = [];
+                    let input = input_box.value;
+                    if (input.length) {
+                        result = subjects.filter((keyword) => {
+                            return keyword.toLowerCase().includes(input.toLowerCase());
+                        });
+                        showResults();
+                    } else {
+                        result_box.classList.remove('visible');
+                    }
+                    display(result);
+                });
+                
+                function showResults() {
+                    result_box.classList.add('visible');
+                }
+                
+                function display(result) {
+                    const content = result.map((list) => {
+                        return `<li onclick="selectItem('${input_box_id}', '${result_box_class}', this)">${list}</li>`;
+                    });
+                    result_box.innerHTML = `<ul>${content.join('')}</ul>`;
+                }
+                
+                // Hide results when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (e.target !== input_box && !result_box.contains(e.target)) {
+                        result_box.classList.remove('visible');
+                    }
+                });
+            }
+            
+            // Initialize autocomplete
+            attachAutoComplete("subject", ".res_boxs");
+        };
+        
+        function selectItem(input_box_id, result_box_class, list) {
+            const input_box = document.getElementById(input_box_id);
+            input_box.value = list.innerHTML;
+            document.querySelector(result_box_class).classList.remove('visible');
+        }
+    </script>
+<!-- location api  -->
+<script>
+  $(document).ready(function () {
+    $('#search').on('input', function () {
+      const query = $(this).val();
+      if (query.length < 2) {
+        $('#results').empty();
+        return;
+      }
+
+      $.get('https://photon.komoot.io/api/', {
+        q: query,
+        limit: 5,
+        lang: 'en'
+      }, function (data) {
+        $('#results').empty();
+
+        data.features.forEach(function (place) {
+          const props = place.properties;
+          if (props.country !== 'India') return;
+
+          const location = props.name || '';
+          const state = props.state || '';
+          const country = props.country || 'India';
+          const formatted = `${location}, ${state}, ${country}`;
+
+          const item = $('<div class="result-item"></div>').text(formatted);
+          item.on('click', function () {
+            $('#search').val(formatted);
+            $('#results').empty();
+          });
+
+          $('#results').append(item);
+        });
+      });
+    });
+
+    $(document).on('click', function (e) {
+      if (!$(e.target).closest('#search, #results').length) {
+        $('#results').empty();
+      }
+    });
+  });
+</script>
+  </body>
+</html>
+

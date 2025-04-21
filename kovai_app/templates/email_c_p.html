@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f2ff; /* Light blue background */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff; /* White background for content */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 600px; /* Max width for larger screens */
+    width: 100%; /* Full width for smaller screens */
+}
+
+h1 {
+    color: #004080; /* Dark blue text */
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #0066cc; /* Medium blue text */
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #008080; /* Teal button */
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #004d4d; /* Darker teal on hover */
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    ul li {
+        font-size: 1em;
+    }
+
+    button {
+        font-size: 1em;
+    }
+}
+
+   </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verify Your Account with Learnersleaf</h1>
+        <h3>Login Details</h3>
+        <ul>
+            <li>NAME: {{name}}</li>
+            <li>PASSWORD: {{password}}</li>
+            <li>EMAIL: {{email}}</li>
+            <li>CONTACT NUMBER: {{number}}</li>
+        </ul>
+        <p> Please Do 'n't Share</p>
+    </div>
+</body>
+</html>

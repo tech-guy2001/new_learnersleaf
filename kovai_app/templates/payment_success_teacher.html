@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Success</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #d1f2eb, #a9dfbf);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    
+        .success-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+    
+        .success-container h2 {
+            color: #2e8b57;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+    
+        .success-container p {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+    
+        .success-container strong {
+            color: #1abc9c;
+        }
+    
+        .success-container a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #2e8b57;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+    
+        .success-container a:hover {
+            background-color: #1e6e43;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="success-container">
+        <h2>Payment Successful!</h2>
+        <p>You received <strong>{{ coins }}</strong> coins.</p>
+        <p>Your new balance is: <strong>{{ balance }}</strong></p>
+        <a href="/teacher_dashboard/">Go to Wallet</a>
+    </div>
+</body>
+</html>

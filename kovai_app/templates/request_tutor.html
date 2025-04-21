@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <script>
+      function validateForm() {
+    const form = document.forms["tutorForm"];
+    const name = form["name"].value.trim();
+    const email = form["email"].value.trim();
+    const location = form["location"].value.trim();
+    const phone = form["phone"].value.trim();
+    const gender = form["gender"].value;
+    const password = form["password"].value.trim();
+    const c_password = form["c_password"].value.trim();
+
+    console.log(password!==c_password)
+         // Confirm Password Validation
+    if (password !== c_password) {
+        alert("Password and Confirm Password must match.");
+        return false;
+    }
+    // Name Validation
+    if (name === "") {
+        alert("Please enter your name.");
+        return false;
+    }
+
+    // Email Validation
+    if (email === "" || !validateEmail(email)) {
+        alert("Please enter a valid email.");
+        return false;
+    }
+
+    // Location Validation
+    if (location === "") {
+        alert("Please select your location.");
+        return false;
+    }
+
+    // Phone Validation
+    if (phone === "" || !validatePhone(phone) ||phone.length()==10) {
+        alert("Please enter a valid 10-digit phone number.");
+        return false;
+    }
+
+    // Gender Validation
+    if (!gender) {
+        alert("Please select your gender.");
+        return false;
+    }
+
+    // Password Validation
+    if (password === "") {
+        alert("Please enter a password.");
+        return false;
+    }
+
+
+
+    return true;
+}
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePhone(phone) {
+    const re = /^\d{10}$/; // Validates a 10-digit phone number
+    return re.test(phone);
+}
+
+    </script>
+
+    <style>
+     body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+
+form {
+    max-width: 60%; /* Ensures full width on mobile */
+    margin: 40px;
+    margin-left: 200px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input[type=text], 
+input[type=email], 
+input[type=password],
+select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+input[type=text]:focus, 
+input[type=email]:focus, 
+input[type=password]:focus,
+select:focus {
+    border-color: #0066cc;
+    box-shadow: 0 0 8px rgba(0, 102, 204, 0.2);
+    outline: none;
+}
+
+input[type=submit] {
+    background-color: #0066cc;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+}
+
+input[type=submit]:hover {
+    background-color: #005bb5;
+}
+
+.location {
+
+ 
+    border-radius: 5px;
+    margin-bottom: 20px;
+   
+}
+
+#search {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    #results {
+      margin-top: 20px;
+      max-width: 400px;
+    }
+
+    .result-item {
+      padding: 10px;
+      background: white;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .result-item:hover {
+      background-color: #eef;
+    }
+/* Responsive Design */
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 14px; /* Adjust font size for readability on smaller screens */
+    }
+
+    form {
+        margin: 10px; /* Reduce the margin for smaller screens */
+        padding: 15px; /* Increase padding for better touch target size */
+        max-width: 100%; /* Ensure form takes full width on mobile */
+    }
+
+    input[type=text], 
+    input[type=email], 
+    input[type=password],
+    select {
+        font-size: 14px; /* Slightly reduce font size for smaller screens */
+        padding: 12px; /* Increase padding for better touch interaction */
+    }
+    
+    input[type=submit] {
+        font-size: 16px; /* Ensure button text is readable on smaller screens */
+        padding: 12px; /* Adjust button padding for better touch area */
+    }
+    
+    .location {
+        padding: 12px; /* Reduce padding for compactness */
+    }
+
+    h2.section-heading {
+        font-size: 20px; /* Reduce heading size for smaller devices */
+        margin: 20px 0; /* Adjust spacing for consistency */
+    }
+}
+
+
+/* Section Heading */
+.section-heading {
+    margin: 30px 400px 0px;
+    font-size: 28px;
+   
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+li{
+    display: inline-block;
+}
+    </style>
+</head>
+<body>
+    <h2 class="section-heading ">Join with Learnersleaf</h2>
+    
+    <form name="tutorForm"  action="tutor_request"  method="POST" onsubmit="return validateForm()">
+    
+        {% csrf_token %}
+        <label >Name</label>
+        <input type="text" name="name" id="name">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="ENTER EMAIL"><br><br>
+        <div class="location">
+            <label>Location</label>
+            <input type="text" name="location" id="search" placeholder="ENTER LOCATION" />
+            <div id="results"></div>
+        </div>
+        <label>Contact</label>
+        <input type="text" name="phone" placeholder="ENTER PHONE"><br><br>
+       
+        <label>Gender</label>
+        <ul class="gender">
+       <li> <input type="radio" name="gender" value="male"></li>  <li><label for="gender">Male</label></li></ul> 
+        <ul class="gender">
+       <li> <input type="radio" name="gender" value="female"></li><li> <label for="gender">Female</label></li></ul><br>
+       <label for="password">Password</label><br>
+       <input type="password" name="password"> <br>
+       <label for="c_password">Confim Password</label> <br>
+       <input type="password" name="c_password">
+       
+        <input type="submit" value="submit">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+    <script>
+        $(document).ready(function () {
+          $('#search').on('input', function () {
+            const query = $(this).val();
+            if (query.length < 2) {
+              $('#results').empty();
+              return;
+            }
+    
+            $.get('https://photon.komoot.io/api/', {
+              q: query,
+              limit: 5,
+              lang: 'en'
+            }, function (data) {
+              $('#results').empty();
+    
+              data.features.forEach(function (place) {
+                const props = place.properties;
+    
+                // Filter for India
+                if (props.country !== 'India') return;
+    
+                const location = props.name || '';
+                const state = props.state || '';
+                const country = props.country || 'India';
+                const formatted = `${location}, ${state}`;
+    
+                const item = $(`
+                  <div class="result-item">${formatted}</div>
+                `);
+    
+                // On click: put it into input box and hide results
+                item.on('click', function () {
+                  $('#search').val(formatted);
+                  $('#results').empty();
+                });
+    
+                $('#results').append(item);
+              });
+            });
+          });
+    
+          // Optional: hide suggestions if clicked outside
+          $(document).on('click', function (e) {
+            if (!$(e.target).closest('#search, #results').length) {
+              $('#results').empty();
+            }
+          });
+        });
+      </script>
+       </body>
+</html>

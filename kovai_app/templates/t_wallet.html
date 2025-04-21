@@ -1,0 +1,484 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+       .navbar{
+		background-color: white;
+		}
+        .navbar-brand h2 {
+            font-weight: bold;
+            color: #007BFF;
+            font-size: 36px;
+        }
+		.section-heading {
+    margin: 40px 0 20px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: #f7fafd;
+    animation: fadeInDown 1s ease;
+}
+
+        .navbar-nav .nav-item .nav-link {
+            font-weight: bold;
+            color: #555;
+        }
+       
+        .dropdown-menu .dropdown-item {
+            color: #0a0606;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .navbar-nav .btn {
+            font-weight: bold;
+            
+        }
+
+        .btn-info {
+            background-color: #007BFF;
+            border-color: #007BFF;
+        }
+
+        .btn-info:hover {
+            background-color: #0056b3;
+        }
+       
+/* Section Heading */
+.section-heading {
+    margin: 40px 0 20px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+.res_box ul li:hover {
+    background-color: #f0f0f0;
+}
+.navbar-nav .nav-item .nav-link:hover{
+    color: #3498db;
+    border-bottom: 2px solid #3498db ;
+}
+
+        .footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+    
+    margin-left: 0;
+}
+
+  
+            h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: #333;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+h1 i {
+    margin-right: 10px;
+    color: #f39c12; /* Wallet icon color */
+}
+.wallet ul{
+    list-style: none;
+    font-size: 20px;
+   
+}
+a{
+    text-decoration: none;
+    color: #060708;
+}
+.wallet {
+    background-color: #f8f9fa;  /* Light background for card feel */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 20px;
+    max-width: 400px;
+    margin: 30px auto; /* Centering */
+    text-align: center;
+}
+
+/* Balance title styling */
+.wallet h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wallet h1 i {
+    margin-right: 10px;
+    color: #f39c12; /* Icon color */
+    font-size: 28px; /* Larger icon */
+}
+
+/* Buy Coin section styling */
+.buy_coin {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.buy_coin a {
+    padding: 10px 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: white;
+    background-color: #3498db;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.buy_coin a:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .buy_coin {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .buy_coin a {
+        width: 80%;
+        text-align: center;
+    }
+}
+.footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+}
+
+.slider-container {
+      display: inline-block;
+      margin-top: 20px;
+      margin-left: 300px;
+    }
+    .value {
+      font-size: 30px;
+      font-weight: bold;
+      color: green;
+      margin-left: 10px;
+    }
+    input[type="range"]
+    {
+        width: 500px;
+    }
+    .coin{
+        margin-top: 50px;
+        margin-left: -100px;
+    }
+   
+
+    @media (max-width: 768px) {
+    /* Navbar */
+    .navbar-brand h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    
+
+
+    /* Section Heading */
+    .section-heading {
+        font-size: 22px;
+        margin: 20px 0;
+    }
+
+    /* Wallet */
+    .wallet {
+        max-width: 90%;
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    /* Slider */
+    .slider-container {
+        margin: 20px auto;
+        text-align: center;
+        margin-left: 100px;
+    }
+
+    .slider-container input[type="range"] {
+        width: 90%;
+    }
+
+    /* Buy Coin */
+    .buy_coin {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buy_coin a {
+        width: 80%;
+        text-align: center;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        font-size: 14px;
+    }
+}
+.active{
+  
+  font-weight: bold;
+
+  border-radius: 4px;
+  color: #3498db;
+  border-bottom: 2px solid #3498db ;
+  
+}
+
+.footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+    
+    margin-left: 0;
+}
+    </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#one").click(function(){
+  
+    $(".one").fadeIn("slow");
+ 
+  });
+});
+$(document).ready(function(){
+  $("#two").click(function(){
+  
+    $(".two").fadeIn("slow");
+ 
+  });
+});
+$(document).ready(function(){
+  $("#three").click(function(){
+  
+    $(".three").fadeIn("slow");
+ 
+  });
+});
+function updateValue(value) {
+      document.getElementById('sliderValue').textContent = value;
+    }
+    function updateValue(value) {
+      document.getElementById('sliderValue').textContent = value;
+      // Update the button text dynamically
+      document.getElementById('buyCoinBtn').textContent = `Buy ${value} Coins`;
+      document.getElementById('buyCoinBtn').dataset.value = value; // Store the value in the button
+  }
+
+  function buyCoins(email) {
+      const coinValue = document.getElementById('buyCoinBtn').dataset.value || 100; // Default to 100 if not set
+      // Redirect or make a fetch/POST request to update balance on the server
+      window.location.href = `/buy_coin_teach/${email}/${coinValue}`;
+  }
+
+</script>
+</head>
+<body>
+    <!-- <nav class="navbar navbar-expand-lg navbar-light " >
+        <div class="container-fluid">
+            <a class="navbar-brand " href="#"><h2 style="font-weight: bold; color: #f9f5f5; font-size: 36px;">Learnersleaf</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/teacher_dashboard/{{account.email}}">Dasboad</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link  " href="/t_wallet/{{account.email}}">Wallet</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <div class="dropdown av-link">
+                            <button type="button" class="btn   dropdown-toggle " data-bs-toggle="dropdown">
+                                Edit
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/t_basic/{{account.email}}">Detail</a></li>
+                                <li><a class="dropdown-item" href="/t_photo/{{account.email}}">Photo</a></li>
+                                <li><a class="dropdown-item" href="/t_subject/{{account.email}}">subject</a></li>
+                                <li><a class="dropdown-item" href="/t_contact/{{account.email}}">contact</a></li>
+                                <li><a class="dropdown-item" href="/t_teaching/{{account.email}}">Teaching Details</a></li>
+                                <li><a class="dropdown-item" href="/t_experience/{{account.email}}">Employ Details</a></li>
+                            </ul>
+                        </div>
+
+                    </li>
+                    
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" >
+                                Find job
+                            </button>
+                            
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">All Job</a></li>
+                                    <li><a class="dropdown-item" href="/tutor_online_job/{{account.email}}">Online Job</a></li>
+                                    <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">Home Teaching</a></li>
+                                    
+                                </ul>
+                           
+                        </div>
+                    </li>
+
+                    <li class="nav-item  ">
+                     <a href="/teacher_inbox/{{account.email}}" class="nav-link" > <i class="fa-solid fa-envelope" style="font-size: 19px;"  ></i>&nbsp;Message</a>
+                </li>
+                <li class="nav-item">
+                <div class="dropdown nav-link "><div class="btn  dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 24px; font-weight: bold; color:  #f9f5f5;;" ><i class="fa-solid fa-id-badge"  ></i> {{account.name|title}}</div>
+        <ul class="dropdown-menu  ">
+            <li><a class="dropdown-item" href="/"> <i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+            <li><a class="dropdown-item" href="#"> <i class="fa-solid fa-gear"></i>Settings</a></li>
+           
+        </ul>
+    </div>
+            </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav> -->
+
+    <nav class="navbar navbar-expand-lg navbar-light  fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand " href="#">
+                <h2>LearnersLeaf</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/teacher_dashboard/{{account.email}}">Dasboad</a>
+                   </li>
+
+                   <li class="nav-item active">
+                    <a class="nav-link  " href="/t_wallet/{{account.email}}">Wallet</a>
+                </li>
+
+
+                    <!-- <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" style="color: #555" data-bs-toggle="dropdown">
+                            Find Tutor
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/tutor_request">Tutor Request</a></li>
+                            <li><a class="dropdown-item" href="/h_all_teachers">All Tutors</a></li>
+                            <li><a class="dropdown-item" href="/h_online_tutor">Online Tutors</a></li>
+                            <li><a class="dropdown-item" href="/h_home_tutor">Home Tutors</a></li>
+                        </ul>
+                    </li> -->
+
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" style="color: #555" data-bs-toggle="dropdown">
+                            Find Job
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">All Job</a></li>
+                            <li><a class="dropdown-item" href="/tutor_online_job/{{account.email}}">Online Job</a></li>
+                            <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">Home Teaching</a></li>
+                                    
+                        </ul>
+                    </li>
+
+                    <li class="nav-item ">
+                        <div class="dropdown" style="color: #555">
+                            <div class="btn dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-user" style="font-size: 18px;"></i> {{account.name|title}}
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                                <li><a class="dropdown-item" href="/#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> <br><br>
+
+    {% if msg %}
+    <div class="alert alert-info alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{msg}}</strong> !!!!!!!
+    </div>
+    {% endif %}
+
+    <div class="wallet">
+   
+        {% if account.coin %}
+        <h1> <i class="fa-solid fa-wallet" style="font-size: 40px;"></i>Balance Coin : <span style="font-weight: bold; font-size: 30px;">{{account.coin}}</span> </h1>
+        {% else %}
+        <h1> <i class="fa-solid fa-wallet" style="font-size: 40px;"></i>Balance Coin :000 </h1>
+        {% endif %}
+     </div>
+    
+   
+  <div class="slider-container">
+    <h1>Adjust the Range Coin</h1>
+    <input 
+      type="range" 
+      id="rangeSlider" 
+      min="100" 
+      max="3000" 
+      value="100" 
+      step="50" 
+      oninput="updateValue(this.value)">
+      <i class="fa-solid fa-coins" style="font-size: 48px;"></i> <span class="value" id="sliderValue">100</span>
+   
+  </div> 
+ <!-- <div class="buy_coin">
+   <a href="/buy_coin_teach/{{account.email}}/300">Buy Coins</a>
+  
+
+ </div> <br> -->
+ <div class="buy_coin">
+    <button 
+        id="buyCoinBtn" 
+        class="btn btn-primary" 
+        onclick="buyCoins('{{account.email}}')">
+        Buy 100 Coins
+    </button>
+</div> <br><br>
+
+</body>
+</html>
+</body>
+</html>

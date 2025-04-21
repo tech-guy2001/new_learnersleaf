@@ -1,0 +1,1982 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" src="{% static loc.css %}">
+    <title>tutor Vacancies</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        #search {
+      width: 100%;
+      position: relative;
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    #results {
+        margin-top: 20px;
+      max-width: 400px;
+      z-index: 1000;
+    }
+
+    .result-item {
+      padding: 10px;
+      background: white;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .result-item:hover {
+      background-color: #eef;
+    }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        /* tutor Cards Container */
+        .tutor-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* tutor Card Styles */
+        .tutor-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .tutor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tutor-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #6e8efb, #a777e3);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .tutor-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .tutor-logo {
+            height: 80px;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .tutor-logo img {
+            max-height: 100%;
+            max-width: 80%;
+            object-fit: contain;
+        }
+        
+        .tutor-details {
+            padding: 20px;
+        }
+        
+        .tutor-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .tutor-company {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #34495e;
+        }
+        
+        .tutor-location, .tutor-salary {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .tutor-location i, .tutor-salary i {
+            margin-right: 5px;
+            color: #95a5a6;
+        }
+        
+        .tutor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            gap: 5px;
+        }
+        
+        .tag {
+            padding: 5px 10px;
+            background-color: #ecf0f1;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+        
+        /* tutor Detail Page */
+        .tutor-detail-page {
+           display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .tutor-detail-container {
+            background-color: white;
+            margin: 50px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-30px);
+            transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        
+        .tutor-detail-header {
+            padding: 30px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            position: relative;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .tutor-detail-company {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tutor-detail-logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tutor-detail-logo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .tutor-detail-title {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .tutor-detail-company-name {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .tutor-detail-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .tutor-detail-info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .tutor-detail-info-item i {
+            margin-right: 10px;
+        }
+        
+        .tutor-detail-content {
+            padding: 30px;
+        }
+        
+        .tutor-detail-section {
+            margin-bottom: 30px;
+        }
+        
+        .tutor-detail-section-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        .tutor-detail-section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            width: 50px;
+            background: linear-gradient(90deg, #6e8efb, #a777e3);
+        }
+        
+        .tutor-detail-description p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .tutor-detail-requirements ul,
+        .tutor-detail-benefits ul {
+            list-style-position: inside;
+            padding-left: 15px;
+        }
+        
+        .tutor-detail-requirements li,
+        .tutor-detail-benefits li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .tutor-detail-apply {
+            padding: 20px 30px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .apply-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .apply-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(110, 142, 251, 0.4);
+        }
+        
+        .tutor-detail-deadline {
+            color: #7f8c8d;
+        }
+        
+        /* Animation Classes */
+        .show-detail {
+            display: block;
+            opacity: 1;
+        }
+        
+        .show-detail .tutor-detail-container {
+            transform: translateY(0);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .tutor-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .tutor-detail-container {
+                margin: 30px 15px;
+            }
+            
+            .tutor-detail-header {
+                padding: 20px;
+            }
+            
+            .tutor-detail-title {
+                font-size: 1.5rem;
+            }
+            
+            .tutor-detail-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tutor-detail-apply {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6e8efb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tutor-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .tutor-card:nth-child(1) { animation-delay: 0.1s; }
+        .tutor-card:nth-child(2) { animation-delay: 0.2s; }
+        .tutor-card:nth-child(3) { animation-delay: 0.3s; }
+        .tutor-card:nth-child(4) { animation-delay: 0.4s; }
+        .tutor-card:nth-child(5) { animation-delay: 0.5s; }
+        .tutor-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .search-container {
+        max-width: 1000px;
+        margin: 0 auto 40px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        animation: slideDown 0.6s ease-out;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .search-title {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 1.6rem;
+    }
+    
+    .search-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 15px;
+        align-items: start;
+    }
+    
+    .search-group {
+        position: relative;
+    }
+    
+    .input-wrapper {
+        position: relative;
+    }
+    
+    .input-wrapper i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #95a5a6;
+        transition: color 0.3s ease;
+    }
+    
+    .input-wrapper input {
+        width: 100%;
+        padding: 15px 15px 15px 45px;
+        border: 1px solid #dcdfe6;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #f9fafb;
+    }
+    
+    .input-wrapper input:focus {
+        border-color: #a777e3;
+        box-shadow: 0 0 0 3px rgba(167, 119, 227, 0.15);
+        outline: none;
+        background-color: white;
+    }
+    
+    .input-wrapper input:focus + i {
+        color: #6e8efb;
+    }
+    
+    .search-button {
+        padding: 15px 30px;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(110, 142, 251, 0.3);
+    }
+    
+    .search-button i {
+        margin-right: 8px;
+    }
+    
+    .search-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(110, 142, 251, 0.4);
+    }
+    
+    .search-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 5px rgba(110, 142, 251, 0.4);
+    }
+    
+    /* Suggestions Container */
+    .skills-suggestions-container,
+    .location-suggestions-container {
+        position: absolute;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        z-index: 100;
+        display: none;
+        top: calc(100% + 5px);
+    }
+    
+    .suggestions-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .suggestion-item {
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .suggestion-item:hover {
+        background: #f5f7fa;
+    }
+    
+    .suggestion-item.active {
+        background: #e9f0fe;
+    }
+    
+    /* Active Filters Styles */
+    .active-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .active-filter {
+        display: flex;
+        align-items: center;
+        background: #f5f7fa;
+        border-radius: 20px;
+        padding: 5px 12px;
+        font-size: 0.9rem;
+        color: #2c3e50;
+        animation: fadeIn 0.3s ease forwards;
+        transition: all 0.3s ease;
+    }
+    
+    .active-filter:hover {
+        background: #edf1f7;
+    }
+    
+    .active-filter .filter-category {
+        font-weight: 600;
+        margin-right: 5px;
+    }
+    
+    .active-filter .filter-value {
+        color: #6e8efb;
+    }
+    
+    .active-filter .remove-filter {
+        margin-left: 8px;
+        color: #95a5a6;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+    }
+    
+    .active-filter .remove-filter:hover {
+        background: #e74c3c;
+        color: white;
+    }
+    
+    /* No results message */
+    .no-results {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+        font-size: 1.2rem;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        margin: 20px auto;
+        max-width: 600px;
+        animation: fadeIn 0.5s ease forwards;
+        
+
+    }
+
+    .noo-results {
+        text-align: center;
+        padding: 40px;
+        color: #7f8c8d;
+        font-size: 1.2rem;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        margin: 20px auto;
+        max-width: 600px;
+        animation: fadeIn 0.5s ease forwards;
+        
+
+    }
+    
+    .no-results i {
+        font-size: 3rem;
+        color: #95a5a6;
+        margin-bottom: 15px;
+        display: block;
+    }
+    
+    /* tutor Card Animations for Filtering */
+    .tutor-card.filtered-out {
+        animation: fadeOut 0.4s ease forwards;
+    }
+    
+    .tutor-card.filtered-in {
+        animation: fadeIn 0.5s ease forwards;
+    }
+    
+    @keyframes fadeOut {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0.95); max-height: 0; margin: 0; padding: 0; overflow: hidden; }
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .search-form {
+            grid-template-columns: 1fr;
+        }
+        
+        .search-container {
+            padding: 20px 15px;
+        }
+    }
+
+    .tutor-type-filter {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    background: white;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #666;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #f0f0f0;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+}
+
+.request-tutor-button {
+    padding: 12px 30px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 0 auto;
+    box-shadow: 0 4px 10px rgba(110, 142, 251, 0.3);
+}
+
+.request-tutor-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(110, 142, 251, 0.4);
+}
+
+.request-tutor-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(110, 142, 251, 0.4);
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .header-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+    }
+    
+    .request-tutor-button {
+        margin-left: 0;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+/* Add this section to create a container for buttons in the header */
+.header-buttons {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 20px;
+      text-align: center;
+    }
+    
+    h1 {
+      color: white;
+      margin-bottom: 30px;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 600;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .open-modal-btn {
+      background: white;
+      color: #6e8efb;
+      border: none;
+      padding: 15px 30px;
+      font-size: clamp(1rem, 3vw, 1.1rem);
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      font-weight: 600;
+    }
+    
+    .open-modal-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .open-modal-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background: rgba(110, 142, 251, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: all 0.5s;
+    }
+    
+    .open-modal-btn:active::after {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 15px;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal {
+      background: white;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 15px;
+      padding: clamp(20px, 5vw, 30px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.4s ease;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #999;
+      transition: color 0.3s;
+      z-index: 2;
+    }
+    
+    .close-modal:hover {
+      color: #a777e3;
+    }
+    
+    .form-title {
+      text-align: center;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 25px;
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: clamp(10px, 3vw, 15px);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+      border-color: #6e8efb;
+      box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+      outline: none;
+    }
+    
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .radio-option {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .radio-option input {
+      margin-right: 8px;
+      accent-color: #a777e3;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      border: none;
+      padding: clamp(12px, 3vw, 15px);
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    
+    .submit-btn:hover {
+      box-shadow: 0 5px 15px rgba(110, 142, 251, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    /* Animation keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    /* Apply animations to form elements */
+    .form-group {
+      opacity: 0;
+      animation: slideUp 0.5s forwards;
+    }
+    
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
+    .form-group:nth-child(7) { animation-delay: 0.7s; }
+    
+    .submit-btn {
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+      animation-delay: 0.8s;
+    }
+    
+    /* Custom scrollbar for modal */
+    .modal::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .modal::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .modal::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      border-radius: 10px;
+    }
+    
+    /* Media queries for better responsiveness */
+    @media (max-width: 600px) {
+      .modal {
+        max-height: 85vh;
+      }
+      
+      .form-group {
+        margin-bottom: 15px;
+      }
+      
+      .close-modal {
+        top: 10px;
+        right: 10px;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .radio-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   
+</head>
+<body>
+    <div class="loading">
+        <div class="spinner"></div>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{ message }}</strong> 
+          </div>
+    {% endfor %}
+{% endif %}
+
+    <header>
+        <h1>Find Your Best tutor</h1>
+        <p>Discover opportunities that match your skills and ambitions</p>
+        <!-- {% if request.user.is_authenticated %}
+        <div class="header-buttons">
+        <a href="/myposts/" style="text-decoration: none;">    <button class="open-modal-btn">
+           
+                Dashboard
+            </button></a>
+        </div>
+        {% else %}
+        <div class="header-buttons">
+            <a href="/stu_login" style="text-decoration: none;">    <button class="open-modal-btn">Login</button></a>
+        </div>
+        {% endif %} -->
+    </header>
+
+    <div class="modal-overlay">
+        <div class="modal">
+          <button class="close-modal">&times;</button>
+          <h2 class="form-title">Join with Learnersleaf</h2>
+          
+          <form id="registration-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" placeholder="Enter Email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input type="text" id="location" class="form-control" placeholder="Enter the location" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Contact</label>
+              <input type="tel" id="phone" class="form-control" placeholder="Enter phone number" required>
+            </div>
+            
+            <div class="form-group">
+              <label>Gender</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="gender" value="male" required> Male
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="gender" value="female"> Female
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="confirm-password">Confirm Password</label>
+              <input type="password" id="confirm-password" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+      </div>
+
+    <div class="search-container">
+        <form action="h_search_teacher" method="POST">
+            {% csrf_token %}
+        <h2 class="search-title">Find Your Perfect tutor</h2>
+        <div class="search-form">
+           
+  
+            <div class="search-group">
+                <div class="input-wrapper">
+                    <!-- <i class="fas fa-briefcase"></i> -->
+                    <input type="text" id="skillsInput" name="subject"  placeholder="Enter skills, technologies, or positions...">
+                    <div class="skills-suggestions-container">
+                        <ul id="skillsSuggestions" class="suggestions-list"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="search-group">
+                <div class="input-wrapper">
+                  <!-- <i class="fas fa-map-marker-alt"></i> -->
+                  <div id="search-container">
+                    <input type="text" id="search"  name="location" placeholder="Start typing..." />
+                    <div id="results"></div>
+                  </div>
+                </div>
+                
+              </div>
+            <button id="searchButton" class="search-button" type="submit">
+                <i class="fas fa-search"></i> Find tutors
+            </button>
+        </div>
+    </form>
+
+    <div class="tutor-type-filter">
+        <div class="filter-buttons">
+            <a href="{% url 'h_all_teachers' %}">
+                <button class="filter-btn {% if h == 'all' %}active{% endif %}" data-type="all">All</button>
+            </a>
+            <a href="{% url 'h_online_tutor' %}">
+                <button class="filter-btn {% if h == 'online' %}active{% endif %}" data-type="remote">Remote</button>
+            </a>
+            <a href="{% url 'h_home_tutor' %}">
+                <button class="filter-btn {% if h == 'home' %}active{% endif %}" data-type="onsite">On-site</button>
+            </a>
+
+
+        </div>
+    </div>
+        <div class="active-filters" id="activeFilters">
+            <!-- Active filters will be populated here -->
+        </div>
+    </div>
+    {% if msg %}
+ 
+    
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>{{ msg }}</strong> 
+          </div>
+   
+{% endif %}
+{% if tutors %}
+    <div class="tutor-container">
+        <!-- tutor Card 1 -->
+      
+
+        <!-- tutor Card 6 -->
+
+        {% for tutor in tutors %}
+        
+        <div class="tutor-card" data-tutor-id=5>
+            <div class="tutor-logo">
+                {% if tutor.profile_photo %}
+                <img src="{{ tutor.profile_photo.url }}" alt="Profile Photo">
+           
+            {% endif %}
+            </div>
+            <div class="tutor-details">
+                <h2 class="tutor-title">{{ tutor.name|title }} </h2>
+                <p class="tutor-company">{{tutor.classes}}</p>
+                <p class="tutor-location"><i class="fas fa-map-marker-alt"></i> {{ tutor.location }}</p>
+                <p class="tutor-salary"><i class="fas fa-dollar-sign"></i> {{ tutor.min_fee }}  -  {{ tutor.max_fee }} </p>
+               
+
+                   
+                </ul>
+                <div class="tutor-tags">
+                    {% for subject in tutor.subject|parse_subjects|slice:":2" %}
+                    <span class="tag">{{ subject }}</span>
+                    {% endfor %}
+                    {% if request.user.is_authenticated %}
+                    <span class="tag"><a href="/s_myprofile/{{tutor.email}}/{{user.email}}" class="ba">Show More</a></span>
+                   {% else %}
+                    <span class="tag"><a href="/stu_login" class="ba">Show More</a></span>
+                    {% endif %}
+                    
+                </div>
+               
+            
+            </div>
+        </div>
+    </a>
+        {% endfor %}
+    </div>
+
+  
+   
+
+
+    {% endif %}
+    {% if t %}
+    <div class="no-results">
+        <i class="fas fa-search"></i>
+        <p>No tutors match your search criteria</p>
+        <p>Try modifying your search terms or clearing all filters</p>
+    </div>
+    {% endif %}
+
+    <script>
+        // tutor data for dynamic loading
+        const tutorData = {
+            "1": {
+                "title": "Senior Software Engineer",
+                "company": "Google",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbIPoI86E_vsisIzYY0FrlOG45MsRfCU2HYA&s",
+                "location": "Mountain View, CA",
+                "salary": "$150,000 - $180,000",
+                "description": `<p>Google is looking for a Senior Software Engineer to join our team working on innovative technologies that impact millions of users worldwide. As a senior engineer, you'll contribute to the design, implementation, and maintenance of key features for Google's core products.</p>
+                                <p>You'll work in a collaborative environment with other engineers, designers, and product managers to solve complex technical challenges and deliver high-quality code that meets Google's high standards for performance, reliability, and maintainability.</p>
+                                <p>This role offers excellent opportunities for professional growth, learning from some of the brightest minds in the industry, and making a significant impact on products used by billions of people.</p>`,
+                "requirements": [
+                    "Bachelor's degree in Computer Science, Engineering, or related field, or equivalent practical experience",
+                    "8+ years of experience in software development",
+                    "Strong programming skills in one or more general-purpose languages (e.g., Java, C/C++, Python, JavaScript, Go)",
+                    "Experience with distributed systems, large-scale applications, and performance optimization",
+                    "Strong understanding of data structures, algorithms, and software design principles",
+                    "Excellent problem-solving, communication, and teamwork skills"
+                ],
+                "benefits": [
+                    "Competitive salary and equity package",
+                    "Comprehensive health, dental, and vision insurance",
+                    "Generous vacation policy and flexible work arrangements",
+                    "401(k) plan with company match",
+                    "On-site amenities including free meals, fitness centers, and wellness programs",
+                    "Professional development opportunities and education reimbursement"
+                ],
+                "deadline": "Application deadline: March 15, 2025"
+            },
+            "2": {
+                "title": "Product Manager",
+                "company": "Amazon",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRalke-Kf6_TB5yrnMuUYP158MBQd4bezQIxw&s",
+                "location": "Seattle, WA",
+                "salary": "$120,000 - $155,000",
+                "description": `<p>Amazon is seeking a Product Manager to lead the development and launch of new features and enhancements for our e-commerce platform. In this role, you'll work closely with engineering, design, marketing, and business teams to define product strategy, prioritize features, and deliver exceptional customer experiences.</p>
+                                <p>As a Product Manager, you'll be responsible for gathering and analyzing market and customer data, creating product roadmaps, writing requirements documents, and coordinating cross-functional teams throughout the product development lifecycle.</p>
+                                <p>This position requires a passionate, customer-focused individual who can balance business needs, technical constraints, and user experience to drive innovative solutions that help Amazon maintain its position as a leader in e-commerce.</p>`,
+                "requirements": [
+                    "Bachelor's degree in Business, Engineering, Computer Science, or related field",
+                    "5+ years of product management experience, preferably in e-commerce or technology",
+                    "MBA or equivalent advanced degree preferred",
+                    "Strong analytical skills and data-driven decision-making ability",
+                    "Excellent communication, presentation, and stakeholder management skills",
+                    "Experience with agile development methodologies",
+                    "Proven track record of successfully launching products or features"
+                ],
+                "benefits": [
+                    "Competitive salary and restricted stock units (RSUs)",
+                    "Comprehensive benefits package including health, dental, and vision insurance",
+                    "401(k) plan with company match",
+                    "Relocation assistance if applicable",
+                    "Employee discounts on Amazon products",
+                    "Career development and advancement opportunities"
+                ],
+                "deadline": "Application deadline: February 28, 2025"
+            },
+            "3": {
+                "title": "UX/UI Designer",
+                "company": "Microsoft",
+                "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZlaUXIWozu3xqknYB3S9nknCPGFPAEVZLA&s",
+                "location": "Redmond, WA",
+                "salary": "$110,000 - $130,000",
+                "description": `<p>Microsoft is looking for a UX/UI Designer to join our design team and help create intuitive, accessible, and visually appealing user experiences for our products. As a designer at Microsoft, you'll collaborate with product managers, researchers, and engineers to understand user needs, create design concepts, and deliver polished designs that align with Microsoft's design language.</p>
+                                <p>You'll be involved in all aspects of the design process, from research and conceptualization to wireframing, prototyping, and design specifications. Your work will directly impact millions of users around the world who rely on Microsoft products daily.</p>
+                                <p>This role offers the chance to work on cutting-edge technology while maintaining a strong focus on usability and accessibility, ensuring that Microsoft products can be used by everyone.</p>`,
+                "requirements": [
+                    "Bachelor's degree in Design, Human-Computer Interaction, or related field",
+                    "3+ years of experience in UX/UI design for digital products",
+                    "Strong portfolio demonstrating your design process and skills",
+                    "Proficiency with industry-standard design tools (e.g., Figma, Sketch, Adobe XD)",
+                    "Understanding of design principles, interaction design, and visual design",
+                    "Experience conducting user research and usability testing",
+                    "Excellent communication and collaboration skills"
+                ],
+                "benefits": [
+                    "Competitive salary and benefits package",
+                    "Microsoft stock options and employee stock purchase plan",
+                    "Comprehensive health, dental, and vision coverage",
+                    "Retirement savings plans with company match",
+                    "Generous vacation time and paid holidays",
+                    "Professional development opportunities and tuition reimbursement",
+                    "Microsoft product discounts"
+                ],
+                "deadline": "Application deadline: March 10, 2025"
+            },
+            "4": {
+                "title": "Data Scientist",
+                "company": "Meta",
+                "logo": "https://png.pngtree.com/png-vector/20220509/ourmid/pngtree-company-logo-design-trademark-design-creative-logo-png-image_4569380.png",
+                "location": "Menlo Park, CA",
+                "salary": "$130,000 - $170,000",
+                "description": `<p>Meta is seeking a Data Scientist to join our team responsible for analyzing user behavior, conducting experiments, and developing models that enhance our products and services. In this role, you'll work with large datasets to extract insights, identify trends, and make data-driven recommendations that improve user experience across Meta's family of apps.</p>
+                                <p>As a Data Scientist at Meta, you'll collaborate with product teams, engineers, and other data scientists to design and implement A/B tests, develop machine learning models, and create dashboards and reports that communicate findings to technical and non-technical stakeholders.</p>
+                                <p>This position offers the opportunity to work on cutting-edge technology and tackle complex challenges that affect billions of users worldwide, while continuously learning and growing your data science skills.</p>`,
+                "requirements": [
+                    "Master's or PhD in Statistics, Mathematics, Computer Science, or related quantitative field",
+                    "3+ years of experience in data science or related role",
+                    "Strong programming skills in Python, R, or similar languages",
+                    "Experience with statistical analysis, machine learning, and experimental design",
+                    "Proficiency with SQL and data visualization tools",
+                    "Ability to communicate complex findings in a clear, actionable manner",
+                    "Experience working with large datasets and distributed computing frameworks"
+                ],
+                "benefits": [
+                    "Competitive salary and equity package",
+                    "Comprehensive health, dental, and vision insurance",
+                    "Wellness reimbursement and on-site fitness facilities",
+                    "401(k) plan with generous company match",
+                    "Generous parental leave policies",
+                    "Free meals and snacks at on-site cafeterias",
+                    "Transportation benefits and shuttle service"
+                ],
+                "deadline": "Application deadline: April 5, 2025"
+            },
+            "5": {
+                "title": "iOS Developer",
+                "company": "Apple",
+                "logo": "https://i.pinimg.com/736x/18/05/ce/1805ce3d6ff5fa2a329d8052ffa90707.jpg",
+                "location": "Cupertino, CA",
+                "salary": "$140,000 - $175,000",
+                "description": `<p>Apple is looking for a talented iOS Developer to join our team and help create exceptional mobile experiences for our users. As an iOS Developer at Apple, you'll work on developing and improving applications that millions of people use every day, ensuring they meet the high standards of quality, performance, and user experience that Apple is known for.</p>
+                                <p>You'll collaborate with designers, product managers, and other engineers to implement new features, fix bugs, and continually enhance our iOS applications. Your work will involve writing clean, maintainable code, participating in code reviews, and staying up-to-date with the latest iOS technologies and best practices.</p>
+                                <p>This role offers the opportunity to make a significant impact on products that are integral to people's daily lives while working in a creative, innovative environment.</p>`,
+                "requirements": [
+                    "Bachelor's degree in Computer Science, Software Engineering, or related field",
+                    "5+ years of experience developing iOS applications",
+                    "Strong proficiency in Swift and Objective-C",
+                    "Deep understanding of iOS frameworks and design patterns",
+                    "Experience with version control systems (e.g., Git) and CI/CD pipelines",
+                    "Knowledge of performance optimization techniques and memory management",
+                    "Ability to write unit tests and implement automated testing"
+                ],
+                "benefits": [
+                    "Competitive salary and bonuses",
+                    "Apple stock options and employee stock purchase program",
+                    "Comprehensive medical, dental, and vision insurance",
+                    "401(k) plan with company match",
+                    "Paid time off and extended holiday breaks",
+                    "Employee product discounts",
+                    "Wellness programs and on-site fitness center"
+                ],
+                "deadline": "Application deadline: March 20, 2025"
+            },
+            "6": {
+                "title": "Backend Engineer",
+                "company": "Netflix",
+                "logo": "https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg",
+                "location": "Los Gatos, CA",
+                "salary": "$145,000 - $185,000",
+                "description": `<p>Netflix is seeking a Backend Engineer to join our team responsible for building and maintaining the infrastructure that powers our global streaming service. In this role, you'll work on designing, developing, and operating backend services that handle millions of requests per second and deliver content to our members around the world.</p>
+                                <p>As a Backend Engineer at Netflix, you'll collaborate with other engineers to implement scalable, reliable, and efficient systems using modern technologies and cloud-native architecture. You'll be involved in all aspects of development, from design and implementation to testing, deployment, and monitoring in production.</p>
+                                <p>This position offers the chance to work on challenging technical problems at massive scale, alongside talented engineers who are passionate about creating the best possible streaming experience for our members.</p>`,
+                "requirements": [
+                    "Bachelor's or Master's degree in Computer Science or related field",
+                    "6+ years of experience in backend development",
+                    "Strong proficiency in Java, Spring Framework, or similar technologies",
+                    "Experience with distributed systems, microservices architecture, and cloud platforms",
+                    "Knowledge of database technologies, caching strategies, and message queues",
+                    "Understanding of concurrency, performance optimization, and scalability",
+                    "Experience with CI/CD pipelines, monitoring, and observability tools"
+                ],
+                "benefits": [
+                    "Competitive salary and generous stock options",
+                    "Comprehensive health, dental, and vision insurance",
+                    "Flexible vacation policy and work arrangements",
+                    "Parental leave and family planning benefits",
+                    "Education and professional development allowance",
+                    "Free Netflix subscription",
+                    "Regular team events and company-wide celebrations"
+                ],
+                "deadline": "Application deadline: March 30, 2025"
+            }
+        };
+
+        // Wait for DOM content to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading spinner after content loads
+            setTimeout(() => {
+                document.querySelector('.loading').style.display = 'none';
+            }, 1500);
+
+            // Get tutor cards and detail elements
+            const tutorCards = document.querySelectorAll('.tutor-card');
+            const tutorDetailPage = document.getElementById('tutorDetailPage');
+            const closeButton = document.getElementById('closeButton');
+
+            // Add click event to each tutor card
+            tutorCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const tutorId = this.getAttribute('data-tutor-id');
+                    showtutorDetails(tutorId);
+                });
+            });
+
+            // Close detail page when clicking close button
+            closeButton.addEventListener('click', function() {
+                tutorDetailPage.classList.remove('show-detail');
+                setTimeout(() => {
+                    tutorDetailPage.style.display = 'none';
+                }, 400);
+            });
+
+            // Close detail page when clicking outside the container
+            tutorDetailPage.addEventListener('click', function(e) {
+                if (e.target === tutorDetailPage) {
+                    tutorDetailPage.classList.remove('show-detail');
+                    setTimeout(() => {
+                        tutorDetailPage.style.display = 'none';
+                    }, 400);
+                }
+            });
+
+            // Function to show tutor details
+            function showtutorDetails(tutorId) {
+                // Get tutor data
+                const tutor = tutorData[tutorId];
+                
+                if (!tutor) return;
+                
+                // // Set tutor details
+                // document.getElementById('detailTitle').textContent = tutor.title;
+                // document.getElementById('detailCompany').textContent = tutor.company;
+            
+                // document.getElementById('detailLogo').alt = `${tutor.company} Logo`;
+                // document.getElementById('detailLocation').innerHTML = `<i class="fas fa-map-marker-alt"></i> <span>${tutor.location}</span>`;
+                // document.getElementById('detailSalary').innerHTML = `<i class="fas fa-dollar-sign"></i> <span>${tutor.salary}</span>`;
+                // document.getElementById('detailDescription').innerHTML = tutor.description;
+                // document.getElementById('detailDeadline').textContent = tutor.deadline;
+
+                // Populate requirements list
+                const requirementsList = document.getElementById('detailRequirements');
+                requirementsList.innerHTML = '';
+                tutor.requirements.forEach(requirement => {
+                    const li = document.createElement('li');
+                    li.textContent = requirement;
+                    requirementsList.appendChild(li);
+                });
+
+                // Populate benefits list
+                const benefitsList = document.getElementById('detailBenefits');
+                benefitsList.innerHTML = '';
+                tutor.benefits.forEach(benefit => {
+                    const li = document.createElement('li');
+                    li.textContent = benefit;
+                    benefitsList.appendChild(li);
+                });
+
+                // Show the detail page with animation
+                tutorDetailPage.style.display = 'block';
+                setTimeout(() => {
+                    tutorDetailPage.classList.add('show-detail');
+                }, 10);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Available locations and skills for suggestions
+     
+        const availableSkills = [
+            "React", "Node.js", "JavaScript", "Python", "Java", "Swift", 
+            "iOS Development", "Android Development", "Machine Learning", 
+            "Artificial Intelligence", "Product Management", "UX/UI Design", 
+            "Graphic Design", "Data Science", "DevOps", "AWS", "Azure",
+            "Spring", "MongoDB", "SQL", "NoSQL", "GraphQL", "REST API"
+        ];
+        
+        // Elements
+        const skillsInput = document.getElementById('skillsInput');
+        const locationInput = document.getElementById('locationInput');
+        const skillsSuggestions = document.getElementById('skillsSuggestions');
+        const locationSuggestions = document.getElementById('locationSuggestions');
+        const searchButton = document.getElementById('searchButton');
+        const activeFilters = document.getElementById('activeFilters');
+        const tutorCards = document.querySelectorAll('.tutor-card');
+        const noResultsMessage = document.querySelector('.no-results');
+        
+        // States
+        let activeSkills = [];
+        let activeLocation = '';
+        
+        // Initialize suggestions containers
+        const skillsSuggestionsContainer = document.querySelector('.skills-suggestions-container');
+        const locationSuggestionsContainer = document.querySelector('.location-suggestions-container');
+        
+        // Function to show autocomplete suggestions
+        function showSuggestions(input, availableItems, suggestionsElement, container) {
+            const value = input.value.toLowerCase();
+            
+            if (value.length < 2) {
+                container.style.display = 'none';
+                return;
+            }
+            
+            const filteredItems = availableItems.filter(item => 
+                item.toLowerCase().includes(value)
+            );
+            
+            if (filteredItems.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+            
+            suggestionsElement.innerHTML = '';
+            filteredItems.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'suggestion-item';
+                li.textContent = item;
+                li.addEventListener('click', () => {
+                    if (suggestionsElement === skillsSuggestions) {
+                        handleSkillSelection(item);
+                    } else {
+                        locationInput.value = item;
+                        activeLocation = item;
+                        addActiveFilter('Location', item);
+                        container.style.display = 'none';
+                    }
+                });
+                suggestionsElement.appendChild(li);
+            });
+            
+            container.style.display = 'block';
+        }
+        
+        // Handle skill selection
+        function handleSkillSelection(skill) {
+            if (!activeSkills.includes(skill)) {
+                activeSkills.push(skill);
+                addActiveFilter('Skill', skill);
+                skillsInput.value = '';
+                skillsSuggestionsContainer.style.display = 'none';
+            }
+        }
+        
+        // Add active filter element
+        function addActiveFilter(category, value) {
+            // Check if filter already exists
+            const existingFilter = Array.from(activeFilters.children).find(
+                child => child.querySelector('.filter-value').textContent === value
+            );
+            
+            if (existingFilter) return;
+            
+            const filterElement = document.createElement('div');
+            filterElement.className = 'active-filter';
+            filterElement.innerHTML = `
+                <span class="filter-category">${category}:</span>
+                <span class="filter-value">${value}</span>
+                <span class="remove-filter" data-category="${category}" data-value="${value}">
+                    <i class="fas fa-times"></i>
+                </span>
+            `;
+            
+            // Add animation
+            filterElement.style.opacity = '0';
+            filterElement.style.transform = 'scale(0.9)';
+            
+            activeFilters.appendChild(filterElement);
+            
+            // Trigger animation
+            setTimeout(() => {
+                filterElement.style.opacity = '1';
+                filterElement.style.transform = 'scale(1)';
+            }, 10);
+            
+            // Add event listener to remove button
+            const removeButton = filterElement.querySelector('.remove-filter');
+            removeButton.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                const value = this.getAttribute('data-value');
+                
+                // Remove filter with fade-out animation
+                filterElement.style.opacity = '0';
+                filterElement.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    filterElement.remove();
+                    
+                    // Remove value from active filters
+                    if (category === 'Skill') {
+                        activeSkills = activeSkills.filter(skill => skill !== value);
+                    } else if (category === 'Location') {
+                        activeLocation = '';
+                        locationInput.value = '';
+                    }
+                    
+                    // Re-filter tutors
+                    filtertutors();
+                }, 300);
+            });
+            
+            // Filter tutors after adding a filter
+            filtertutors();
+        }
+        
+        // Function to filter tutors
+        function filtertutors() {
+            let visibleCount = 0;
+            
+            tutorCards.forEach(card => {
+                const cardLocation = card.querySelector('.tutor-location').textContent;
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent);
+                const title = card.querySelector('.tutor-title').textContent;
+                const company = card.querySelector('.tutor-company').textContent;
+                
+                // Check if location matches (if active location is set)
+                const locationMatch = !activeLocation || cardLocation.includes(activeLocation);
+                
+                // Check if any active skills match with tags or title or company
+                const skillMatch = activeSkills.length === 0 || activeSkills.some(skill => {
+                    return tags.some(tag => tag.toLowerCase().includes(skill.toLowerCase())) ||
+                           title.toLowerCase().includes(skill.toLowerCase()) ||
+                           company.toLowerCase().includes(skill.toLowerCase());
+                });
+                
+                if (locationMatch && skillMatch) {
+                    // Show the card with animation
+                    card.classList.remove('filtered-out');
+                    card.classList.add('filtered-in');
+                    setTimeout(() => {
+                        card.style.display = 'block';
+                    }, 50);
+                    visibleCount++;
+                } else {
+                    // Hide the card with animation
+                    card.classList.remove('filtered-in');
+                    card.classList.add('filtered-out');
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 400);
+                }
+            });
+            
+            // Show "No results" message if no tutors are visible
+            if (visibleCount === 0 && (activeSkills.length > 0 || activeLocation)) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        }
+        
+        // Event listeners for input fields
+        skillsInput.addEventListener('input', () => {
+            showSuggestions(skillsInput, availableSkills, skillsSuggestions, skillsSuggestionsContainer);
+        });
+        
+        locationInput.addEventListener('input', () => {
+            showSuggestions(locationInput, availableLocations, locationSuggestions, locationSuggestionsContainer);
+        });
+        
+        // Close suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!skillsInput.contains(e.target) && !skillsSuggestionsContainer.contains(e.target)) {
+                skillsSuggestionsContainer.style.display = 'none';
+            }
+            
+            if (!locationInput.contains(e.target) && !locationSuggestionsContainer.contains(e.target)) {
+                locationSuggestionsContainer.style.display = 'none';
+            }
+        });
+        
+        // Enter key in inputs
+        skillsInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && skillsInput.value.trim() !== '') {
+                handleSkillSelection(skillsInput.value.trim());
+            }
+        });
+        
+        locationInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && locationInput.value.trim() !== '') {
+                activeLocation = locationInput.value.trim();
+                addActiveFilter('Location', activeLocation);
+            }
+        });
+        
+        // Search button click
+        searchButton.addEventListener('click', () => {
+            // Add animation to button
+            searchButton.classList.add('active');
+            setTimeout(() => {
+                searchButton.classList.remove('active');
+            }, 300);
+            
+            // Add any pending inputs as filters
+            if (skillsInput.value.trim() !== '') {
+                handleSkillSelection(skillsInput.value.trim());
+            }
+            
+            if (locationInput.value.trim() !== '' && locationInput.value !== activeLocation) {
+                activeLocation = locationInput.value.trim();
+                addActiveFilter('Location', activeLocation);
+            }
+            
+            // Filter tutors and scroll to results
+            filtertutors();
+            window.scrollTo({
+                top: document.querySelector('.tutor-container').offsetTop - 20,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Add animation for search button
+        searchButton.addEventListener('mousedown', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        searchButton.addEventListener('mouseup', function() {
+            this.style.transform = '';
+        });
+        
+        searchButton.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    let activetutorType = 'all';
+
+    // Function to filter tutors by type
+    function filtertutorsByType(type) {
+        const tutorCards = document.querySelectorAll('.tutor-card');
+        let visibleCount = 0;
+
+        tutorCards.forEach(card => {
+            const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+            const shouldShow = type === 'all' || 
+                (type === 'remote' && (tags.includes('remote') || tags.includes('hybrid'))) ||
+                (type === 'onsite' && tags.includes('on-site'));
+
+            if (shouldShow) {
+                card.style.display = 'block';
+                card.classList.remove('filtered-out');
+                card.classList.add('filtered-in');
+                visibleCount++;
+            } else {
+                card.classList.remove('filtered-in');
+                card.classList.add('filtered-out');
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 400);
+            }
+        });
+
+        // Show/hide no results message
+        const noResultsMessage = document.querySelector('.no-results');
+        noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    // Add click event listeners to filter buttons
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Update active tutor type and filter
+            activetutorType = button.getAttribute('data-type');
+            filtertutorsByType(activetutorType);
+        });
+    });
+
+    // Modify your existing filtertutors function to include tutor type filtering
+    const originalFiltertutors = window.filtertutors;
+    window.filtertutors = function() {
+        originalFiltertutors();
+        filtertutorsByType(activetutorType);
+    };
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+      const openModalBtn = document.querySelector('.open-modal-btn');
+      const modalOverlay = document.querySelector('.modal-overlay');
+      const closeModalBtn = document.querySelector('.close-modal');
+      const form = document.getElementById('registration-form');
+      const modal = document.querySelector('.modal');
+      
+      // Open modal with animation
+      openModalBtn.addEventListener('click', function() {
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      });
+      
+      // Close modal
+      function closeModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+        
+        // Reset form animations after modal is closed
+        setTimeout(() => {
+          const formGroups = document.querySelectorAll('.form-group');
+          const submitBtn = document.querySelector('.submit-btn');
+          
+          formGroups.forEach((group, index) => {
+            group.style.opacity = '0';
+            setTimeout(() => {
+              group.style.opacity = '';
+              group.style.transform = '';
+            }, 50);
+          });
+          
+          submitBtn.style.opacity = '0';
+          setTimeout(() => {
+            submitBtn.style.opacity = '';
+          }, 50);
+        }, 400);
+      }
+      
+      closeModalBtn.addEventListener('click', closeModal);
+      
+      // Close modal when clicking outside
+      modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) {
+          closeModal();
+        }
+      });
+      
+      // Prevent modal close when clicking on modal content
+      modal.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+      
+      // Form submission
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Password validation
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (password !== confirmPassword) {
+          // Show error message
+          const confirmPasswordInput = document.getElementById('confirm-password');
+          confirmPasswordInput.style.borderColor = '#ff3860';
+          
+          // Create error message if it doesn't exist
+          let errorMessage = document.getElementById('password-error');
+          if (!errorMessage) {
+            errorMessage = document.createElement('p');
+            errorMessage.id = 'password-error';
+            errorMessage.style.color = '#ff3860';
+            errorMessage.style.fontSize = '0.85rem';
+            errorMessage.style.marginTop = '5px';
+            errorMessage.textContent = 'Passwords do not match!';
+            confirmPasswordInput.parentNode.appendChild(errorMessage);
+          }
+          
+          return;
+        }
+        
+        // Remove error message if passwords match
+        const errorMessage = document.getElementById('password-error');
+        if (errorMessage) {
+          errorMessage.remove();
+        }
+        
+        // Form animation on success
+        const formElements = form.querySelectorAll('.form-group, .submit-btn');
+        formElements.forEach((element, index) => {
+          setTimeout(() => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(-20px)';
+          }, index * 100);
+        });
+        
+        setTimeout(() => {
+          form.innerHTML = `
+            <div style="text-align: center; animation: fadeIn 0.5s forwards;">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#6e8efb" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <h3 style="background: linear-gradient(135deg, #6e8efb, #a777e3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-top: 15px; font-size: 1.4rem;">Registration Successful!</h3>
+              <p style="margin-top: 10px; color: #666;">Thank you for joining Learnersleaf</p>
+              <button id="close-success" style="margin-top: 20px; background: linear-gradient(135deg, #6e8efb, #a777e3); color: white; border: none; padding: 10px 25px; border-radius: 50px; cursor: pointer; font-weight: 500; transition: all 0.3s ease;">Close</button>
+            </div>
+          `;
+          
+          // Add event listener to close success message
+          document.getElementById('close-success').addEventListener('click', closeModal);
+        }, formElements.length * 100 + 300);
+      });
+      
+      // Handle responsive issues
+      window.addEventListener('resize', function() {
+        if (modalOverlay.classList.contains('active')) {
+          // Ensure modal stays within viewport on resize
+          const modalHeight = modal.offsetHeight;
+          const windowHeight = window.innerHeight;
+          
+          if (modalHeight > windowHeight * 0.9) {
+            modal.style.height = (windowHeight * 0.85) + 'px';
+          } else {
+            modal.style.height = '';
+          }
+        }
+      });
+    });
+    </script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script>
+   $(document).ready(function () {
+     $('#search').on('input', function () {
+       const query = $(this).val();
+       if (query.length < 3) {
+         $('#results').empty();
+         return;
+       }
+
+       $.get('https://photon.komoot.io/api/', {
+         q: query,
+         limit: 5,
+         lang: 'en'
+       }, function (data) {
+         $('#results').empty();
+
+         data.features.forEach(function (place) {
+           const props = place.properties;
+
+           // Filter for India
+           if (props.country !== 'India') return;
+
+           const location = props.name || '';
+           const state = props.state || '';
+           const country = props.country || 'India';
+           const formatted = `${location}, ${state}, ${country}`;
+
+           const item = $(`
+             <div class="result-item">${formatted}</div>
+           `);
+
+           // On click: put it into input box and hide results
+           item.on('click', function () {
+             $('#search').val(formatted);
+             $('#results').empty();
+           });
+
+           $('#results').append(item);
+         });
+       });
+     });
+
+     // Optional: hide suggestions if clicked outside
+     $(document).on('click', function (e) {
+       if (!$(e.target).closest('#search, #results').length) {
+         $('#results').empty();
+       }
+     });
+   });
+ </script>
+</body>
+</html>

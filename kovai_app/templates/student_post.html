@@ -1,0 +1,453 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        i{
+            font-size: 20px;
+        }
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.post {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+ul li {
+    font-size: 18px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: 50px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+p i {
+    color: #0066cc;
+    margin-right: 8px;
+}
+
+p span {
+    font-weight: bold;
+}
+
+.icon-location {
+    color: #e74c3c;
+}
+
+.icon-phone {
+    color: #27ae60;
+}
+
+.icon-gender {
+    color: #8e44ad;
+}
+
+.icon-wifi {
+    color: #3498db;
+}
+
+.icon-message {
+    color: #f39c12;
+}
+
+@media (max-width: 768px) {
+    .post {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    p, ul li {
+        font-size: 16px;
+    }
+}
+
+    </style>
+   
+</head>
+<body>
+    <h1>Post</h1>
+    <div class="post">
+   
+    <h2>{{sp.meeting_option }} {{sp.subject}} Teacher needed in {{s.location}}</h2>
+    <p> <i class="fa-solid fa-chalkboard-teacher class-icon"></i> Class {{sp.classes}} {{sp.curriculam}}</p>
+    <p><i class="fa-solid fa-graduation-cap"></i> Subject: </p>
+    <ul>
+        {% if sp.subject %}
+        <li> {{sp.subject}}</li>
+        {% endif %}
+        {% if sp.two_subject %}
+        <li> {{sp.two_subject}}</li>
+        {% endif %}
+        {% if sp.three_subject %}
+        <li> {{sp.three_subject}}</li>
+        {% endif %}
+
+    </ul>
+  <p> <i class="fa-solid fa-location-dot" style="font-size: 20px;"></i> {{s.location}}  </p> 
+  <p><i class="fa-solid fa-indian-rupee-sign" style="font-size: 20px;"></i> {{sp.budget}} /{{sp.budget_need}}</p>
+  <p><i class="fa-solid fa-hourglass-start"></i> Posted:{{ sp.dates|timesince }} ago  <i class="fa-solid fa-scale-unbalanced-flip"></i> Requires:{{sp.need}}</p>
+  <p><i class="fa-solid fa-user"></i> Posted by: {{s.name}}</p>
+  <p><i class="fa-solid fa-phone"></i>Contact: {{s.phone}}</p>
+  <p><i class="fa-solid fa-venus-mars"></i>Gender Preference: {{sp.gender}}</p>
+  <p><i class="fa-solid fa-wifi"></i>Available :{{sp.meeting_option}}</p>
+  <p><i class="fa-solid fa-paper-plane"></i> Can communicate in :{{sp.language }}</p>
+  <p>{{sp.message}}</p>
+  {% if sp.imagess %}
+  <p><i class="fa-solid fa-file-arrow-up"></i> <a href="{{ sp.imagess.url }}" target="_blank">View File</a></p>
+{% else %}
+  <p>No file uploaded.</p>
+{% endif %}
+
+  <p>{{sp.dyr}}</p>
+
+
+
+
+    </div>
+    </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Posting Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a69bd;
+            --secondary-color: #6a89cc;
+            --background-color: #f4f6ff;
+            --text-color: #2f3542;
+            --card-bg: white;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .post-container {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
+            width: 100%;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .post-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .post-header {
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--background-color);
+            padding-bottom: 1rem;
+        }
+
+        .post-header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-header p {
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        .post-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background-color: #f9f9fc;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .post-detail:hover {
+            background-color: #f0f1f5;
+        }
+
+        .post-detail i {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .subjects-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .file-upload {
+            display: flex;
+            align-items: center;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .file-upload:hover {
+            color: var(--primary-color);
+        }
+
+        .contact-section {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .contact-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .post-container {
+                padding: 1.5rem;
+                margin: 0 10px;
+            }
+
+            .post-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-load {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="post-container animate-load">
+        <div class="post-header">
+            <h1>{{sp.meeting_option}} {{sp.subject}} Teacher Needed</h1>
+            <p>Located in {{s.location}}</p>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <div>
+                <strong>Class & Curriculum</strong>
+                <p>{{sp.classes}} /{{sp.curriculum}}</p>
+            </div>
+        </div>
+        <div class="post-detail">
+            <i class="fa-solid fa-graduation-cap"></i>
+            
+        <div class="subjects-list">
+            <strong>Subjects</strong><br>
+            {% if sp.subject %}
+                <span class="subject-tag">{{sp.subject}}</span>
+            {% endif %}
+            {% if sp.two_subject %}
+                <span class="subject-tag">{{sp.two_subject}}</span>
+            {% endif %}
+            {% if sp.three_subject %}
+                <span class="subject-tag">{{sp.three_subject}}</span>
+            {% endif %}
+        </div>
+    </div>
+        <div class="post-detail">
+            <i class="fas fa-indian-rupee-sign"></i>
+            <div>
+                <strong>Budget</strong>
+                <p>{{sp.budget}} / {{sp.budget_need}}</p>
+            </div>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-hourglass-start"></i>
+            <div>
+                <strong>Posted</strong>
+                <p>{{ sp.dates|timesince }} ago</p>
+            </div>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-user"></i>
+            <div>
+                <strong>Posted By</strong>
+                <p>{{s.name}}</p>
+            </div>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-phone"></i>
+            <div>
+                <strong>Contact</strong>
+                <p>{{s.phone}}</p>
+            </div>
+        </div>
+
+        
+        <div class="post-detail">
+           <i class="fas fa-map-marker-alt"></i>
+            <div>
+                <strong>Location</strong>
+                <p>{{sp.location}}</p>
+            </div>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-venus-mars"></i>
+            <div>
+                <strong>Gender Preference</strong>
+                <p>{{sp.gender}}</p>
+            </div>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-wifi"></i>
+            <div>
+                <strong>Meeting Option</strong>
+                <p>{{sp.meeting_option}}</p>
+            </div>
+        </div>
+
+        <div class="post-detail">
+            <i class="fas fa-language"></i>
+            <div>
+                <strong>Communication Languages</strong>
+                <p>{{sp.language}}</p>
+            </div>
+        </div>
+
+        {% if sp.dyr %}
+        <div class="post-detail">
+            <i class="fas fa-comment-dots"></i>
+            <div>
+                <strong>Additional Message</strong>
+                <p>{{sp.dyr}}</p>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if sp.imagess %}
+        <div class="post-detail">
+            <i class="fas fa-file-upload"></i>
+            <div>
+                <strong>Attached File</strong>
+                <a href="{{ sp.imagess.url }}" target="_blank" class="file-upload">
+                    View Uploaded File
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="post-detail">
+            <i class="fas fa-file-upload"></i>
+            <div>
+                <strong>Attachments</strong>
+                <p>No file uploaded</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="contact-section">
+            <a href="/h_all_teachers"><button class="contact-btn">
+                Contact Teacher
+            </button></a>
+        </div>
+    </div>
+</body>
+</html>

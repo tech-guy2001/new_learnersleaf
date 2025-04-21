@@ -1,0 +1,1241 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <script src="{% static 'js/post.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        form {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .autocomplete-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], select {
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"]::placeholder {
+            color: #888;
+        }
+
+        .autocomplete-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .res_box, .two_res_box, .three_res_box {
+            position: absolute;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            border-radius: 4px;
+        }
+
+        .res_box ul, .two_res_box ul, .three_res_box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .res_box li, .two_res_box li, .three_res_box li {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+
+        .res_box li:hover, .two_res_box li:hover, .three_res_box li:hover {
+            background-color: #f0f0f0;
+        }
+
+        #two, #three {
+            display: none;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .checkbox-label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        h1{
+            text-align: center;
+            background-color: #007bff; 
+            color: #fff;
+            font-size: 30px;
+            padding: 10px;
+            width: 60%;
+            margin-left: 200px;
+          
+        }
+        .subject-section {
+            display: none;
+            margin-top: 20px;
+            position: relative;
+        }
+        @media (max-width: 600px) {
+            h1{
+                margin-left: 10px;
+            }
+        }
+    </style>
+
+    <script>
+           $(document).ready(function () {
+            $("#show-two").click(function () {
+                $(".two").toggle();
+                $("#show-two").hide();
+            });
+
+            $("#show-three").click(function () {
+                $(".three").toggle();
+                $("#show-three").hide();
+            });
+
+            $("#show-four").click(function () {
+                $(".four").toggle();
+                $("#show-four").hide();
+            });
+
+            $("#show-five").click(function () {
+               
+                $(".five").toggle();
+                $("#show-five").hide();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Post a New Requirement</h1>
+    <form action="/add_post/{{email}}" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="classes">Class</label> <br>
+        <input type="text" name="classes" id="classes" required><br>
+    
+        <label>Curriculum</label>
+        <input type="text" placeholder="State board, CBSE, ICSE, IGCSE, IB..." name="curriculum" id="curriculum"> <br>
+    
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="e.g., Maths, Python" required>
+        <div class="autocomplete-results res_box"></div>
+    
+        <button type="button" class="btn btn-primary show-btn" id="show-two">Add Another Subject</button>
+
+       
+        <div class="two subject-section">
+            <label for="two_subject">Subject</label>
+            <input type="text" id="two_subject" name="two_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results two_res_box"></div>
+
+            <button type="button" class="btn btn-primary show-btn" id="show-three">Add Another Subject</button>
+          
+        </div>
+
+        
+        <div class="three subject-section">
+            <label for="three_subject">Subject</label>
+            <input type="text" id="three_subject" name="three_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results three_res_box"></div>
+            <button type="button" class="btn btn-primary show-btn" id="show-four">Add Another Subject</button>
+        </div>
+
+    
+        <div class="four subject-section">
+            <label for="four_subject">Subject</label>
+            <input type="text" id="four_subject" name="four_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results four_res_box"></div>
+
+            <button type="button" class="btn btn-primary show-btn" id="show-five">Add Another Subject</button>
+        </div>
+
+       
+        <div class="five subject-section">
+            <label for="five_subject">Subject</label>
+            <input type="text" id="five_subject" name="five_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results five_res_box"></div>
+
+           
+        </div><br>
+        <br>
+
+        <label for="i_want">I am looking for:</label> <br>
+        <select id="i_want" name="i_want">
+            <option value="Tutoring">Tuition</option>
+            <option value="Project Support">Project Support</option>
+            <option value="assignment help">Assignment Support</option>
+            <option value="Others">Others</option>
+        </select> <br><br>
+
+        <label>Mode of Teaching:</label><br>
+        <label class="checkbox-label"><input type="checkbox" name="meeting_option" value="Online"> Online </label>
+        <label class="checkbox-label"><input type="checkbox" name="meeting_option" value="Home"> Home</label>
+        <label class="checkbox-label"><input type="checkbox" name="meeting_option" value="At Tutor's Place"> At Tutor's Place</label> <br><br>
+
+        <label for="budget">Budget</label> <br>
+        <input type="text" id="budget" name="budget" placeholder="INR" style="width: 40%;" required> 
+        <select name="budget_need" style="width: 40%;">
+            <option value="per hour">per hour</option>
+            <option value="per hour">per hour</option>
+            <option value="per day">per day</option>
+            <option value="per week">per week</option>
+            <option value="per month">per month</option>
+
+         
+        </select> <br><br>
+
+        <label for="gender">Gender Preference</label><br>
+        <select id="gender" name="gender" style="width: 40%;">
+            <option value="">Select your preferred tutor gender:</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="both">Any</option>
+        </select> <br><br>
+
+        <label for="language">Preferred Language</label> <br>
+        <input type="text" id="language" name="language" placeholder="I can communicate with the tutor in (languages)" style="width: 90%;" required> <br><br>
+
+     
+        <label for="need">I need some:</label> <br>
+       
+        <input type="checkbox" value="Full Time" name="need">
+        <label for="need">Full Time</label> 
+        <input type="checkbox" value="Part Time" name="need">
+        <label for="need">Part Time</label>
+        <input type="checkbox" value="both" name="need">
+        <label for="need">Any</label>
+         <br><br>
+         <label for="image">Upload your requirement:(Optional)</label>
+         <input type="file" name="image" id="image" > <br><br>
+
+        <label for="dyr">Details of your requirement</label>
+        <textarea id="dyr" name="dyr" style="width: 90%; height: 120px; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" placeholder="Example: I am looking for someone with experience in teaching IGCSE Maths online to young kids. My daughter is available from 4.30 pm EST to 8.30 pm EST on weekdays and flexible on Weekends. You should have a digital pen and good internet connection. My budget is a maximum of $35 per hour."></textarea> <br><br>
+
+        <input type="submit" value="POST" class="btn">
+    </form>
+    <script>
+     function validation() {
+    // Required fields
+    const requiredFields = [
+        { id: "classes", message: "Class field is required." },
+        { id: "subject", message: "Subject field is required." },
+        { id: "i_want", message: "You must select what you are looking for." },
+        { id: "budget", message: "Budget field is required." },
+        { id: "gender", message: "You must select a gender preference." },
+        { id: "language", message: "Preferred language is required." },
+        { id: "dyr", message: "Details of your requirement are required." }
+    ];
+
+    // Check if all required fields are filled
+    for (const field of requiredFields) {
+        const element = document.getElementById(field.id);
+        if (!element.value.trim()) {
+            alert(field.message);
+            element.focus();
+            return false; // Prevent form submission
+        }
+    }
+
+    // Checkboxes for mode of teaching
+    const meetingOptions = document.querySelectorAll('input[name="meeting_option"]');
+    const isMeetingOptionSelected = Array.from(meetingOptions).some(option => option.checked);
+    if (!isMeetingOptionSelected) {
+        alert("You must select at least one mode of teaching.");
+        return false; // Prevent form submission
+    }
+
+    // Checkbox for need type
+    const needs = document.querySelectorAll('input[name="need"]');
+    const isNeedSelected = Array.from(needs).some(need => need.checked);
+    if (!isNeedSelected) {
+        alert("You must select at least one need type (Full Time, Part Time, or Any).");
+        return false; // Prevent form submission
+    }
+
+    // Validate short profile description (Details of your requirement)
+    const description = document.getElementById("dyr").value.trim();
+    const regex = /^[A-Za-z\s.,!?'"-]+$/; // Allows only letters, spaces, and some punctuation
+    if (!regex.test(description)) {
+        alert('Please enter only valid characters in the "Details of your requirement" field. Avoid using numbers or special symbols.');
+        return false; // Prevent form submission
+    }
+
+    // If all checks pass, allow form submission
+    return true;
+}
+
+
+    </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a New Requirement</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6e8efb, #a777e3);
+            --text-color: #4a4a4a;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(110, 142, 251, 0.15);
+            --transition: all 0.3s ease;
+            --input-bg: rgba(255, 255, 255, 0.9);
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header_addpost {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0; /* This is causing the header to be invisible initially */
+        }
+        
+        .header_addpost h1 {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            font-size: 28px;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header_addpost h1::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .form-container_addpost {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            opacity: 0; /* This is causing the form to be invisible initially */
+            transform: translateY(20px);
+        }
+        
+        /* Rest of your styles remain the same */
+        .form-group_addpost {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group_addpost label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #6e8efb;
+            transition: var(--transition);
+        }
+        
+        .form-control_addpost {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--input-bg);
+            transition: var(--transition);
+            outline: none;
+        }
+        
+        .form-control_addpost:focus {
+            border-color: #a777e3;
+            box-shadow: 0 0 8px rgba(167, 119, 227, 0.3);
+        }
+        
+        .form-control_addpost::placeholder {
+            color: #b9b9b9;
+        }
+        
+        .budget-container_addpost {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .budget-container_addpost .form-control_addpost {
+            flex: 1;
+        }
+        
+        .checkbox-group_addpost {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-label_addpost {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            padding-left: 35px;
+            transition: var(--transition);
+        }
+        
+        .checkbox-label_addpost input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark_addpost {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: var(--input-bg);
+            border: 2px solid #e1e1e1;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        
+        .checkbox-label_addpost:hover .checkmark_addpost {
+            border-color: #a777e3;
+        }
+        
+        .checkbox-label_addpost input:checked ~ .checkmark_addpost {
+            background: var(--primary-gradient);
+            border-color: transparent;
+        }
+        
+        .checkmark_addpost:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .checkbox-label_addpost input:checked ~ .checkmark_addpost:after {
+            display: block;
+        }
+        
+        .subject-section_addpost {
+            display: none;
+            margin-top: 20px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .add-subject-btn_addpost {
+            margin-top: 15px;
+            background: transparent;
+            color: #6e8efb;
+            border: 2px solid #6e8efb;
+            padding: 10px 20px;
+            font-size: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .add-subject-btn_addpost:hover {
+            background: rgba(110, 142, 251, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .add-subject-btn_addpost i {
+            font-size: 16px;
+        }
+        
+        .submit-btn_addpost {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            transition: var(--transition);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(110, 142, 251, 0.3);
+        }
+        
+        .submit-btn_addpost:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(110, 142, 251, 0.4);
+        }
+        
+        .submit-btn_addpost:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn_addpost::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .submit-btn_addpost:hover::after {
+            animation: shine 1.5s infinite;
+        }
+        
+        .autocomplete-results_addpost {
+            position: absolute;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #e1e1e1;
+            border-top: none;
+            max-height: 200px;
+            overflow-y: auto;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+        
+        .autocomplete-results_addpost ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .autocomplete-results_addpost li {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: var(--transition);
+        }
+        
+        .autocomplete-results_addpost li:hover {
+            background-color: rgba(110, 142, 251, 0.1);
+        }
+        
+        .autocomplete-results_addpost.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .file-upload_addpost {
+            position: relative;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 2px dashed #e1e1e1;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .file-upload_addpost:hover {
+            border-color: #a777e3;
+            background-color: rgba(110, 142, 251, 0.05);
+        }
+        
+        .file-upload_addpost input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #6e8efb;
+            font-weight: 600;
+        }
+        
+        .file-upload-label i {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .file-name_addpost {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #888;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        textarea.form-control_addpost {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            color: #6e8efb;
+            position: relative;
+        }
+        
+        .form-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .form-container_addpost {
+                padding: 20px;
+            }
+            
+            .header_addpost h1 {
+                font-size: 24px;
+                padding: 15px;
+            }
+            
+            .form-group_addpost {
+                margin-bottom: 20px;
+            }
+            
+            .checkbox-group_addpost {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .budget-container_addpost {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .submit-btn_addpost {
+                width: 100%;
+                max-width: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header_addpost h1 {
+                font-size: 20px;
+                padding: 12px;
+            }
+            
+            .form-control_addpost {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .checkbox-label_addpost {
+                padding-left: 30px;
+                font-size: 14px;
+            }
+            
+            .checkmark_addpost {
+                height: 20px;
+                width: 20px;
+            }
+            
+            .checkmark_addpost:after {
+                left: 7px;
+                top: 4px;
+                width: 4px;
+                height: 8px;
+            }
+            
+            .submit-btn_addpost {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header_addpost">
+            <h1>Post a New Requirement</h1>
+        </div>
+        
+        <form action="/add_post/{{email}}" method="POST" id="requirementForm" onsubmit="return validation()" enctype="multipart/form-data" class="form-container_addpost">
+            {% csrf_token %}
+            
+            <div class="form-section-title">Basic Information</div>
+            
+            <div class="form-group_addpost">
+                <label for="classes">Class</label>
+                <input type="text" class="form-control_addpost" name="classes" id="classes" required>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="curriculum">Curriculum</label>
+                <input type="text" class="form-control_addpost" name="curriculum" id="curriculum" placeholder="State board, CBSE, ICSE, IGCSE, IB...">
+            </div>
+            
+            <div class="form-section-title">Subject Information</div>
+            
+            <div class="form-group_addpost">
+                <label for="subject">Subject</label>
+                <input type="text" class="form-control_addpost" id="subject" name="subject" placeholder="e.g., Maths, Python" required>
+                <div class="autocomplete-results_addpost res_box"></div>
+                
+                <button type="button" class="add-subject-btn_addpost" id="show-two">
+                    <i class="fas fa-plus-circle"></i> Add Another Subject
+                </button>
+            </div>
+            
+            <div class="subject-section_addpost two">
+                <div class="form-group_addpost">
+                    <label for="two_subject">Subject 2</label>
+                    <input type="text" class="form-control_addpost" id="two_subject" name="two_subject" placeholder="e.g., Maths, Python">
+                    <div class="autocomplete-results_addpost two_res_box"></div>
+                    
+                    <button type="button" class="add-subject-btn_addpost" id="show-three">
+                        <i class="fas fa-plus-circle"></i> Add Another Subject
+                    </button>
+                </div>
+            </div>
+            
+            <div class="subject-section_addpost three">
+                <div class="form-group_addpost">
+                    <label for="three_subject">Subject 3</label>
+                    <input type="text" class="form-control_addpost" id="three_subject" name="three_subject" placeholder="e.g., Maths, Python">
+                    <div class="autocomplete-results_addpost three_res_box"></div>
+                    
+                    <button type="button" class="add-subject-btn_addpost" id="show-four">
+                        <i class="fas fa-plus-circle"></i> Add Another Subject
+                    </button>
+                </div>
+            </div>
+            
+            <div class="subject-section_addpost four">
+                <div class="form-group_addpost">
+                    <label for="four_subject">Subject 4</label>
+                    <input type="text" class="form-control_addpost" id="four_subject" name="four_subject" placeholder="e.g., Maths, Python">
+                    <div class="autocomplete-results_addpost four_res_box"></div>
+                    
+                    <button type="button" class="add-subject-btn_addpost" id="show-five">
+                        <i class="fas fa-plus-circle"></i> Add Another Subject
+                    </button>
+                </div>
+            </div>
+            
+            <div class="subject-section_addpost five">
+                <div class="form-group_addpost">
+                    <label for="five_subject">Subject 5</label>
+                    <input type="text" class="form-control_addpost" id="five_subject" name="five_subject" placeholder="e.g., Maths, Python">
+                    <div class="autocomplete-results_addpost five_res_box"></div>
+                </div>
+            </div>
+            
+            <div class="form-section-title">Tutoring Requirements</div>
+            
+            <div class="form-group_addpost">
+                <label for="i_want">I am looking for:</label>
+                <select class="form-control_addpost" id="i_want" name="i_want">
+                    <option value="Tutoring">Tuition</option>
+                    <option value="Project Support">Project Support</option>
+                    <option value="assignment help">Assignment Support</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label>Mode of Teaching:</label>
+                <div class="checkbox-group_addpost">
+                    <label class="checkbox-label_addpost">
+                        <input type="checkbox" name="meeting_option" value="Online">
+                        <span class="checkmark_addpost"></span>
+                        Online
+                    </label>
+                    <label class="checkbox-label_addpost">
+                        <input type="checkbox" name="meeting_option" value="Offline">
+                        <span class="checkmark_addpost"></span>
+                        Home
+                    </label>
+                    <label class="checkbox-label_addpost">
+                        <input type="checkbox" name="meeting_option" value="Offline">
+                        <span class="checkmark_addpost"></span>
+                        At Tutor's Place
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="budget">Budget</label>
+                <div class="budget-container_addpost">
+                    <input type="text" class="form-control_addpost" id="budget" name="budget" placeholder="INR" required>
+                    <select class="form-control_addpost" name="budget_need">
+                        <option value="per hour">per hour</option>
+                        <option value="per day">per day</option>
+                        <option value="per week">per week</option>
+                        <option value="per month">per month</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="gender">Gender Preference</label>
+                <select class="form-control_addpost" id="gender" name="gender">
+                    <option value="">Select your preferred tutor gender:</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="both">Any</option>
+                </select>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="language">Preferred Language</label>
+                <input type="text" class="form-control_addpost" id="language" name="language" placeholder="I can communicate with the tutor in (languages)" required>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="need">I need someone:</label>
+                <div class="checkbox-group_addpost">
+                    <label class="checkbox-label_addpost">
+                        <input type="checkbox" value="Full Time" name="need">
+                        <span class="checkmark_addpost"></span>
+                        Full Time
+                    </label>
+                    <label class="checkbox-label_addpost">
+                        <input type="checkbox" value="Part Time" name="need">
+                        <span class="checkmark_addpost"></span>
+                        Part Time
+                    </label>
+                    <label class="checkbox-label_addpost">
+                        <input type="checkbox" value="both" name="need">
+                        <span class="checkmark_addpost"></span>
+                        Any
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="image">Upload your requirement (Optional)</label>
+                <div class="file-upload_addpost">
+                    <label for="image" class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Drag and drop files here or click to browse</span>
+                        <div class="file-name_addpost">No file selected</div>
+                    </label>
+                    <input type="file" name="image" id="image">
+                </div>
+            </div>
+            
+            <div class="form-group_addpost">
+                <label for="dyr">Details of your requirement</label>
+                <textarea class="form-control_addpost" id="dyr" name="dyr" placeholder="Example: I am looking for someone with experience in teaching IGCSE Maths online to young kids. My daughter is available from 4.30 pm EST to 8.30 pm EST on weekdays and flexible on Weekends. You should have a digital pen and good internet connection. My budget is a maximum of $35 per hour." required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn_addpost">
+                POST REQUIREMENT
+            </button>
+        </form>
+    </div>
+    
+    <script>
+        // Fix for the incomplete script
+        $(document).ready(function() {
+            // Make header and form visible immediately instead of relying on animation
+            $('.header_addpost').css('opacity', '1');
+            $('.form-container_addpost').css({
+                'opacity': '1',
+                'transform': 'translateY(0)'
+            });
+            
+            // Initial animations
+            anime({
+                targets: '.header_addpost h1::after',
+                translateX: ['100%', '-100%'],
+                delay: 500,
+                duration: 1500,
+                easing: 'easeInOutSine',
+                loop: true
+            });
+            
+            // Animate submit button shine effect
+            anime({
+                targets: '.submit-btn_addpost::after',
+                translateX: ['-100%', '100%'],
+                delay: 0,
+                duration: 1500,
+                easing: 'easeInOutSine',
+                loop: true
+            });
+            
+            // Add subject buttons
+            $("#show-two").click(function() {
+                $(".two").show();
+                anime({
+                    targets: '.two',
+                    opacity: 1,
+                    translateY: 0,
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+                $(this).hide();
+            });
+            
+            $("#show-three").click(function() {
+                $(".three").show();
+                anime({
+                    targets: '.three',
+                    opacity: 1,
+                    translateY: 0,
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+                $(this).hide();
+            });
+            
+            $("#show-four").click(function() {
+                $(".four").show();
+                anime({
+                    targets: '.four',
+                    opacity: 1,
+                    translateY: 0,
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+                $(this).hide();
+            });
+            
+            $("#show-five").click(function() {
+                $(".five").show();
+                anime({
+                    targets: '.five',
+                    opacity: 1,
+                    translateY: 0,
+                    duration: 500,
+                    easing: 'easeOutQuad'
+                });
+                $(this).hide();
+            });
+            
+            // Form controls focus animation
+            $(".form-control_addpost").focus(function() {
+                $(this).parent().find("label").css({
+                    'color': '#a777e3'
+                });
+            });
+            
+            $(".form-control_addpost").blur(function() {
+                $(this).parent().find("label").css({
+                    'color': '#6e8efb'
+                });
+            });
+            
+            // File upload preview
+            $("#image").change(function() {
+                const fileName = $(this).val().split('\\').pop();
+                if (fileName) {
+                    $(".file-name_addpost").text(fileName);
+                    $(".file-upload-label i").removeClass("fa-cloud-upload-alt").addClass("fa-check-circle");
+                    
+                    anime({
+                        targets: '.file-upload-label i',
+                        scale: [1, 1.2, 1],
+                        duration: 700,
+                        easing: 'easeInOutQuad'
+                    });
+                } else {
+                    $(".file-name_addpost").text("No file selected");
+                    $(".file-upload-label i").removeClass("fa-check-circle").addClass("fa-cloud-upload-alt");
+                }
+            });
+            
+            // Float animation for buttons
+            anime({
+                targets: '.add-subject-btn_addpost, .submit-btn_addpost',
+                translateY: [0, -5, 0],
+                duration: 2000,
+                easing: 'easeInOutSine',
+                loop: true,
+                delay: anime.stagger(100)
+            });
+        });
+        
+        function validation() {
+            // Required fields
+            const requiredFields = [
+                { id: "classes", message: "Class field is required." },
+                { id: "subject", message: "Subject field is required." },
+                { id: "budget", message: "Budget field is required." },
+                { id: "language", message: "Preferred language is required." },
+                { id: "dyr", message: "Details of your requirement are required." }
+            ];
+            
+    // Validate short profile description (Details of your requirement)
+    const description = document.getElementById("dyr").value.trim();
+    const regex = /^[A-Za-z\s.,!?'"-]+$/; // Allows only letters, spaces, and some punctuation
+    if (!regex.test(description)) {
+        alert('Please enter only valid characters in the "Details of your requirement" field. Avoid using numbers or special symbols.');
+        return false; // Prevent form submission
+    }
+
+    const classes = document.getElementById("classes").value.trim();
+
+    if(classes.length>5)
+    {
+        alert('Please Enter  only valid class and length must be with in five');
+        return false; // Prevent form submission
+    }
+
+            // Check if all required fields are filled
+            for (const field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element.value.trim()) {
+                    // Shake animation for invalid fields
+                    anime({
+                        targets: `#${field.id}`,
+                        translateX: [0, -10, 10, -10, 10, 0],
+                        duration: 500,
+                        easing: 'easeInOutSine'
+                    });
+                    
+                    // Highlight the field with error
+                    element.style.borderColor = '#ff6b6b';
+                    
+                    // Show error message
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'error-message';
+                    errorMsg.style.color = '#ff6b6b';
+                    errorMsg.style.fontSize = '13px';
+                    errorMsg.style.marginTop = '5px';
+                    errorMsg.innerHTML = field.message;
+                    
+                    // Remove any existing error message
+                    const existingError = element.parentNode.querySelector('.error-message');
+                    if (existingError) {
+                        element.parentNode.removeChild(existingError);
+                    }
+                    
+                    element.parentNode.appendChild(errorMsg);
+                    element.focus();
+                    
+                    // Scroll to the invalid field
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    return false;
+                } else {
+                    // Reset border color if valid
+                    element.style.borderColor = '#e1e1e1';
+                    
+                    // Remove any existing error message
+                    const existingError = element.parentNode.querySelector('.error-message');
+                    if (existingError) {
+                        element.parentNode.removeChild(existingError);
+                    }
+                }
+            }
+            
+            // Checkboxes for mode of teaching
+            const meetingOptions = document.querySelectorAll('input[name="meeting_option"]');
+            const isMeetingOptionSelected = Array.from(meetingOptions).some(option => option.checked);
+            if (!isMeetingOptionSelected) {
+                // Highlight the checkbox group
+                const checkboxGroup = document.querySelector('.checkbox-group_addpost');
+                
+                // Shake animation for invalid fields
+                anime({
+                    targets: checkboxGroup,
+                    translateX: [0, -10, 10, -10, 10, 0],
+                    duration: 500,
+                    easing: 'easeInOutSine'
+                });
+                
+                // Show error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.style.color = '#ff6b6b';
+                errorMsg.style.fontSize = '13px';
+                errorMsg.style.marginTop = '5px';
+                errorMsg.innerHTML = "You must select at least one mode of teaching.";
+                
+                // Remove any existing error message
+                const existingError = checkboxGroup.parentNode.querySelector('.error-message');
+                if (existingError) {
+                    checkboxGroup.parentNode.removeChild(existingError);
+                }
+                
+                checkboxGroup.parentNode.appendChild(errorMsg);
+                checkboxGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                return false;
+            }
+            
+            // Checkbox for need type
+            const needs = document.querySelectorAll('input[name="need"]');
+            const isNeedSelected = Array.from(needs).some(need => need.checked);
+            if (!isNeedSelected) {
+                // Highlight the checkbox group
+                const needGroup = document.querySelector('.checkbox-group_addpost:last-of-type');
+                
+                // Shake animation for invalid fields
+                anime({
+                    targets: needGroup,
+                    translateX: [0, -10, 10, -10, 10, 0],
+                    duration: 500,
+                    easing: 'easeInOutSine'
+                });
+                
+                // Show error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'error-message';
+                errorMsg.style.color = '#ff6b6b';
+                errorMsg.style.fontSize = '13px';
+                errorMsg.style.marginTop = '5px';
+                errorMsg.innerHTML = "You must select at least one need type (Full Time, Part Time, or Any).";
+                
+                // Remove any existing error message
+                const existingError = needGroup.parentNode.querySelector('.error-message');
+                if (existingError) {
+                    needGroup.parentNode.removeChild(existingError);
+                }
+                
+                needGroup.parentNode.appendChild(errorMsg);
+                needGroup.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                return false;
+            }
+            
+            return true; // Submit the form if all validations pass
+        }
+    </script>
+</body>
+</html>

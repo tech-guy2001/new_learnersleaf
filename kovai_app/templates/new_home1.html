@@ -1,0 +1,865 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learnersleaf</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+    <style>
+		.navbar{
+		background-color: white;
+		}
+        .navbar-brand h2 {
+            font-weight: bold;
+            color: #007BFF;
+            font-size: 36px;
+        }
+		.section-heading {
+    margin: 40px 0 20px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: #f7fafd;
+    animation: fadeInDown 1s ease;
+}
+
+        .navbar-nav .nav-item .nav-link {
+            font-weight: bold;
+            color: #555;
+        }
+       
+        .dropdown-menu .dropdown-item {
+            color: #0a0606;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .navbar-nav .btn {
+            font-weight: bold;
+            color: white;
+        }
+
+        .btn-info {
+            background-color: #007BFF;
+            border-color: #007BFF;
+        }
+
+        .btn-info:hover {
+            background-color: #0056b3;
+        }
+		.c{
+			background-color:#fff;
+			padding-bottom:  10px;
+			border-radius: 5px;
+			 padding-top: 7px;
+             box-shadow: 0px 0px 6px 3px  #555;
+             margin-top: -60px;
+
+             
+
+		}
+
+        .skill {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+
+ 
+ font-size: 20px;
+ font-weight: bold;
+ margin-top: 2px;
+ padding-top: 40px;
+ padding-bottom: 50px;
+
+}
+
+        /* Mobile styling for smaller screens */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                text-align: center;
+            }
+
+            .navbar-nav .nav-item {
+                margin-top: 10px;
+            }
+        }
+
+        /* Form Styling */
+        .form {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .form input {
+            margin-bottom: 10px;
+        }
+
+        .reveal {
+            padding-top: 30px;
+        }
+
+        h2 {
+            color: #0a0606;
+            font-weight: bold;
+        }
+
+
+		.schedule {
+	background: #fff;
+	margin: 0;
+	padding: 0;
+	margin-top: 80px;
+	height: 230px;
+}
+.schedule .schedule-inner {
+	position: relative;
+	transform: translateY(-50%);
+	
+}
+.schedule .single-schedule {
+	position: relative;
+	text-align: left;
+
+	border-radius:5px;
+	background:#fff;
+	 -webkit-transition: all .3s ease-out 0s;
+    -moz-transition: all .3s ease-out 0s;
+    -ms-transition: all .3s ease-out 0s;
+    -o-transition: all .3s ease-out 0s;
+    transition: all .3s ease-out 0s;
+    box-shadow: 0px 5px 5px 5px  #555;
+}
+.schedule .single-schedule .inner {
+	overflow:hidden;
+	position: relative;
+	padding:30px;
+
+}
+
+.schedule .single-schedule:hover:before{
+	opacity: 0.8;
+}
+.schedule .single-schedule:hover{
+	transform: translateY(-5px);
+}
+
+.schedule h4,a{
+color:#0056b3;
+text-decoration: none;
+}
+.schedule p{
+color:rgb(5, 4, 4);
+text-decoration: none;
+}
+
+
+.tx h2{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #007BFF;
+}
+.tx p{
+    font-size: 18px;
+    text-align: center;
+}
+.tx{
+    width: 800px;
+    margin-left: 200px;
+    margin-top: 30px;
+}
+
+
+
+	
+@media (max-width: 991px) {
+        .navbar-collapse {
+            text-align: center;
+        }
+
+        .navbar-nav .nav-item {
+            margin-top: 10px;
+        }
+
+        .navbar-brand h2 {
+            font-size: 28px;
+        }
+
+        .section-heading {
+            font-size: 20px;
+        }
+
+        .form {
+            margin-top: 30px;
+        }
+
+        .form input {
+            margin-bottom: 10px;
+        }
+
+        .schedule {
+            margin-top: 320px;
+        }
+        .single-schedule{
+            margin-top: 20px;
+        }
+        .schedule h4 {
+            font-size: 20px;
+        }
+
+        .skill {
+            flex-direction: column;
+           
+        }
+      
+        .skill .ob {
+            margin-bottom: 10px;
+        }
+   
+    }
+
+    /* Media query for screens with max width of 576px (Mobile screens) */
+    @media (max-width: 576px) {
+        .navbar-brand h2 {
+            font-size: 22px;
+        }
+
+        .navbar-nav .nav-item {
+            margin-top: 5px;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .form {
+            margin-top: 20px;
+        }
+
+        .form input {
+            width: 100%;
+        }
+
+        .schedule h4 {
+            font-size: 16px;
+        }
+
+        .skill {
+            font-size: 16px;
+        }
+
+        .skill .ob {
+            font-size: 14px;
+        }
+        .container-fluid{
+            margin-top: 50px;
+        }
+    }
+
+  
+    .tx h2 {
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+        color: #007BFF;
+    }
+
+    .tx p {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .tx {
+        width: 800px;
+        margin-left: 200px;
+        margin-top: 30px;
+    }
+
+    /* Tablet and small desktops (max-width: 991px) */
+    @media (max-width: 991px) {
+        .tx {
+            width: 600px;
+            margin-left: 100px;
+            margin-top: 20px;
+        }
+
+        .tx h2 {
+            font-size: 20px;
+        }
+
+        .tx p {
+            font-size: 16px;
+        }
+    }
+
+    /* Mobile screens (max-width: 576px) */
+    @media (max-width: 590px) {
+        .tx {
+            width: 100%;
+            margin-left: 0;
+            padding: 0 15px;
+            margin-top: 10px;
+        }
+        #demo{
+            margin-top: 90px;
+        }
+        
+       
+.subject ul {
+    grid-template-columns: auto auto;
+    margin-left: 0;
+}
+        .tx h2 {
+            font-size: 18px;
+        }
+
+        .tx p {
+            font-size: 14px;
+        }
+    }
+    #ul{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 30px;
+  
+   
+    padding-left: 60px;
+    justify-content: space-around;
+    border-radius: 10px;
+    opacity: 0.9;
+    margin-bottom: 20px;
+  
+   
+}
+.footer{
+    background-color: #373636;
+    color: white;
+    margin-bottom: 0;
+    display: flex; 
+    justify-content: space-around;
+    padding-top: 10px;
+   
+
+
+
+}
+.footer  input[type=submit]
+{
+    background-color: #007BFF;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    color: white;
+
+}
+.footer  input[type=text],input[type=email]
+{
+   
+    border: none;
+   border-radius: 4px ;
+ width: 210px;
+ padding: 5px;
+}
+
+.footer ul{
+    margin-left: 50px;
+    padding: 50px;
+    font-size: 20px;
+}
+.footer li {
+    list-style-type: none;
+
+}
+.footer a {
+    text-decoration: none;
+    color: white;
+
+}
+.d{
+    margin-top: 30px;
+    border-right: 1px solid white;
+    padding-right: 220px;
+}
+@media (max-width: 991px) {
+    .footer{
+            flex-direction: column;
+            
+           
+        }
+        .footer div{
+            padding-left: 35px;
+            margin-bottom: 10px;
+        }
+    }
+.demo{
+    margin-top: 0;
+}
+#ul a{
+    color:#0056b3;
+}
+.subject{
+margin-top: -60px;
+}
+ /* Mobile screens (max-width: 576px) */
+ @media (max-width: 596px) {
+        #ul {
+            grid-template-columns: auto auto;
+            padding: 10px;
+            padding-left: 20px;
+            margin: 10px;
+           
+        }
+    #demo .btn{
+       
+        margin-bottom: -40px;
+        
+      
+    }
+    .subject{
+            margin-top: 150px;
+        }
+    }
+
+    /* Extra small screens (max-width: 400px) */
+    @media (max-width: 400px) {
+        #ul {
+            grid-template-columns: auto;
+            padding: 10px;
+            padding-left: 10px;
+        }
+
+    }
+
+    .res_box ul {
+    border: 1px solid silver;
+    padding: 10px;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.res_box ul li {
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.contact{
+    margin-top: 20px;
+}
+
+.res_box ul li:hover {
+    background-color: #f0f0f0;
+}
+.navbar-nav .nav-item .nav-link:hover{
+    color: #3498db;
+    border-bottom: 2px solid #3498db ;
+}
+#btn{
+    color:#555; border: 1px solid  #3498db; font-family: Arial, Helvetica, sans-serif;
+}
+#btn:hover{
+    background-color: #3498db ;
+    color: white;
+}
+
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(0deg) brightness(0);
+}
+
+.d h3{
+    border-bottom: 1px solid white;
+    overflow-x:  visible;
+    width: 220px;
+    padding-bottom: 5px;
+   
+    
+   
+}
+.contact h3{
+    border-bottom: 1px solid white;
+    overflow-x:  visible;
+    padding-bottom: 5px;
+   
+    
+   
+}
+</style>
+
+   
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light  fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand active" href="#">
+                <h2>LearnersLeaf</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/about">About Us</a>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" style="color: #555" data-bs-toggle="dropdown">
+                            Find Tutor
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/tutor_request">Tutor Request</a></li>
+                            <li><a class="dropdown-item" href="/h_all_teachers">All Tutors</a></li>
+                            <li><a class="dropdown-item" href="/h_online_tutor">Online Tutors</a></li>
+                            <li><a class="dropdown-item" href="/h_home_tutor">Home Tutors</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <button class="btn dropdown-toggle" style="color: #555" data-bs-toggle="dropdown">
+                            Find Job
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/h_tutors_job">All Jobs</a></li>
+                            <li><a class="dropdown-item" href="/h_online_job">Online Jobs</a></li>
+                            <li><a class="dropdown-item" href="/h_home_job">Home Jobs</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn" id="btn" href="/stu_login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <!-- <div class="carousel-indicators">
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active" style="color: #0a0606;"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="1" style="color: #010101; border: 1px solid black;"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="2" style="color: #010101;"></button>
+    </div> -->
+    
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+      
+      <div class="carousel-item active">
+        <img src="{% static 'images/banner1.jpg' %}" alt="Chicago" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+            <button class="btn btn-primary "><a href="/h_all_teachers" class="text-white">FIND  TUTORS<i class="fa fa-long-arrow-right"></i></a></button>
+        </div> 
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'images/banner2.jpg' %}" alt="New York" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          
+            <button class="btn text-white " style="background-color:rgb(251, 110, 230);"><a href="/h_tutors_job" class="text-white">Find JOBS<i class="fa fa-long-arrow-right"></i></a></button>
+      </div>
+    </div>
+    <div class="carousel-item">
+        <img src="{% static 'images/banner3.jpg' %}" alt="New York" class="d-block" style="width:100%">
+        <div class="carousel-caption">
+          
+            <button class="btn text-white " style="background-color:rgb(6, 93, 33);"><a href="/h_tutors_job" class="text-white">ASSESSMENT<i class="fa fa-long-arrow-right"></i></a></button>
+      </div>
+    </div>
+    
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" >
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next " type="button" data-bs-target="#demo" data-bs-slide="next" style="color: #010101;">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+<!-- Search Form Section -->
+<div class="container-fluid mt-5 reveal">
+    <div class="container c">
+        <h2  style="color: #555;" class="section-heading">Find Online Teachers and Home Tutors for Free</h2>
+        <div class="form">
+            <form action="{% url 'h_search_teacher' %}" method="POST" class="row mb-4">
+                {% csrf_token %}
+                <div class="col-md-5">
+                    <input type="text" name="subject" class="form-control" placeholder="Subject/Skill">
+                </div>
+                <div class="col-md-5">
+                    <div class="locations">
+                        <input type="text" placeholder="Enter the location" id="box" autocomplete="off" name="location" class="form-control">
+                        <div class="res_box">
+                            <!-- Results will appear here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i>  Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="skill">
+    <div class="ob"><p><i class="fa-brands fa-whmcs" style="font-size: 40px;"></i> 9500+ <br>
+                   Subjects</p>
+                </div>
+    <div class="ob"><p><i class="fa-brands fa-steam-symbol" style="font-size: 40px;"></i>1500+ <br>
+        Skills </p></div>
+    <div class="ob"> <p> <i class="fa-brands fa-teamspeak" style="font-size: 40px;"></i> 1000+ <br>
+        Languages</p>
+        </div>
+</div>
+
+
+
+<section class="schedule">
+    <div class="container">
+        <div class="schedule-inner">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 ">
+                    <!-- single-schedule -->
+                    <div class="single-schedule first">
+                        <div class="inner">
+                            
+                            <div class="single-content">
+                                <span></span>
+                                <h4> Find Teacher</h4>
+                                <p>Find the Perfect Teacher for You"
+                                    "Browse our network of skilled teachers and find the one that fits your needs, whether it’s for academic subjects or new skills!"</p>
+                                <a href="/h_all_teachers">FIND  MORE <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div><br><br>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- single-schedule -->
+                    <div class="single-schedule middle">
+                        <div class="inner">
+                            <div class="icon">
+                                <i class="icofont-prescription"></i>
+                            </div>
+                            <div class="single-content">
+                                <span></span>
+                                <h4>Find Job</h4>
+                                <p>"Find Your Next Teaching Opportunity"
+                                    "Looking for a teaching job? Explore exciting opportunities and connect with students who need your expertise!"</p>
+                                <a href="/h_tutors_job">FIND MORE <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-12">
+                    <!-- single-schedule -->
+                    <div class="single-schedule last">
+                        <div class="inner">
+                            <div class="icon">
+                                <i class="icofont-ui-clock"></i>
+                            </div>
+                            <div class="single-content">
+                                <span></span>
+                                <h4>Assessment</h4>
+                                <p>Find Assessment Work Opportunities"
+                                    "Looking for assessment tasks? Connect with individuals or organizations in need of skilled assessors for various projects."</p>
+                                <a href="#">FIND MORE <i class="fa fa-long-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+
+
+
+<div class="subject">
+    <h2 style="margin-left: 10px; border-bottom: 1px solid #373636; padding-bottom: 4px;  text-align: center; color: #555;">Top Subjects and Skills</h2>
+        <ul class="list-inline top-subjects-list" id="ul">
+            <li><a href="#">Academic Writing</a></li>
+            <li><a href="#">Accountancy</a></li>
+            <li><a href="#">Adobe Photoshop</a></li>
+            <li><a href="#">Algorithm &amp; Data Structures</a></li>
+            <li><a href="#">Analog Electronics</a></li>
+            <li><a href="#">Art and Craft</a></li>
+            <li><a href="#">AutoCAD</a></li>
+            <li><a href="#">Basic Electronics</a></li>
+            <li><a href="#">BioChemistry</a></li>
+            <li><a href="#">Biology</a></li>
+            <li><a href="#">Biotechnology</a></li>
+            <li><a href="#">Business Management</a></li>
+            <li><a href="#">C/C++</a></li>
+            <li><a href="#">C#</a></li>
+            <li><a href="#">Chemistry</a></li>
+            <li><a href="#">Civil Engineering</a></li>
+            <li><a href="#">Commerce</a></li>
+            <li><a href="#">Communication Skills</a></li>
+            <li><a href="#">Company Law</a></li>
+            <li><a href="#">Computer networking</a></li>
+            <li><a href="#">Computer Science</a></li>
+            <li><a href="#">Control Systems</a></li>
+            <li><a href="#">DBMS</a></li>
+            <li><a href="#">Digital Electronics</a></li>
+            <li><a href="#">.net</a></li>
+            <li><a href="#">Economics</a></li>
+            <li><a href="#">Electrical Engineering</a></li>
+            <li><a href="#">Engineering Mechanics</a></li>
+            <li><a href="#">English</a></li>
+            <li><a href="#">Environmental Science</a></li>
+            <li><a href="#">Financial Management</a></li>
+            <li><a href="#">Fluid Mechanics</a></li>
+            <li><a href="#">French</a></li>
+            <li><a href="#">German</a></li>
+            <li><a href="#">History</a></li>
+            <li><a href="#">HTML</a></li>
+            <li><a href="#">IELTS</a></li>
+            <li><a href="#">Income Tax</a></li>
+            <li><a href="#">JAVA</a></li>
+            <li><a href="#">Jquery and JavaScript</a></li>
+            <li><a href="#">Law</a></li>
+            <li><a href="#">Maths</a></li>
+            <li><a href="#">Mechanical</a></li>
+            <li><a href="#">Microbiology</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">PHP</a></li>
+            <li><a href="#">Physics</a></li>
+            <li><a href="#">Political Science</a></li>
+            <li><a href="#">Programming</a></li>
+            <li><a href="#">Psychology</a></li>
+            <li><a href="#">Python</a></li>
+            <li><a href="#">R</a></li>
+            <li><a href="#">Science</a></li>
+            <li><a href="#">Selenium Webdriver</a></li>
+            <li><a href="#">Sociology</a></li>
+            <li><a href="#">Statistics</a></li>
+            <li><a href="#">Strength of Materials</a></li>
+            <li><a href="#">Thermodynamics</a></li>
+            <li><a href="#">Zoology</a></li>
+        </ul>
+</div>
+
+<div class="footer">
+    <div class="d">
+            <h3 style="color: #f8f9fa;">Contact us Today</h3>
+            <li><i class="fa-solid fa-phone-volume"></i> 8428856284</li>
+            <li><i class="fa-solid fa-envelope"></i> learnersleaf.developer@gmail.com</li>
+            <li><i class="fa-brands fa-whatsapp"></i><a href="https://wa.me/918428856284?text=Hello%20Nandha%2C%20I%20would%20like%20to%20connect%20with%20you!" target="_blank">
+                Chat on WhatsApp
+            </a>
+            </li>
+        </ul>
+        <p>&copy; 2023 All rights reserved | Design by <a href="#"></a>
+            </p>
+        </div>
+
+        <div class="contact">
+            <h3 style="color: #fcfdfd;">Book your Free Session</h3>
+            <form action="contact" method="POST" >
+                {% csrf_token %}
+            <label >Name</label> <br>
+            <input type="text" name="name" placeholder="Enter your Name" required> <br>
+            <label >Email</label> <br>
+            
+            <input type="email" name="email" placeholder="Enter your Email" required> <br>
+            <label >Mobile Number</label> <br>
+            <input type="text" name="number" placeholder="Enter your Mobile Number" required> <br>
+            
+            <label >Message</label> <br>
+            <textarea name="message" placeholder="Enter your message" required></textarea> <br><br>
+            <input type="submit" value="Send">
+        </form>
+
+
+        </div>
+</div>
+ 
+<script>
+    window.onload = function() {
+       const key = [
+           "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
+           "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
+           "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
+           "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
+           "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
+           "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
+           "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
+           "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
+           "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
+           "Ramanathapuram, Tamil Nadu"
+       ];
+       const result_box = document.querySelector('.res_box');
+       const input_box = document.getElementById("box");
+
+       input_box.onkeyup = function() {
+           let result = [];
+           let input = input_box.value;
+           if (input.length) {
+               result = key.filter((keyword) => {
+                   return keyword.toLowerCase().includes(input.toLowerCase());
+               });
+           }
+           display(result);
+       };
+
+       function display(result) {
+           const content = result.map((list) => {
+               return `<li onclick="selectLocation(this)">${list}</li>`;
+           });
+           result_box.innerHTML = `<ul>${content.join('')}</ul>`;
+       }
+   };
+
+   function selectLocation(list) {
+       const input_box = document.getElementById("box");
+       input_box.value = list.innerHTML;
+       document.querySelector('.res_box').innerHTML = '';
+   }
+  // Add this JavaScript code to your existing script
+window.addEventListener('scroll', reveal);
+
+function reveal() {
+var reveals = document.querySelectorAll('.reveal');
+for (var i = 0; i < reveals.length; i++) {
+var windowheight = window.innerHeight;
+var revealTop = reveals[i].getBoundingClientRect().top;
+var revealPoint = 150;
+
+if (revealTop < windowheight - revealPoint) {
+  reveals[i].classList.add('active');
+} else {
+  reveals[i].classList.remove('active');
+}
+}
+}
+</script>
+   
+</body>
+</html>
+
+   

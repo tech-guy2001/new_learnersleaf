@@ -1,0 +1,631 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education and Certifications</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            padding: 20px;
+            background-color: #e2e5e6;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+/* Section Heading */
+.section-heading {
+    margin: 40px 0 20px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+        h5 {
+            margin-bottom: 20px;
+            border-bottom: 4px solid blue;
+            padding-bottom: 10px;
+        }
+
+        form {
+            background: #ffffff;
+            padding: 20px;
+            width: 800px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-left: 150px;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+        }
+
+        .profile {
+            display: flex;
+            justify-content: flex-end;
+            background-color: #0069d9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile i {
+            font-size: 40px;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        .profile span {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .profile {
+                justify-content: center;
+            }
+
+            h3, h5 {
+                margin-left: 0;
+                text-align: center;
+            }
+
+            form {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .alert {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+        #back{
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #16472f;
+            color: white;
+        border-radius: 5px;
+        border: none;
+        }
+
+    </style>
+</head>
+<body>
+  
+    {% if msg %}
+    <div class="alert alert-primary alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{msg}}</strong> 
+    </div>
+    {% endif %}
+
+    <h3 class="section-heading ">Education and Certifications</h3>
+    <h5>Add Education/Certification</h5>
+
+    <form action="/certificate/{{email}}" method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Institution name with city</label>
+            <input type="text" class="form-control" name="institution_name" placeholder="e.g., XYZ University, New York">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Degree Type</label>
+            <select class="form-select" name="degree_type">
+                <option value="">Please select</option>
+                <option value="Diploma">Diploma</option>
+                <option value="Doctorate">Doctorate</option>
+                <option value="Mphil">Mphil</option>
+                <option value="MEd">MEd</option>
+                <option value="MBA">MBA</option>
+                <option value="MSc">MSc</option>
+                <option value="MA">MA</option>
+                <option value="Postgraduate">Postgraduate</option>
+                <option value="Undergraduate">Undergraduate</option>
+               
+
+
+
+                
+
+
+
+            
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Degree Name</label>
+            <input type="text" class="form-control" name="degree_name" placeholder="e.g., BSc Computer Science">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            <input type="date" class="form-control" name="start_date" min="2001-04-01" max="2024-04-30">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">End Date</label>
+            <input type="date" class="form-control" name="end_date" min="2001-04-01" max="2024-04-30">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Association</label>
+            <select class="form-select" name="association">
+                <option value="parttime">Part time</option>
+                <option value="fulltime">Full time</option>
+                <option value="Correspondence / Distance Learning">Correspondence / Distance Learning</option>
+            </select>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Save">
+    </form>
+    <button type="button" id="back" onclick="history.back()">Back</button>
+    <script>
+        function validateForm() {
+            const institutionName = document.querySelector('input[name="institution_name"]').value.trim();
+            const degreeType = document.querySelector('select[name="degree_type"]').value;
+            const degreeName = document.querySelector('input[name="degree_name"]').value.trim();
+            const startDate = document.querySelector('input[name="start_date"]').value;
+            const endDate = document.querySelector('input[name="end_date"]').value;
+            const association = document.querySelector('select[name="association"]').value;
+
+            
+            if (!institutionName) {
+                alert('Please enter the institution name.');
+                return false;
+            }
+            if (!degreeType) {
+                alert('Please select a degree type.');
+                return false;
+            }
+            if (!degreeName) {
+                alert('Please enter the degree name.');
+                return false;
+            }
+            if (!startDate) {
+                alert('Please enter the start date.');
+                return false;
+            }
+            if (!association) {
+                alert('Please select an association type.');
+                return false;
+            }
+
+            // Ensure start date is not after end date
+            if (endDate && new Date(startDate) > new Date(endDate)) {
+                alert('Start date cannot be after the end date.');
+                return false;
+            }
+
+            return true; // Allow form submission if all checks pass
+        }
+    </script>
+</body>
+</html>
+
+
+ -->
+
+ <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects You Teach</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        h3 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+
+        .profile {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+            border-radius: 8px;
+            background-color:  #0069d9;
+        }
+
+        .subject-section {
+            display: none;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .show-btn {
+            margin-bottom: 20px;
+        }
+
+        .autocomplete-results {
+            border: 1px solid #ccc;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: #fff;
+            position: absolute;
+            z-index: 1000;
+            width: calc(100% - 22px);
+        }
+
+        .autocomplete-results ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .autocomplete-results li {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .autocomplete-results li:hover {
+            background-color: #f0f0f0;
+        }
+        #back{
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #16472f;
+            color: white;
+        border-radius: 5px;
+        border: none;
+        }
+
+    </style>
+ 
+</head>
+
+<body>
+    <h3 style="margin-left: 200px;">Profile 3 of 6</h3>
+    <div class="alert alert-info alert-dismissible fade show">
+       
+        <strong>{{ msg }}</strong>
+    </div>
+
+    <h3 class="section-heading " style="text-align: center;">Qualification Profile</h3>
+
+    <form action="/certificate/{{email}}" method="POST" onsubmit="return validateForm()">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Institution </label>
+            <input type="text" class="form-control" name="institution_name" placeholder="e.g., XYZ University, New York">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Graduation</label>
+            <select class="form-select" name="degree_type">
+                
+                <option value="Diploma">Diploma</option>
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+                <option value="Doctorate">Doctorate</option>
+               
+               
+              
+            
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Degree</label>
+            <input type="text" class="form-control" name="degree_name" placeholder="e.g., BSc Computer Science">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Subject Specialisation</label>
+            <input type="text" class="form-control" name="specialisation" placeholder="e.g.,Enter subject Specialisatione">
+        </div>
+
+        
+
+        <button type="button" class="btn btn-primary show-btn" id="show-two">Add Another Education</button> <br>
+        <div class="two subject-section">
+             <div class="mb-3">
+                <label class="form-label">Institution </label>
+                <input type="text" class="form-control" name="institution_name_two" placeholder="e.g., XYZ University, New York">
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Graducation</label>
+                <select class="form-select" name="degree_type_two">
+                    
+                    <option value="Diploma">Diploma</option>
+                    <option value="Doctorate">Doctorate</option>
+                   
+                    <option value="Postgraduate">Postgraduate</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Degree</label>
+                <input type="text" class="form-control" name="degree_name_two" placeholder="e.g., BSc Computer Science">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Subject Specialisation</label>
+                <input type="text" class="form-control" name="specialisation_two" placeholder="e.g.,Enter subject Specialisatione">
+            </div>
+    
+            
+            <button type="button" class="btn btn-primary show-btn" id="show-three">Add Another Education</button> <br>
+        </div>
+
+      
+        <div class="three subject-section">
+            <div class="mb-3">
+                <label class="form-label">Institution</label>
+                <input type="text" class="form-control" name="institution_name_three" placeholder="e.g., XYZ University, New York">
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Graducation </label>
+                <select class="form-select" name="degree_type_three">
+                    
+                    <option value="Diploma">Diploma</option>
+                    <option value="Doctorate">Doctorate</option>
+                   
+                    <option value="Postgraduate">Postgraduate</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Degree</label>
+                <input type="text" class="form-control" name="degree_name_three" placeholder="e.g., BSc Computer Science">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Subject Specialisation</label>
+                <input type="text" class="form-control" name="specialisation_three" placeholder="e.g.,Enter subject Specialisatione">
+            </div>
+    
+            
+            <button type="button" class="btn btn-primary show-btn" id="show-four">Add Another Education</button><br>
+        </div>
+
+       
+        <div class="four subject-section">
+            <div class="mb-3">
+                <label class="form-label">Institution</label>
+                <input type="text" class="form-control" name="institution_name_four" placeholder="e.g., XYZ University, New York">
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Graducation</label>
+                <select class="form-select" name="degree_type_four">
+                    
+                    <option value="Diploma">Diploma</option>
+                    <option value="Doctorate">Doctorate</option>
+                   
+                    <option value="Postgraduate">Postgraduate</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Degree</label>
+                <input type="text" class="form-control" name="degree_name_four" placeholder="e.g., BSc Computer Science">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Subject Specialisation</label>
+                <input type="text" class="form-control" name="specialisation_four" placeholder="e.g.,Enter subject Specialisatione">
+            </div>
+    
+            
+            <button type="button" class="btn btn-primary show-btn" id="show-five">Add Another Education</button> <br>
+        </div>
+
+        
+        <div class="five subject-section">
+            <div class="mb-3">
+                <label class="form-label">Institution </label>
+                <input type="text" class="form-control" name="institution_name_five" placeholder="e.g., XYZ University, New York">
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Graducation</label>
+                <select class="form-select" name="degree_type_five">
+                    
+                    <option value="Diploma">Diploma</option>
+                    <option value="Doctorate">Doctorate</option>
+                   
+                    <option value="Postgraduate">Postgraduate</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                
+                </select>
+            </div>
+    
+            <div class="mb-3">
+                <label class="form-label">Degree</label>
+                <input type="text" class="form-control" name="degree_name_five" placeholder="e.g., BSc Computer Science">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Subject Specialisation</label>
+                <input type="text" class="form-control" name="specialisation_five" placeholder="e.g.,Enter subject Specialisatione">
+            </div>
+    
+    
+        </div>    
+
+        <input type="submit" value="Submit">
+    </form>
+    <button  id="back" type="button" onclick="history.back()">Back</button>
+
+    <script>
+        $(document).ready(function () {
+            $("#show-two").click(function () {
+                $(".two").toggle();
+                $("#show-two").hide();
+            });
+
+            $("#show-three").click(function () {
+                $(".three").toggle();
+                $("#show-three").hide();
+            });
+
+            $("#show-four").click(function () {
+                $(".four").toggle();
+            });
+
+            $("#show-five").click(function () {
+                $(".five").toggle();
+            });
+        });
+   
+        window.onload = function () {
+    const subjects = [
+        "Mathematics", "Physics", "Chemistry", "Biology", "Computer Science", "Statistics", 
+        "Data Science", "Artificial Intelligence", "Machine Learning", "Information Technology", 
+        "Software Engineering", "Electrical Engineering", "Mechanical Engineering", 
+        "Civil Engineering", "Chemical Engineering", "Aerospace Engineering", "Environmental Science", 
+        "Geology", "Astronomy", "Oceanography", "Zoology", "Botany", "Genetics", "Microbiology", 
+        "Biotechnology", "Biomedical Engineering", "Neuroscience", "Psychology", "Sociology", 
+        "Anthropology", "Philosophy", "Political Science", "International Relations", "Law", 
+        "Criminology", "Economics", "Finance", "Accounting", "Business Administration", 
+        "Marketing", "Human Resource Management", "Entrepreneurship", "Supply Chain Management", 
+        "Management Information Systems", "Project Management", "Public Administration", 
+        "History", "Geography", "Archaeology", "Linguistics", "Literature", "Creative Writing", 
+        "English", "French", "Spanish", "German", "Chinese", "Japanese", "Russian", 
+        "Italian", "Latin", "Music", "Art", "Drama", "Theater", "Film Studies", "Dance", 
+        "Graphic Design", "Fashion Design", "Interior Design", "Architecture", "Urban Planning", 
+        "Medicine", "Nursing", "Dentistry", "Pharmacy", "Public Health", "Nutrition", 
+        "Veterinary Science", "Kinesiology", "Sports Science", "Education", "Teaching Methods", 
+        "Special Education", "Early Childhood Education", "Library Science", "Ethics", 
+        "Religious Studies", "Theology", "Cultural Studies", "Gender Studies", 
+        "Communication Studies", "Journalism", "Media Studies", "Photography", "Film Production", 
+        "Game Design", "Animation", "Culinary Arts", "Hospitality Management", "Tourism", 
+        "Event Management", "Agriculture", "Horticulture", "Forestry", "Environmental Studies", 
+        "Sustainable Development", "Marine Biology", "Hydrology", "Physics", "Theoretical Physics", 
+        "Quantum Mechanics", "Thermodynamics", "Fluid Mechanics", "Solid State Physics", 
+        "Electronics", "Circuit Design", "Signal Processing", "Robotics", "Control Systems", 
+        "Nanotechnology", "Materials Science", "Renewable Energy", "Meteorology", 
+        "Climatology", "Ecology", "Evolutionary Biology", "Bioinformatics", "Biophysics", 
+        "Pathology", "Immunology", "Pharmacology", "Toxicology", "Anatomy", "Physiology", 
+        "Dermatology", "Ophthalmology", "Radiology", "Surgery", "Orthopedics", "Cardiology", 
+        "Psychiatry", "Neurology", "Geriatrics", "Pediatrics", "Obstetrics and Gynecology", 
+        "Radiation Therapy", "Genomic Studies", "Molecular Biology", "Virology", 
+        "Cybersecurity", "Network Engineering", "Database Management", "Software Testing", 
+        "Programming", "Web Development", "Mobile App Development", "Cloud Computing", 
+        "Blockchain Technology", "Artificial Neural Networks", "Big Data Analysis"
+    ];
+
+    function attachAutoComplete(input_box_id, result_box_class) {
+        const input_box = document.getElementById(input_box_id);
+        const result_box = document.querySelector(result_box_class);
+
+        input_box.onkeyup = function () {
+            let result = [];
+            let input = input_box.value;
+            if (input.length) {
+                result = subjects.filter((keyword) => {
+                    return keyword.toLowerCase().includes(input.toLowerCase());
+                });
+            }
+            display(result, result_box);
+        };
+
+        function display(result, result_box) {
+            const content = result.map((list) => {
+                return `<li onclick="selectItem('${input_box_id}', '${result_box_class}', this)">${list}</li>`;
+            });
+            result_box.innerHTML = `<ul>${content.join('')}</ul>`;
+        }
+    }
+
+    // Initialize autocomplete for all subject fields
+    attachAutoComplete("subject", ".res_box");
+    attachAutoComplete("two_subject", ".two_res_box");
+    attachAutoComplete("three_subject", ".three_res_box");
+    attachAutoComplete("four_subject", ".four_res_box");
+    attachAutoComplete("five_subject", ".five_res_box");
+};
+
+function selectItem(input_box_id, result_box_class, list) {
+    const input_box = document.getElementById(input_box_id);
+    input_box.value = list.innerHTML;
+    document.querySelector(result_box_class).innerHTML = '';
+}
+
+    </script>
+</body>
+
+</html>
+

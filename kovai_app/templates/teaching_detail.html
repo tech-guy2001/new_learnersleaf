@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Details Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Adjust spacing between elements */
+        }
+
+        .checkbox-container label {
+            margin: 0;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            form {
+                padding: 15px;
+            }
+
+            input[type="text"], input[type="number"], select {
+                padding: 8px;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+                padding: 12px;
+            }
+        }
+        input[type="checkbox"]
+        {
+            margin-left: 10px;
+        }
+    </style>
+    <script>
+   
+    function validation() {
+        let x = document.getElementById("min_fees").value;
+        let y = document.getElementById("max_fees").value;
+
+        // Check if Min fee is empty
+        if (!x) {
+            alert("Min fee should not be empty");
+            return false;
+        }
+
+        // Check if Max fee is empty
+        if (!y) {
+            alert("Max fee should not be empty");
+            return false;
+        }
+
+        // Check if Min fee exceeds 8 digits
+        if (x.length > 8) {
+            alert("Min fee should not exceed 8 digits");
+            return false;
+        }
+
+        // Check if Max fee exceeds 8 digits
+        if (y.length > 8) {
+            alert("Max fee should not exceed 8 digits");
+            return false;
+        }
+
+        return true;
+    }
+
+
+    </script>
+</head>
+
+<body>
+    <h3 style="margin-left: 200px;">Profile 5 of 6</h3>
+    <form action="/teaching_detail/{{email}}" method="POST" onsubmit="return validation()">
+        {% csrf_token %}
+
+        <label>I charge (INR)</label>
+        <select name="i_charge">
+            <option value="hour">per hour</option>
+            <option value="month">per month</option>
+            <option value="year">per year</option>
+        </select>
+
+        <input type="number" name="min_fee" placeholder="Min fee" id="min_fees">
+        <input type="number" name="max_fee" placeholder="Max fee" id="max_fees">
+         <label > I Prefer to Teach</label> <br>
+         <div class="checkbox-container">
+            <input type="checkbox" name="classes" value="I - V">
+            <label>I - V</label>
+            <input type="checkbox" name="classes" value="VI - VIII">
+            <label>VI - VIII</label>
+            <input type="checkbox" name="classes" value="IX - X">
+            <label>IX - X</label>
+            <input type="checkbox" name="classes"  value="XI - XII">
+            <label>XI - XII</label>
+           
+        </div>
+        <label >Others</label>
+        <input type="text" placeholder="UG,PG,ENGG,NEET,JEE,JAM..." name="other_subject">
+        <label >Curriculum</label>
+        <input type="text" placeholder="State board,CBSE,ICSE,IGCSE,IB..." name="curriculum">
+        <label >Language</label>
+        <input type="text" name="language_subject">
+
+     
+        <label>Are you Willing to Travel To Student Place?</label>
+        <input type="radio" name="travel" value="yes"> Yes
+        <input type="radio" name="travel" value="no"> No
+
+        <label>Available for Online Teaching?</label>
+        <input type="radio" name="online_teach" value="yes"> Yes
+        <input type="radio" name="online_teach" value="no"> No
+
+        <label>Do you help with Homework and Assignments?</label>
+        <input type="radio" name="homework" value="yes"> Yes
+        <input type="radio" name="homework" value="no"> No
+
+        <label>Are you currently a Full-time Teacher Employed by a School/College?</label>
+        <input type="radio" name="full_time" value="yes"> Yes
+        <input type="radio" name="full_time" value="no"> No
+
+        <label>Opportunities you are Interested in</label>
+        <select name="interested_in">
+          
+            <option value="full_time">Full Time</option>
+            <option value="part_time">Part Time</option>
+            <option value="both">Both</option>
+        </select>
+
+        <input type="submit" value="Save">
+    </form>
+</body>
+</html>

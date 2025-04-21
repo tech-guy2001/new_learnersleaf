@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Description</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            margin-top: 10px;
+            display: block;
+        }
+
+        textarea,
+        input[type="file"],
+        input[type="checkbox"],
+        input[type="number"] {
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+        .profile {
+            display: flex;
+            justify-content: flex-end;
+            background-color:  #0069d9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #back{
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #16472f;
+            color: white;
+        border-radius: 5px;
+        border: none;
+        margin: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h3 style="margin-left: 200px;">Profile 6 of 6</h3>
+    <h3>Profile Description</h3>
+    <p>This is the most important section for you.<br>
+        80% of students will decide if they want to hire you just based on what you write here.<br>
+        Make sure it's good, relevant, in detail, and without mistakes.<br>
+        Do not copy-paste your resume here.<br>
+        Do not share any contact details.</p>
+
+    <form action="/personal_detail/{{email}}" method="POST" enctype="multipart/form-data" onsubmit="return validateProfileDescription()">
+        {% csrf_token %}
+      
+
+
+        <label for="profile_description">Profile Description</label>
+        <textarea
+        id="sprofile_description"
+        name="profile_description"
+        rows="10"
+        cols="50"
+        placeholder="I have not shared any contact details (Email, Phone, Skype, Website, etc)"
+    ></textarea><br>
+
+       
+   
+
+             
+        <h3>Upload ID Proof</h3>
+        <p>Please upload proof for the following:<br>
+            You are a citizen of India OR<br>
+            You are in India</p>
+
+        <label for="id_proof">Document Type </label>
+        <input type="file" name="id_proof"><br><br>
+
+        <h3>Upload Profile Photo</h3>
+        <p>Please upload a clear photo of yourself. <br>
+            The photo should be clear, recent, and high-quality.</p>
+
+        <label for="profile">Choose Picture</label>
+        <input type="file" name="profile"><br><br>
+
+        <label for="number">Contact Number</label>
+        <input type="number" id="number" name="number"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    <button type="button" id="back" onclick="history.back()">Back</button>
+
+    <script>
+      
+    function validateProfileDescription() {
+        const description = document.getElementById('profile_description').value.trim();
+        const sdescription = document.getElementById('sprofile_description').value.trim();
+        const idProof = document.querySelector('input[name="id_proof"]').files;
+        const profilePic = document.querySelector('input[name="profile"]').files;
+
+        const regex = /^[A-Za-z\s.,!?'" ]+$/; // Allows only letters, spaces, and some punctuation
+
+        // Validate the short profile description
+        if (!regex.test(description)) {
+            alert('Please enter only characters in the short profile description and avoid using numbers or special symbols.');
+            return false; // Prevent form submission
+        }
+
+        // Validate the full profile description
+        if (!regex.test(sdescription)) {
+            alert('Please enter only characters in the profile description and avoid using numbers or special symbols.');
+            return false; // Prevent form submission
+        }
+
+        // Validate the upload for ID proof
+        if (idProof.length === 0) {
+            alert('Please upload your ID proof.');
+            return false; // Prevent form submission
+        }
+
+        // Validate the upload for profile photo
+        if (profilePic.length === 0) {
+            alert('Please upload your profile photo.');
+            return false; // Prevent form submission
+        }
+
+        return true; // Allow form submission
+    }
+</script>
+
+
+       
+            
+           
+    
+</body>
+
+</html>

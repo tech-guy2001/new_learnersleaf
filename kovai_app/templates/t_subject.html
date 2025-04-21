@@ -1,0 +1,527 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#one").click(function(){
+  
+    $(".one").fadeIn("slow");
+ 
+  });
+});
+$(document).ready(function(){
+  $("#two").click(function(){
+  
+    $(".two").fadeIn("slow");
+ 
+  });
+});
+$(document).ready(function(){
+  $("#three").click(function(){
+  
+    $(".three").fadeIn("slow");
+ 
+  });
+});
+
+</script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            
+        }
+
+       
+
+        .detail ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail li {
+            padding: 10px 0;
+            font-size: 18px;
+        }
+
+        .location {
+            margin-top: 20px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(0, 123, 255);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+        .detail{
+            background-color: azure;
+            border-radius: 10px;
+            margin-left: 300px;
+           
+            width: 600px;
+        }
+        .detail h4{
+            background-color: rgb(18, 213, 216);
+            margin-top: 40px;
+            cursor: pointer;
+          
+            
+            
+        }
+        .detail h4:hover{
+            background-color: #0056b3;
+            color: azure;
+        }
+        .one, .two, .three, .four, .five{
+            display: none;
+        }
+                   /* Navbar styles */
+.navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #0056b3;
+}
+.active{
+    background-color: #f3f5f7;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 4px;
+    
+}
+.nav-link {
+    font-size: 18px;
+    margin-right: 20px;
+    color: #0e0e0e;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #007bff;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+
+
+/* Post button styles */
+.post-btn {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.post-btn:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Section Heading */
+.section-heading {
+    margin: 40px 0 20px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+      body {
+    background-color: #f5f5f5;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+h2 {
+    color: #0a0606;
+    font-weight: bold;
+}
+
+nav{
+    background: linear-gradient(45deg, #0048ff, #7ed6df);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.nav-item:hover {
+    color: #0048ff;
+    border-bottom: 3px solid #0048ff;
+    cursor: pointer;
+}
+        .dropdown-menu {
+            min-width: 160px;
+        }
+ 
+.main{
+    padding-top: 30px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 40px;
+}
+        .footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+    
+    margin-left: 0;
+}
+/* Page title */
+h4{
+    padding: 20px;
+}
+h4:hover{
+  cursor: pointer;
+  transform: scale(1, 2);
+  background-color: #007bff;
+
+
+}
+form{
+    margin-left: 200px;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light " >
+        <div class="container-fluid">
+            <a class="navbar-brand " href="#"><h2 style="font-weight: bold; color: #f9f5f5; font-size: 36px;">Learnersleaf</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " href="/teacher_dashboard/{{account.email}}">Dasboad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link  " href="/t_wallet/{{account.email}}">Wallet</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <div class="dropdown av-link">
+                            <button type="button" class="btn   dropdown-toggle " data-bs-toggle="dropdown">
+                                Edit
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/t_basic/{{account.email}}">Detail</a></li>
+                                <li><a class="dropdown-item" href="/t_photo/{{account.email}}">Photo</a></li>
+                                <li><a class="dropdown-item" href="/t_subject/{{account.email}}">subject</a></li>
+                                <li><a class="dropdown-item" href="/t_contact/{{account.email}}">contact</a></li>
+                                <li><a class="dropdown-item" href="/t_teaching/{{account.email}}">Teaching Details</a></li>
+                                <li><a class="dropdown-item" href="/t_experience/{{account.email}}">Employ Details</a></li>
+                            </ul>
+                        </div>
+
+                    </li>
+                  
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" >
+                                Find job
+                            </button>
+                            
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">All Job</a></li>
+                                    <li><a class="dropdown-item" href="/tutor_online_job/{{account.email}}">Online Job</a></li>
+                                    <li><a class="dropdown-item" href="/tutor_job/{{account.email}}">Home Teaching</a></li>
+                                    
+                                </ul>
+                           
+                        </div>
+                    </li>
+
+                    <li class="nav-item  ">
+                     <a href="/teacher_inbox/{{account.email}}" class="nav-link" > <i class="fa-solid fa-envelope"  ></i>&nbsp;Message</a>
+                </li>
+                <li class="nav-item">
+                <div class="dropdown nav-link "><div class="btn  dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 24px; font-weight: bold; color:  #f9f5f5;;" ><i class="fa-solid fa-id-badge"  ></i> {{account.name|title}}</div>
+        <ul class="dropdown-menu  ">
+            <li><a class="dropdown-item" href="/"> <i class="fa-solid fa-right-from-bracket"></i>Logout</a></li>
+            <li><a class="dropdown-item" href="#"> <i class="fa-solid fa-gear"></i>Settings</a></li>
+           
+        </ul>
+    </div>
+            </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    {% if msg %}
+    <div class="alert alert-info alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>{{msg}}</strong> !!!!!!!
+    </div>
+    {% endif %}
+
+    <h3  class="section-heading" style="margin-left: 300px; border-bottom:4px solid #0056b3; width: 100px;"> Subject </h3>
+    <div class="detail">
+        
+    
+            {% if account.subject %}
+        <h4 id="one">{{account.subject}}  from :<span>{{account.from_level}} to: {{account.to_level}}</span><i class="fa-solid fa-pen-to-square"></i></h4>
+        
+        {% endif %}
+        {% if account.two_subject %}
+        <h4 id="two">{{account.two_subject}} <span>{{account.two_from_level}} to {{account.two_to_level}}</span> <i class="fa-solid fa-pen-to-square"></i></h4>
+        
+        {% endif %}
+        {% if account.three_subject %}
+        <h4 id="three">{{account.three_subject}} <span>{{account.three_from_level}} to {{account.three_to_level}}</span> <i class="fa-solid fa-pen-to-square"></i></h4>
+        
+        {% endif %}
+
+      
+    </div>
+
+    
+
+    <form action="/t_subject/{{account.email}}" method="POST">
+        <p>Update the value you need or leave blank</p>
+        {% csrf_token %}
+        <div class="one">
+            <h3> subject of one</h3>
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="e.g., Maths, Python">
+        <div class="autocomplete-results res_box"></div>
+
+        <label>From Level</label>
+        <select name="level">
+            <optgroup label="-- Skill Level --">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Expert">Expert</option>
+            </optgroup>
+            <optgroup label="-- Grades --">
+                <option value="school">Preschool, Kindergarten, KG, Nursery</option>
+                <!-- Additional Grade Options here -->
+            </optgroup>
+        </select>
+
+        <label>To Level</label>
+        <select name="to_level">
+            <optgroup label="-- Highest Level --">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Expert">Expert</option>
+            </optgroup>
+        </select>
+        </div>
+
+  
+        <div class="two">
+            <h3> subject of two</h3>
+            <label for="two_subject">Subject</label>
+            <input type="text" id="two_subject" name="two_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results two_res_box"></div>
+
+            <label>From Level</label>
+            <select name="two_level">
+                <optgroup label="-- Skill Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+                <optgroup label="-- Grades --">
+                    <option value="school">Preschool, Kindergarten, KG, Nursery</option>
+                    <!-- Additional Grade Options here -->
+                </optgroup>
+            </select>
+
+            <label>To Level</label>
+            <select name="two_to_level">
+                <optgroup label="-- Highest Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+            </select>
+        </div>
+
+        
+        <div class="three">
+            <h3> subject of three</h3>
+            <label for="three_subject">Subject</label>
+            <input type="text" id="three_subject" name="three_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results three_res_box"></div>
+
+            <label>From Level</label>
+            <select name="three_level">
+                <optgroup label="-- Skill Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+                <optgroup label="-- Grades --">
+                    <option value="school">Preschool, Kindergarten, KG, Nursery</option>
+                    <!-- Additional Grade Options here -->
+                </optgroup>
+            </select>
+
+            <label>To Level</label>
+            <select name="three_to_level">
+                <optgroup label="-- Highest Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+            </select>
+        </div>
+
+        
+        <div class="four">
+            <h3> subject of four</h3>
+            <label for="four_subject">Subject</label>
+            <input type="text" id="four_subject" name="four_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results four_res_box"></div>
+
+            <label>From Level</label>
+            <select name="four_level">
+                <optgroup label="-- Skill Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+                <optgroup label="-- Grades --">
+                    <option value="school">Preschool, Kindergarten, KG, Nursery</option>
+                    <!-- Additional Grade Options here -->
+                </optgroup>
+            </select>
+
+            <label>To Level</label>
+            <select name="four_to_level">
+                <optgroup label="-- Highest Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+            </select>
+        </div>
+
+        
+        <div class="five">
+            <h3> subject of five</h3>
+            <label for="five_subject">Subject</label>
+            <input type="text" id="five_subject" name="five_subject" placeholder="e.g., Maths, Python">
+            <div class="autocomplete-results five_res_box"></div>
+
+            <label>From Level</label>
+            <select name="five_level">
+                <optgroup label="-- Skill Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+                <optgroup label="-- Grades --">
+                    <option value="school">Preschool, Kindergarten, KG, Nursery</option>
+                    <!-- Additional Grade Options here -->
+                </optgroup>
+            </select>
+
+            <label>To Level</label>
+            <select name="five_to_level">
+                <optgroup label="-- Highest Level --">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <div class="footer " style="margin-top: 200px;">
+        <p>&copy; 2023 All rights reserved | This website is made with <i
+            class="fa-solid fa-heart"></i> by <a href="https://www.linkedin.com
+            /in/krishnachandra-9a8a3a1a5/"> call me</a>
+            </p>
+    </div>
+    
+</body>
+</html>

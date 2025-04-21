@@ -1,0 +1,808 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+
+        /* Navbar styles */
+.navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #0056b3;
+}
+
+.nav-link {
+    font-size: 18px;
+    margin-right: 20px;
+    color: #333;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #007bff;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Post button styles */
+.post-btn {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.post-btn:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Section Heading */
+.section-heading {
+    margin: 40px 0 20px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+      body {
+    background-color: #f5f5f5;
+    font-family: Verdana, sans-serif;
+    color: #333;
+}
+
+h2 {
+    color: #0a0606;
+    font-weight: bold;
+}
+
+nav{
+    background: linear-gradient(45deg, #0048ff, #7ed6df);
+    background-size: 400% 400%;
+    animation: gradientAnimation 10s ease infinite;
+    
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.nav .item1, .nav .item2, .nav .item3, .nav .item5 {
+    color: #333;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    margin-left: 20px;
+}
+
+.nav-item:hover {
+    color: #0048ff;
+    border-bottom: 3px solid #0048ff;
+    cursor: pointer;
+}
+
+.nav .item5 .btn {
+    background-color: #0048ff;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 20px;
+}
+
+nav+.container-fluid {
+    background-image: url("{% static 'images/giphy.gif' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 300px;
+    position: relative;
+    
+}
+
+.container {
+    background-color: white;
+    position: relative;
+    top: 40px;
+    
+    width: 1000px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    
+    margin-top: -50px;
+}
+
+.container:hover {
+    opacity: 1;
+}
+
+.teacher, .student {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.teacher .teach-img img, .student .stud-img img {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 70px;
+    margin-right: 50px;
+}
+.stud-img{
+    position: absolute;
+    left: 400px;
+}
+
+.teach-info, .stud-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.teach-info div, .stud-info div {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+      width: 400px;     
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 70px;
+    margin-right:50px ;
+}
+
+.teach-info div:hover, .stud-info div:hover {
+    background-color: #f3f6f7;
+}
+
+.teach-info div a, .stud-info div a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    font-size: 20px;
+}
+
+.teach-info div a:hover, .stud-info div a:hover {
+    color: #06070a;
+}
+
+input[type="text"] {
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"]:focus {
+    border-color: #0048ff;
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0, 72, 255, 0.1);
+}
+
+button[type="submit"] {
+    background-color: #0048ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #003bb5;
+}
+
+.res_box ul {
+    border: 1px solid silver;
+    padding: 10px;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.res_box ul li {
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.res_box ul li:hover {
+    background-color: #f0f0f0;
+}
+.nav{
+    margin-left: 700px;
+}
+.c{
+    margin-top: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+   font-size: 20px;
+   width: 1800px;
+   background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+   color: #f5f5f5;
+}
+
+.c_two{
+    margin-top: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+   font-size: 20px;
+   width: 1800px;
+   background: linear-gradient(90deg, #2575fc 0%, #6a11cb 100%);
+   color: #f5f5f5;
+}
+
+.content {
+    background-image: url("{% static 'images/giphy.gif' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+   top: 1100px;
+    z-index: -1;
+    color: #f0f0f0;
+    font-weight: bold;
+    padding: 50px;
+    font-size: 20px;
+    text-align: center;
+}
+.ob{
+    display: inline-block;
+    position: relative;
+   top: 1200px;
+   margin-left: 300px;
+   font-style: 26px;
+}
+p{
+    text-align: center;
+    font-size: 26px;
+}
+.subject{
+    position: relative;
+    top: 1200px;
+
+   
+    padding: 20px;
+    background-image: url("{% static 'images/giphy.gif' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+ 
+}
+#ul{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 30px;
+    margin-left: 50px;
+    background-color: #f0f0f0;
+    padding-left: 60px;
+    justify-content: space-around;
+    border-radius: 10px;
+    opacity: 0.9;
+   
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+
+/* Navbar adjustments for mobile */
+.navbar-brand {
+    font-size: 24px;
+}
+
+.nav-link {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+/* Ensure the navbar items stack on smaller screens */
+
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    padding: 10px;
+}
+
+.teacher, .student {
+    grid-template-columns: 1fr;
+}
+
+.teach-info div, .stud-info div {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Adjust images for mobile */
+.teach-img img, .stud-img img {
+    width: 100%;
+    height: auto;
+}
+
+/* Adjust content sections for better readability on mobile */
+.content {
+    padding: 20px;
+    font-size: 18px;
+}
+
+.subject ul {
+    grid-template-columns: auto auto;
+    margin-left: 0;
+}
+
+/* Adjust the "Find Tutor" form inputs */
+.form .col-md-5, .form .col-md-2 {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Adjust the "Top Subjects" grid for mobile */
+#ul {
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+}
+
+/* Default styling for desktop */
+.skill {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 0;
+}
+
+.ob {
+  opacity: 0; /* Start invisible */
+  transform: translateY(20px); /* Start slightly below */
+  animation: fadeInUp 1s ease-in-out forwards; /* Trigger animation */
+}
+
+.ob:nth-child(1) {
+  animation-delay: 1s; /* Delay for first element */
+}
+
+.ob:nth-child(2) {
+  animation-delay: 2s; /* Delay for second element */
+}
+
+.ob:nth-child(3) {
+  animation-delay: 3s; /* Delay for third element */
+}
+
+/* Keyframes for fade-in and upwards motion */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Starts lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Ends in original position */
+  }
+}
+
+
+.skill .ob {
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  width: 30%;
+}
+
+/* Mobile responsive styling */
+@media (max-width: 768px) {
+  .skill {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;  /* Reduce top and bottom margin */
+    margin-top: 10px;
+    padding: 0;      /* Remove unnecessary padding */
+  }
+
+  .skill .ob {
+    width: 90%;       /* Slightly wider for better fit */
+    margin-bottom: 15px;
+    margin-top: 20px; /* Reduce space between items */
+    padding: 15px;    /* Reduce padding for better compactness */
+  }
+  .c{
+    margin-top:-70px;
+    font-size: 10px;
+  }
+  .c p{
+   
+    font-size: 19px;
+  }
+  .teach-img{
+    margin-left: -50px;
+    width: 300px;
+  }
+  .content{
+    margin-top: 870px;
+  }
+  .c_two{
+
+    margin-top: -30px;
+   
+  }
+  .c_two p{
+
+
+font-size: 19px;
+}
+.stud-info{
+    width: 340px;
+}
+.student img{
+    margin-left: -50px;
+    width: 380px;
+}
+.content{
+    margin-top: 550px;
+}
+}
+.footer{
+    background-color: #060606;
+    padding: 20px;
+    color: #fff;
+   position: relative;
+   bottom: -1200px;
+   right: 0;
+}
+
+.reveal {
+  position: relative;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 1s ease;
+ 
+}
+
+.reveal.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light " >
+        <div class="container-fluid">
+            <a class="navbar-brand  active " href="#"><h2 style="font-weight: bold; color: #0a0606; font-size: 36px;">Learnersleaf</h2>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active " href="/">Home</a>
+                    </li>
+                   
+                   
+                    <li class="nav-item">
+                    <div class="dropdown">
+                        <button type="button" style="color: #0a0606; font-weight: bold;" class="btn btn-black dropdown-toggle" data-bs-toggle="dropdown" >
+                            Find tutor
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/tutor_request">Tutor Request</a></li>
+                            <li><a class="dropdown-item" href="/h_all_teachers">All Tutors</a></li>
+                            <li><a class="dropdown-item" href="/h_online_tutor">Online Tutors</a></li>
+                            <li><a class="dropdown-item" href="/h_home_tutor">Home Tutors</a></li>
+                        </ul>
+                    </div>
+
+                    </li>
+                   
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-black dropdown-toggle" data-bs-toggle="dropdown" style="color: #0a0606; font-weight: bold;">
+                                Find job
+                            </button>
+                            <ul class="dropdown-menu">
+                                
+                                <li><a class="dropdown-item" href="/h_tutors_job">All Job</a></li>
+                                <li><a class="dropdown-item" href="/h_online_job">Online Job</a></li>
+                                <li><a class="dropdown-item" href="/h_home_job">Home Job</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-info" href="/stu_login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+     
+    <div class="container-fluid mt-5 reveal">
+        <div class="container">
+        <h2 style="text-align: center;">Find online teachers and home tutors for free</h2>
+        <div class="form">
+        <form action="{% url 'h_search_teacher' %}" method="POST" class="row mb-4">
+            {% csrf_token %}
+            <div class="col-md-5">
+                <input type="text" name="subject" class="form-control" placeholder="Subject/Skill">
+            </div>
+            <div class="col-md-5">
+                <div class="locations">
+                   
+                    <input type="text" placeholder="Enter the location" id="box" autocomplete="off" name="location">
+                    <div class="res_box">
+                        <!-- Results will appear here -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </form>
+    </div>
+    </div> <br> <br><br> <br>
+
+    <div class="c container reveal ">
+        <p>Find top online teachers and home tutors for free! Browse our extensive database, connect with qualified educators, and start your personalized learning journey today. No cost, no hassle—just quality education at your fingertips!</p>
+
+    </div>
+    
+    <div class="teacher reval">
+
+        <div class="teach-img">
+            <img src="{% static 'images/teacher.png' %}"  height="300px" width="500px">
+        </div>
+        <div class="teach-info">
+            
+                <div class="item1"><a href="/h_all_teachers">All Teacher</a></div>
+                <div class="item2"><a href="/h_online_tutor">Online Tutors</a></div>
+                <div class="item3"><a href="/h_home_tutor">Home Tutors</a></div>
+        </div>
+
+    </div> 
+    <div class="container c_two reveal">
+    <p >Find your next job with Hope Tech for free! Explore a diverse range of job listings, connect with top employers, and advance your career effortlessly. Start your job search with Hope Tech today and discover exciting opportunities!</p>
+</div>
+    <div class="student reveal">
+        
+        <div class="stud-info">
+            <div><a class="item1" href="/h_tutors_job">All Job</a></div>
+            <div><a class="item2" href="/h_online_job">Online Job</a></div>
+            <div><a class="item2" href="/h_home_job">Home Job</a></div>
+        </div>
+        <div class="stud-img"></div>
+            <img src="{% static 'images/job.png' %}" height="300px" width="500px">
+        </div>
+    </div>
+    <div class="content reveal">
+        <div class="tx" style="background-color: #26282c; opacity: 0.9; border-radius: 10px;" >
+        <h2 style="text-align:  center; color: aliceblue;">Experience Quality Teachers </h2>
+        <p>Connect with high-quality teachers at Hope Tech! Only 55.1% of applicants pass our rigorous selection process, ensuring you receive top-notch education. Find the best tutors and elevate your learning experience today!</p>
+    </div>
+    </div>
+    <div class="skill reveal">
+        <div class="ob"><p>9500+ <br>
+                       Subjects</p>
+                    </div>
+        <div class="ob"><p>1500+ <br>
+            Skills </p></div>
+        <div class="ob"> <p>1000+ <br>
+            Languages</p>
+            </div>
+    </div>
+    <div class="subject reveal">
+        <h2 style="text-align: center; color: #f0f0f0; font-weight: bold;">Top subjects and skills</h2>
+        <ul class="list-inline top-subjects-list" id="ul">
+            <li><a href="#">Academic Writing</a></li>
+            <li><a href="#">Accountancy</a></li>
+            <li><a href="#">Adobe Photoshop</a></li>
+            <li><a href="#">Algorithm &amp; Data Structures</a></li>
+            <li><a href="#">Analog Electronics</a></li>
+            <li><a href="#">Art and Craft</a></li>
+            <li><a href="#">AutoCAD</a></li>
+            <li><a href="#">Basic Electronics</a></li>
+            <li><a href="#">BioChemistry</a></li>
+            <li><a href="#">Biology</a></li>
+            <li><a href="#">Biotechnology</a></li>
+            <li><a href="#">Business Management</a></li>
+            <li><a href="#">C/C++</a></li>
+            <li><a href="#">C#</a></li>
+            <li><a href="#">Chemistry</a></li>
+            <li><a href="#">Civil Engineering</a></li>
+            <li><a href="#">Commerce</a></li>
+            <li><a href="#">Communication Skills</a></li>
+            <li><a href="#">Company Law</a></li>
+            <li><a href="#">Computer networking</a></li>
+            <li><a href="#">Computer Science</a></li>
+            <li><a href="#">Control Systems</a></li>
+            <li><a href="#">DBMS</a></li>
+            <li><a href="#">Digital Electronics</a></li>
+            <li><a href="#">.net</a></li>
+            <li><a href="#">Economics</a></li>
+            <li><a href="#">Electrical Engineering</a></li>
+            <li><a href="#">Engineering Mechanics</a></li>
+            <li><a href="#">English</a></li>
+            <li><a href="#">Environmental Science</a></li>
+            <li><a href="#">Financial Management</a></li>
+            <li><a href="#">Fluid Mechanics</a></li>
+            <li><a href="#">French</a></li>
+            <li><a href="#">German</a></li>
+            <li><a href="#">History</a></li>
+            <li><a href="#">HTML</a></li>
+            <li><a href="#">IELTS</a></li>
+            <li><a href="#">Income Tax</a></li>
+            <li><a href="#">JAVA</a></li>
+            <li><a href="#">Jquery and JavaScript</a></li>
+            <li><a href="#">Law</a></li>
+            <li><a href="#">Maths</a></li>
+            <li><a href="#">Mechanical</a></li>
+            <li><a href="#">Microbiology</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">PHP</a></li>
+            <li><a href="#">Physics</a></li>
+            <li><a href="#">Political Science</a></li>
+            <li><a href="#">Programming</a></li>
+            <li><a href="#">Psychology</a></li>
+            <li><a href="#">Python</a></li>
+            <li><a href="#">R</a></li>
+            <li><a href="#">Science</a></li>
+            <li><a href="#">Selenium Webdriver</a></li>
+            <li><a href="#">Sociology</a></li>
+            <li><a href="#">Statistics</a></li>
+            <li><a href="#">Strength of Materials</a></li>
+            <li><a href="#">Thermodynamics</a></li>
+            <li><a href="#">Zoology</a></li>
+        </ul>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 All rights reserved | This website is made with <i
+            class="fa-solid fa-heart"></i> by <a href="https://www.linkedin.com
+            /in/krishnachandra-9a8a3a1a5/"> call me</a>
+            </p>
+    </div>
+    <script>
+        window.onload = function() {
+           const key = [
+               "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
+               "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
+               "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
+               "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
+               "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
+               "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
+               "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
+               "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
+               "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
+               "Ramanathapuram, Tamil Nadu"
+           ];
+           const result_box = document.querySelector('.res_box');
+           const input_box = document.getElementById("box");
+          
+           input_box.onkeyup = function() {
+               let result = [];
+               let input = input_box.value;
+               if (input.length) {
+                   result = key.filter((keyword) => {
+                       return keyword.toLowerCase().includes(input.toLowerCase());
+                   });
+               }
+               display(result);
+           };
+
+           function display(result) {
+               const content = result.map((list) => {
+                   return `<li onclick="selectLocation(this)">${list}</li>`;
+               });
+               result_box.innerHTML = `<ul>${content.join('')}</ul>`;
+           }
+       };
+
+       function selectLocation(list) {
+           const input_box = document.getElementById("box");
+           input_box.value = list.innerHTML;
+           document.querySelector('.res_box').innerHTML = '';
+       }
+      // Add this JavaScript code to your existing script
+window.addEventListener('scroll', reveal);
+
+function reveal() {
+  var reveals = document.querySelectorAll('.reveal');
+  for (var i = 0; i < reveals.length; i++) {
+    var windowheight = window.innerHeight;
+    var revealTop = reveals[i].getBoundingClientRect().top;
+    var revealPoint = 150;
+
+    if (revealTop < windowheight - revealPoint) {
+      reveals[i].classList.add('active');
+    } else {
+      reveals[i].classList.remove('active');
+    }
+  }
+}
+   </script>
+    
+</body>
+</html>

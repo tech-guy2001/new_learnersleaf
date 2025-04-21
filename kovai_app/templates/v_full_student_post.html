@@ -1,0 +1,529 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        i{
+            font-size: 20px;
+        }
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+ 
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.post {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.post h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+ul li {
+    font-size: 18px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+p i {
+    color: #0066cc;
+    margin-right: 8px;
+}
+
+p span {
+    font-weight: bold;
+}
+
+.icon-location {
+    color: #e74c3c;
+}
+
+.icon-phone {
+    color: #27ae60;
+}
+
+.icon-gender {
+    color: #8e44ad;
+}
+
+.icon-wifi {
+    color: #3498db;
+}
+
+.icon-message {
+    color: #f39c12;
+}
+
+@media (max-width: 768px) {
+    .post {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    p, ul li {
+        font-size: 16px;
+    }
+}
+
+button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            
+        }
+
+        .profile {
+            display: flex;
+            justify-content: flex-end;
+            background-color:rgb(0, 123, 255);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 3s ease;
+        }
+
+        .profile div {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            color: rgb(9, 11, 11);
+            transition: transform 0.3s ease;
+        }
+
+        .profile div:hover {
+            transform: scale(1.1);
+        }
+
+        .profile a {
+            color: rgb(20, 23, 23);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+        }
+
+        .nav .item1, .nav .item2, .nav .item3, .nav .item4, .nav .item5 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 20px;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        .item2 {
+            color: rgb(0, 123, 255);
+            border-bottom: 3px solid rgb(0, 123, 255);
+            padding-bottom: 10px;
+        }
+
+        .nav .item1:hover, .nav .item2:hover, .nav .item3:hover, .nav .item4:hover, .nav .item5:hover {
+            color: rgb(0, 123, 255);
+            border-bottom: 3px solid rgb(0, 123, 255);
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            min-width: 160px;
+        }
+
+
+    
+.section-heading {
+    margin: 40px 0 20px;
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    color: #007bff;
+    animation: fadeInDown 1s ease;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    </style>
+   
+</head>
+<body>
+   
+    <h1 class="section-heading ">Post</h1>
+  
+
+  <div class="post">
+   
+    <h2>{{sp.meeting_option }} {{sp.subject}} Teacher needed in {{s.location}}</h2>
+    <p> <i class="fa-solid fa-chalkboard-teacher class-icon"></i> Class {{sp.classes}} {{sp.curriculam}}</p>
+    <p><i class="fa-solid fa-graduation-cap"></i> Subject: </p>
+    <ul>
+        {% if sp.subject %}
+        <li> {{sp.subject}}</li>
+        {% endif %}
+        {% if sp.two_subject %}
+        <li> {{sp.two_subject}}</li>
+        {% endif %}
+        {% if sp.three_subject %}
+        <li> {{sp.three_subject}}</li>
+        {% endif %}
+
+    </ul>
+  <p> <i class="fa-solid fa-location-dot" style="font-size: 20px;"></i> {{s.location}}  </p> 
+  <p><i class="fa-solid fa-indian-rupee-sign" style="font-size: 20px;"></i> {{sp.budget}} /{{sp.budget_need}}</p>
+  <p><i class="fa-solid fa-hourglass-start"></i> Posted:{{ sp.dates|timesince }} ago  <i class="fa-solid fa-scale-unbalanced-flip"></i> Requires:{{sp.need}}</p>
+  <p><i class="fa-solid fa-user"></i> Posted by: {{s.name}}</p>
+  <p><i class="fa-solid fa-phone"></i>Contact: {{s.phone}}</p>
+  <p><i class="fa-solid fa-venus-mars"></i>Gender Preference: {{sp.gender}}</p>
+  <p><i class="fa-solid fa-wifi"></i>Available :{{sp.meeting_option}}</p>
+  <p><i class="fa-solid fa-paper-plane"></i> Can communicate in :{{sp.language }}</p>
+  <p>{{sp.message}}</p>
+  {% if sp.imagess %}
+  <p><i class="fa-solid fa-file-arrow-up"></i> <a href="{{ sp.imagess.url }}" target="_blank">View File</a></p>
+  
+
+{% endif %}
+
+  <p>{{sp.dyr}}</p>
+ 
+  <button class="whatsapp-btn" onclick="contactWhatsApp()"> <i class="fa-brands fa-square-whatsapp"></i>Contact with WhatsApp</button>
+
+
+
+
+    </div>
+
+  <script>
+      function contactWhatsApp() {
+          window.open("https://wa.me/{{s.w_number}}s?text=Hello, I'd like to contact you!", "_blank");
+      }
+  </script>
+
+
+
+    </div>
+    </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Post Listing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #6e8efb, #a777e3);
+            --text-color: #333;
+            --background-light: #f4f4f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-light);
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .post-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .post-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .post-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-header h2 {
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .post-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .post-detail:hover {
+            transform: translateX(10px);
+        }
+
+        .post-detail i {
+            color: #6e8efb;
+            font-size: 1.2rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .subjects-list {
+            list-style-type: none;
+            
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .subjects-list li {
+            position: relative;
+            margin-bottom: 0.5rem;
+            background-color: #6e8efb;
+            padding: 0.2rem;
+            border-radius: 0.5rem;
+            color: white;
+        }
+
+        /* .subjects-list li::before {
+            content: '•';
+            color: #a777e3;
+            position: absolute;
+            left: -1rem;
+        } */
+
+        .whatsapp-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .whatsapp-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .post-container {
+                margin: 1rem;
+                border-radius: 10px;
+            }
+
+            .post-details {
+                grid-template-columns: 1fr;
+            }
+        }
+       
+        
+    </style>
+</head>
+<body>
+    <div class="post-container">
+        <div class="post-header">
+            <h1>{{sp.meeting_option}} {{sp.subject}} Teacher Needed</h1>
+            <h2>Location: {{s.location}}</h2>
+        </div>
+
+        <div class="post-content">
+            <div class="post-details">
+                <div class="post-detail">
+                    <i class="fa-solid fa-chalkboard-teacher"></i>
+                    <span>Class: {{sp.classes}} {{sp.curriculam}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Subjects:</span>
+                    <ul class="subjects-list">
+                        {% if sp.subject %}
+                        <li>{{sp.subject}}</li>
+                        {% endif %}
+                        {% if sp.two_subject %}
+                        <li>{{sp.two_subject}}</li>
+                        {% endif %}
+                        {% if sp.three_subject %}
+                        <li>{{sp.three_subject}}</li>
+                        {% endif %}
+                    </ul>
+                  
+                </div>
+            
+            </div>
+
+           
+
+            <div class="post-details">
+                <div class="post-detail">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>{{s.location}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                    <span>{{sp.budget}} /{{sp.budget_need}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-hourglass-start"></i>
+                    <span>Posted: {{ sp.dates|timesince }} ago</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                    <span>Requires: {{sp.need}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Posted by: {{s.name}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Contact: {{s.phone}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-venus-mars"></i>
+                    <span>Gender Preference: {{sp.gender}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-wifi"></i>
+                    <span>Available: {{sp.meeting_option}}</span>
+                </div>
+                <div class="post-detail">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Can communicate in: {{sp.language}}</span>
+                </div>
+
+                <div class="post-detail">
+                <i class="fa-solid fa-eye"></i>
+                
+                    <span>No of View: {{sp.count}}</span>
+                </div>
+                
+          
+
+            </div>
+
+            <p class="post-detail" style="margin-top: 1rem;">{{sp.dyr}}</p>
+
+            {% if sp.imagess %}
+            <div class="post-detail">
+                <i class="fa-solid fa-file-arrow-up"></i>
+                <a href="{{ sp.imagess.url }}" target="_blank">View File</a>
+            </div>
+            {% endif %}
+
+            <button class="whatsapp-btn" onclick="contactWhatsApp()">
+                <i class="fa-brands fa-square-whatsapp"></i>Contact with WhatsApp
+            </button>
+           <a href="/teacher_dashboard/"> <button class="whatsapp-btn" >
+                Go Dashboard
+            </button>
+        </a>
+        </div>
+    </div>
+
+    <script>
+        function contactWhatsApp() {
+            window.open("https://wa.me/{{s.w_number}}?text=Hello, I'd like to contact you!", "_blank");
+        }
+    </script>
+</body>
+</html>

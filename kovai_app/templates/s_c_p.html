@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f0f4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    
+        /* Form container */
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+    
+        /* Labels */
+        label {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+    
+        /* Input fields */
+        input[type="password"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+    
+        input[type="password"]:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+    
+        /* Submit button */
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    
+        /* Success/Error message */
+        p {
+            color: red; /* Adjust to green for success messages */
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+    
+</head>
+<body>
+   <p> {{msg}}</p>
+    <form action="/s_change_password/{{email}}" method="POST">
+        {% csrf_token %}
+        <label>Password</label> <br>
+        <input type="password" name="password" placeholder="Enter the new "> <br> <br>
+        <label >Confirm password</label><br>
+        <input type="password" name="confirm_password" placeholder="Enter the confirm password "> <br> <br> <br>
+        <input type="submit" value="UPDATE">
+
+    </form>
+</body>
+</html>

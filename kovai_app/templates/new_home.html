@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnLeaf</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Modern Color Palette */
+        :root {
+            --primary: #6366F1;       /* Indigo */
+            --primary-light: #EEF2FF; /* Very light indigo */
+            --accent: #EC4899;        /* Pink */
+            --accent-light: #FCE7F3;  /* Light pink */
+            --secondary: #10B981;     /* Emerald */
+            --neutral-100: #F3F4F6;   /* Lightest gray */
+            --neutral-200: #E5E7EB;   /* Light gray */
+            --neutral-300: #D1D5DB;   /* Medium light gray */
+            --neutral-500: #6B7280;   /* Medium gray */
+            --neutral-700: #374151;   /* Dark gray */
+            --neutral-900: #111827;   /* Very dark gray */
+            --gradient: linear-gradient(135deg, #6366F1, #EC4899);
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --button-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--neutral-100);
+            color: var(--neutral-700);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #6366F1;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            color: #6366F1;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #6366F1;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #6366F1;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #6366F1;
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links li a.active {
+            color: #6366F1;
+        }
+
+        .nav-links li a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 15px 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active .bar1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .menu-toggle.active .bar2 {
+                opacity: 0;
+            }
+
+            .menu-toggle.active .bar3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--neutral-900);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.25rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        p {
+            color: var(--neutral-500);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: var(--button-shadow);
+        }
+        
+        .btn:hover {
+            background-color: #5253e3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background-color: #db2777;
+        }
+    
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+            margin-top:60px;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        .slide-image {
+            flex: 1;
+            height: 60vh;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-text {
+            flex: 1;
+            color: #333;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out 0.3s;
+        }
+
+        .slide.active .slide-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out 0.5s;
+        }
+
+        .slide.active .slide-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #333;
+            cursor: pointer;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .nav-button:hover {
+            color: #000;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev {
+            left: 2rem;
+        }
+
+        .next {
+            right: 2rem;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .progress-item {
+            width: 3rem;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-item.active {
+            background: #333;
+            width: 5rem;
+        }
+        
+        /* Stats Section */
+        .stats {
+            background-color: white;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 1rem;
+            border-radius: 1rem;
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Services Section */
+        .section-intro {
+            max-width: 700px;
+            text-align: center;
+            margin: 0 auto 3rem;
+        }
+        
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-card:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            padding: 1rem;
+            border-radius: 1rem;
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .service-card:nth-child(2n) .service-icon {
+            background-color: var(--accent-light);
+            color: var(--accent);
+        }
+        
+        .service-card:nth-child(3n) .service-icon {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--secondary);
+        }
+        
+        .service-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Top Subject & Skills */
+        .skills {
+            background-color: var(--primary-light);
+        }
+        
+        .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .skill-category {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .skill-category:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    
+    .category-header {
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      padding: 1.25rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    
+    .category-items {
+      padding: 1.25rem;
+    }
+    
+    .skill-item {
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #eee;
+      transition: transform 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .skill-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .skill-item:hover {
+      transform: translateX(5px);
+    }
+    
+    .skill-item a {
+      color: #4a5568;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+    
+    .skill-item a:hover {
+      color: #3f87a6;
+    }
+    
+    .skill-item a::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #4895ef;
+      margin-right: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+        
+        /* Footer */
+        footer {
+            background-color: var(--neutral-900);
+            color: white;
+            padding: 5rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 3rem;
+            height: 2px;
+            background: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--neutral-300);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-column p {
+            color: var(--neutral-300);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            padding-top: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--neutral-300);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <span>LearnLeaf</span>
+                </div>
+                <div class="menu-toggle">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/" class="active">Home</a></li>
+                    <li><a href="/h_all_teachers">Find Tutors</a></li>
+                    <li><a href="/h_tutors_job">Find Jobs</a></li>
+                    <li><a href="/about">About</a></li>
+                    {% if request.user.is_authenticated %}
+                    
+                    {% else %}
+                    <li><a href="/stu_login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="carousel">
+        <div class="slide active">
+            <div class="slide-content">
+                <div class="slide-image">
+                    <img src="https://media.istockphoto.com/id/1307457391/photo/happy-black-student-raising-arm-to-answer-question-while-attending-class-with-her-university.jpg?s=612x612&w=0&k=20&c=iZaZFyC-WqlqSQc4elqUNPTxLvWPe8P5Tb_YdZnrI9Q=" alt="Quality Education">
+                </div>
+                <div class="slide-text">
+                    <h2 class="slide-title">Quality Education</h2>
+                    <p class="slide-description">Empower your future with world-class education and skill-building opportunities.</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-image">
+                    <img src="https://plus.unsplash.com/premium_photo-1713296255442-e9338f42aad8?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sbGVnZXxlbnwwfHwwfHx8MA%3D%3D" alt="E-Learning">
+                </div>
+                <div class="slide-text">
+                    <h2 class="slide-title">E-Learning Platforms</h2>
+                    <p class="slide-description">Access a wide range of online courses from top universities and educators around the world.</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-image">
+                    <img src="https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg?s=612x612&w=0&k=20&c=Ur3moWl1fKFms-6UACseglMjoYAynYKzsanZpgK8lFk=" alt="Career Development">
+                </div>
+                <div class="slide-text">
+                    <h2 class="slide-title">Career Development</h2>
+                    <p class="slide-description">Enhance your skills and boost your career with expert guidance and industry-relevant training.</p>
+                </div>
+            </div>
+        </div>
+    
+        <button class="nav-button prev">←</button>
+        <button class="nav-button next">→</button>
+    
+        <div class="progress-bar"></div>
+    </div>
+    
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <h2>Our Impact by the Numbers</h2>
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-number">9500+</div>
+                    <p>Subjects</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="stat-number">1500+</div>
+                    <p>Skills</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-number">1000+</div>
+                    <p>Languages</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-number">5+</div>
+                    <p>Years of Excellence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-intro">
+                <h2>Our Premium Services</h2>
+                <p>Empowering your learning experience with innovative solutions, expert guidance, and cutting-edge technology to help you achieve your goals.</p>
+            </div>
+            <div class="services-container">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i> <!-- Updated to a search icon -->
+                    </div>
+                    <h3 class="service-title">Easy tutor search</h3>
+                    <p>Find the perfect tutor effortlessly with our intelligent search system, tailored filters, and verified tutor profiles.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-sliders-h"></i> <!-- Updated to a customization icon -->
+                    </div>
+                    <h3 class="service-title">Customizable learning</h3>
+                    <p>Personalize your learning experience with flexible schedules, tailored lesson plans, and interactive study materials.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-check-circle"></i> <!-- Updated to a quality check icon -->
+                    </div>
+                    <h3 class="service-title">Quality assurance</h3>
+                    <p>We ensure high-quality education through verified tutors, regular progress tracking, and student feedback integration.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i> <!-- Updated to a support icon -->
+                    </div>
+                    <h3 class="service-title">24/7 support and learning resources</h3>
+                    <p>Access round-the-clock assistance, comprehensive study materials, and an ever-growing library of resources to support your learning journey.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Top Subject & Skills -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2>Top Subjects and Skills</h2>
+            <div class="skills-grid">
+                <!-- Engineering Category -->
+                <div class="skill-category">
+                  <div class="category-header">Engineering</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Civil Engineering</a></div>
+                    <div class="skill-item"><a href="#">Electrical Engineering</a></div>
+                    <div class="skill-item"><a href="#">Engineering Mechanics</a></div>
+                    <div class="skill-item"><a href="#">Mechanical</a></div>
+                    <div class="skill-item"><a href="#">Strength of Materials</a></div>
+                    <div class="skill-item"><a href="#">Fluid Mechanics</a></div>
+                    <div class="skill-item"><a href="#">Thermodynamics</a></div>
+                  </div>
+                </div>
+                
+                <!-- Computer Science Category -->
+                <div class="skill-category">
+                  <div class="category-header">Computer Science</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Computer Science</a></div>
+                    <div class="skill-item"><a href="#">Programming</a></div>
+                    <div class="skill-item"><a href="#">C/C++</a></div>
+                    <div class="skill-item"><a href="#">C#</a></div>
+                    <div class="skill-item"><a href="#">JAVA</a></div>
+                    <div class="skill-item"><a href="#">Python</a></div>
+                    <div class="skill-item"><a href="#">HTML</a></div>
+                    <div class="skill-item"><a href="#">Jquery and JavaScript</a></div>
+                  </div>
+                </div>
+                
+                <!-- Electronics Category -->
+                <div class="skill-category">
+                  <div class="category-header">Electronics</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Analog Electronics</a></div>
+                    <div class="skill-item"><a href="#">Basic Electronics</a></div>
+                    <div class="skill-item"><a href="#">Digital Electronics</a></div>
+                    <div class="skill-item"><a href="#">Control Systems</a></div>
+                    <div class="skill-item"><a href="#">Computer networking</a></div>
+                  </div>
+                </div>
+                
+                <!-- Science Category -->
+                <div class="skill-category">
+                  <div class="category-header">Sciences</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Science</a></div>
+                    <div class="skill-item"><a href="#">Physics</a></div>
+                    <div class="skill-item"><a href="#">Chemistry</a></div>
+                    <div class="skill-item"><a href="#">Biology</a></div>
+                    <div class="skill-item"><a href="#">Biotechnology</a></div>
+                    <div class="skill-item"><a href="#">Environmental Science</a></div>
+                    <div class="skill-item"><a href="#">Microbiology</a></div>
+                    <div class="skill-item"><a href="#">Zoology</a></div>
+                  </div>
+                </div>
+                
+                <!-- Business Category -->
+                <div class="skill-category">
+                  <div class="category-header">Business</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Business Management</a></div>
+                    <div class="skill-item"><a href="#">Commerce</a></div>
+                    <div class="skill-item"><a href="#">Economics</a></div>
+                    <div class="skill-item"><a href="#">Financial Management</a></div>
+                    <div class="skill-item"><a href="#">Accountancy</a></div>
+                    <div class="skill-item"><a href="#">Income Tax</a></div>
+                    <div class="skill-item"><a href="#">Company Law</a></div>
+                  </div>
+                </div>
+                
+                <!-- Languages & Writing Category -->
+                <div class="skill-category">
+                  <div class="category-header">Languages & Writing</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Academic Writing</a></div>
+                    <div class="skill-item"><a href="#">English</a></div>
+                    <div class="skill-item"><a href="#">French</a></div>
+                    <div class="skill-item"><a href="#">German</a></div>
+                    <div class="skill-item"><a href="#">IELTS</a></div>
+                    <div class="skill-item"><a href="#">Communication Skills</a></div>
+                  </div>
+                </div>
+                
+                <!-- Mathematics & Analytics Category -->
+                <div class="skill-category">
+                  <div class="category-header">Mathematics & Analytics</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Maths</a></div>
+                    <div class="skill-item"><a href="#">Statistics</a></div>
+                    <div class="skill-item"><a href="#">R</a></div>
+                    <div class="skill-item"><a href="#">Algorithm & Data Structures</a></div>
+                  </div>
+                </div>
+                
+                <!-- Miscellaneous Category -->
+                <div class="skill-category">
+                  <div class="category-header">Miscellaneous</div>
+                  <div class="category-items">
+                    <div class="skill-item"><a href="#">Law</a></div>
+                    <div class="skill-item"><a href="#">Music</a></div>
+                    <div class="skill-item"><a href="#">Art and Craft</a></div>
+                    <div class="skill-item"><a href="#">History</a></div>
+                    <div class="skill-item"><a href="#">Political Science</a></div>
+                    <div class="skill-item"><a href="#">Psychology</a></div>
+                    <div class="skill-item"><a href="#">Sociology</a></div>
+                  </div>
+                </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>About LearnLeaf</h3>
+                    <p>We are a forward-thinking digital agency committed to helping businesses transform and thrive in the digital landscape through innovative solutions and strategic partnerships.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Easy tutor search</a></li>
+                        <li><a href="#">Customizable learning</a></li>
+                        <li><a href="#">Quality assurance</a></li>
+                        <li><a href="#">24/7 support and learning resources</a></li>
+                        <!-- <li><a href="#">Cloud Solutions</a></li>
+                        <li><a href="#">Cybersecurity</a></li> -->
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/" >Home</a></li>
+                        <li><a href="/h_all_teachers">Find Tutors</a></li>
+                        <li><a href="/h_tutors_job">Find Jobs</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/stu_login">Login</a></li>
+                  
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> 250 Innovation Boulevard</li>
+                        <li><i class="fas fa-city" style="margin-right: 10px;"></i> San Francisco, CA 94103</li>
+                        <li><i class="fas fa-phone" style="margin-right: 10px;"></i> (415) 555-0123</li>
+                        <li><i class="fas fa-envelope" style="margin-right: 10px;"></i> hello@learnleaf.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LearnLeaf. All Rights Reserved. | <a href="#" style="color: var(--neutral-300);">Privacy Policy</a> | <a href="#" style="color: var(--neutral-300);">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+        const progressBar = document.querySelector('.progress-bar');
+
+        let currentSlide = 0;
+
+        // Create progress bar items
+        slides.forEach((_, index) => {
+            const progressItem = document.createElement('div');
+            progressItem.classList.add('progress-item');
+            if (index === 0) progressItem.classList.add('active');
+            progressItem.addEventListener('click', () => goToSlide(index));
+            progressBar.appendChild(progressItem);
+        });
+
+        const progressItems = document.querySelectorAll('.progress-item');
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                progressItems[index].classList.remove('active');
+            });
+
+            slides[currentSlide].classList.add('active');
+            progressItems[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlides();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+
+        prevButton.addEventListener('click', prevSlide);
+        nextButton.addEventListener('click', nextSlide);
+
+        // Touch events
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Auto-play with longer interval
+        let autoplayInterval = setInterval(nextSlide, 6000);
+
+        // Pause on hover
+        document.querySelector('.carousel').addEventListener('mouseenter', () => {
+            clearInterval(autoplayInterval);
+        });
+
+        document.querySelector('.carousel').addEventListener('mouseleave', () => {
+            autoplayInterval = setInterval(nextSlide, 6000);
+        });
+
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
