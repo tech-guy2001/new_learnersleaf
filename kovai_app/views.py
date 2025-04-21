@@ -35,7 +35,7 @@ def tutor_request(request):
            return render(request, 'request_tutor.html',{"msg":"An account with this email already exists."})
         else:
     
-             
+            print("jjvv")
 # Generate a random 6-digit OTP
             otp = random.randint(100000, 999999)
 
@@ -55,7 +55,7 @@ def tutor_request(request):
             
             
             if User.objects.filter(email=email).exists():
-                
+                print("jj")
                 return render(request, 'request_tutor.html',{"msg":"An account with this email already exists."})
             user = User.objects.create_user(username=uname, email=email, password=password)
             user = authenticate(request, username=email , password=password)  # Authenticate using email
