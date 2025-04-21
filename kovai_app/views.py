@@ -1834,7 +1834,7 @@ def  buy_coin_stus(request,amount):
                 "customer_phone": "+919090407368"
             },
             "order_meta": {
-                "return_url": f"https://learnersleaf.com//payment/verify/?order_id={order_id}"
+                "return_url": f"https://learnersleaf.com/payment/verify/?order_id={order_id}"
             }
         }
 
