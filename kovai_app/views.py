@@ -1834,7 +1834,7 @@ def  buy_coin_stus(request,amount):
                 "customer_phone": "+919090407368"
             },
             "order_meta": {
-                "return_url": f"http://127.0.0.1:8000/payment/verify/?order_id={order_id}"
+                "return_url": f"https://learnersleaf.com//payment/verify/?order_id={order_id}"
             }
         }
 
@@ -1943,7 +1943,7 @@ def  buy_coin_teacher(request,amount):
                 "customer_phone": "+919090407368"
             },
             "order_meta": {
-                "return_url": f"http://127.0.0.1:8000/payment/verify_teacher/?order_id={order_id}"
+                "return_url": f"https://learnersleaf.com/payment/verify_teacher/?order_id={order_id}"
             }
         }
 
