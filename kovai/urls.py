@@ -30,6 +30,6 @@ urlpatterns = [
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = TemplateView.as_view(template_name='404.html')
-handler500=TemplateView.as_view(template_name='404.html')
+
   
 

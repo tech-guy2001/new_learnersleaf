@@ -1180,7 +1180,10 @@
         <div class="tutor-card" data-tutor-id=5>
             <div class="tutor-logo">
                 {% if tutor.profile_photo %}
-                <img src="{{ tutor.profile_photo.url }}" alt="Profile Photo">
+                <img src="{{ tutor.profile_photo.url|default:'https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg?s=612x612&w=0&k=20&c=Ur3moWl1fKFms-6UACseglMjoYAynYKzsanZpgK8lFk=' }}" alt="Profile Photo">
+
+                {% else %}
+                <img src="https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg?s=612x612&w=0&k=20&c=Ur3moWl1fKFms-6UACseglMjoYAynYKzsanZpgK8lFk=" alt="Career Development">
            
             {% endif %}
             </div>
