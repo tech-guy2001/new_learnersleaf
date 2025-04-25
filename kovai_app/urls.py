@@ -18,7 +18,7 @@ urlpatterns = [
  path('stu_login',views.stu_login, name='stu_login'),
   path('delete_stu',views.delete_stu, name='delete'),
 
-path('search_teachers/<email>',views.search_teachers, name='search_teachers'),
+#path('search_teachers/<email>',views.search_teachers, name='search_teachers'),
 path('online_tutors/<email>',views.online_tutor, name='online_tutors'),
 path('home_tutors/<email>',views.home_tutor, name='home_tutor'),
  path('fliter_location/<location>/<email>',views.fliter_location, name='fliter_location'),
@@ -39,12 +39,12 @@ path('add_subject/<email>',views.addsubject, name='addsubject'),
        path('teacher_email_verifed/<email>',views.teacher_email_verifed, name='teacher_email_verified'),
          path('teacher_login',views.teach_login, name='teach_login'),
           path('myprofile/<email>',views.myprofile, name='myprofile'),
-           path('search_teacher/<email>',views.search_teacher, name='search_teacher'),
+           #path('search_teacher/<email>',views.search_teacher, name='search_teacher'),
 
-          path('fliter_location/<location>/',views.fliter_location, name='fliter_location'),
+          # path('fliter_location/<location>/',views.fliter_location, name='fliter_location'),
 
-           path('online_tutor',views.online_tutor, name='online_tutors'),
-            path('home_tutor',views.home_tutor, name='home_tutors'),
+          #  path('online_tutor',views.online_tutor, name='online_tutors'),
+          #   path('home_tutor',views.home_tutor, name='home_tutors'),
             
             
 
@@ -74,7 +74,7 @@ path('add_subject/<email>',views.addsubject, name='addsubject'),
                     path('h_all_teachers',views.h_all_teachers, name='h_all_teachers'),
                      path('h_online_tutor',views.h_online_tutor, name='h_online_tutor'),
                       path('h_home_tutor',views.h_home_tutor, name='h_home_tutor'),
-                      path('h_fliter_location/<str:location>/', views.h_fliter_location, name='h_fliter_location'),
+                     # path('h_fliter_location/<str:location>/', views.h_fliter_location, name='h_fliter_location'),
 
                        path('h_tutors_job', views.h_tutors_job, name='h_tutors_job'),
 

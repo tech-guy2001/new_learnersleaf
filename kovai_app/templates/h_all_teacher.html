@@ -1,4 +1,4 @@
-{% load static %}
+
 {% load custom_filters %}
 
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" src="{% static loc.css %}">
+   
     <title>tutor Vacancies</title>
     <style>
         /* General Styles */
@@ -1041,6 +1041,11 @@
     <header>
         <h1>Find Your Best tutor</h1>
         <p>Discover opportunities that match your skills and ambitions</p>
+        {% if request.user.is_authenticated %}
+       <a href="/common_dashboard" style="text-decoration: none;"> <button  class="search-button" style="background: #184dfa;" >
+             Go to Dashboard
+        </button></a>
+        {% endif %}
         <!-- {% if request.user.is_authenticated %}
         <div class="header-buttons">
         <a href="/myposts/" style="text-decoration: none;">    <button class="open-modal-btn">
@@ -1054,59 +1059,6 @@
         </div>
         {% endif %} -->
     </header>
-
-    <div class="modal-overlay">
-        <div class="modal">
-          <button class="close-modal">&times;</button>
-          <h2 class="form-title">Join with Learnersleaf</h2>
-          
-          <form id="registration-form">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" class="form-control" placeholder="Enter Email" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="location">Location</label>
-              <input type="text" id="location" class="form-control" placeholder="Enter the location" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="phone">Contact</label>
-              <input type="tel" id="phone" class="form-control" placeholder="Enter phone number" required>
-            </div>
-            
-            <div class="form-group">
-              <label>Gender</label>
-              <div class="radio-group">
-                <label class="radio-option">
-                  <input type="radio" name="gender" value="male" required> Male
-                </label>
-                <label class="radio-option">
-                  <input type="radio" name="gender" value="female"> Female
-                </label>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="confirm-password">Confirm Password</label>
-              <input type="password" id="confirm-password" class="form-control" required>
-            </div>
-            
-            <button type="submit" class="submit-btn">Submit</button>
-          </form>
-        </div>
-      </div>
 
     <div class="search-container">
         <form action="h_search_teacher" method="POST">
@@ -1178,14 +1130,20 @@
         {% for tutor in tutors %}
         
         <div class="tutor-card" data-tutor-id=5>
+            <!-- <div class="tutor-logo">
+                {% if tutor.profile_photo %}
+                <img src="{{ tutor.profile_photo.url }}" alt="Profile Photo">
+            {% else %}
+                <img src="https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg" alt="Default Profile">
+            {% endif %}
+            </div> -->
             <div class="tutor-logo">
                 {% if tutor.profile_photo %}
-                <img src="{{ tutor.profile_photo.url|default:'https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg?s=612x612&w=0&k=20&c=Ur3moWl1fKFms-6UACseglMjoYAynYKzsanZpgK8lFk=' }}" alt="Profile Photo">
-
-                {% else %}
-                <img src="https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg?s=612x612&w=0&k=20&c=Ur3moWl1fKFms-6UACseglMjoYAynYKzsanZpgK8lFk=" alt="Career Development">
-           
+                <img src="{{ tutor.profile_photo.url }}" alt="Profile Photo">
+            {% else %}
+                <img src="https://media.istockphoto.com/id/1371896330/photo/happy-asian-woman-in-his-graduation-day.jpg" alt="Default Profile">
             {% endif %}
+            
             </div>
             <div class="tutor-details">
                 <h2 class="tutor-title">{{ tutor.name|title }} </h2>

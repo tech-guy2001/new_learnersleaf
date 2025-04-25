@@ -1078,97 +1078,97 @@ def search_teacher(request,email):
 
 #_______________________________________________________________________________________________________________________________________
 from urllib.parse import unquote
-def fliter_location(request,location):
-    l=[
-                "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
-                "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
-                "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
-                "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
-                "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
-                "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
-                "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
-                "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
-                "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
-                "Ramanathapuram, Tamil Nadu"
-            ]
-    decoded_once = unquote(location)  # First level of decoding
-    decoded_twice = unquote(decoded_once)   # Second level of decoding
+# def fliter_location(request,location):
+#     l=[
+#                 "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
+#                 "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
+#                 "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
+#                 "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
+#                 "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
+#                 "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
+#                 "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
+#                 "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
+#                 "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
+#                 "Ramanathapuram, Tamil Nadu"
+#             ]
+#     decoded_once = unquote(location)  # First level of decoding
+#     decoded_twice = unquote(decoded_once)   # Second level of decoding
 
-    print(decoded_twice)
-    if TutorRegistration.objects.filter(location=decoded_twice).exists():
-        tutors=TutorRegistration.objects.filter(location=decoded_twice).values()
-    else:
-        tutors=TutorRegistration.objects.all().values()
-    return render(request,"all_teacher.html",{"tutors":tutors,"locations":l,"heading":"All Tutors"})
+#     print(decoded_twice)
+#     if TutorRegistration.objects.filter(location=decoded_twice).exists():
+#         tutors=TutorRegistration.objects.filter(location=decoded_twice).values()
+#     else:
+#         tutors=TutorRegistration.objects.all().values()
+#     return render(request,"all_teacher.html",{"tutors":tutors,"locations":l,"heading":"All Tutors"})
 
-#__________________________________________________________________________________
-def online_tutor(request):
-    l=[
-                "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
-                "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
-                "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
-                "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
-                "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
-                "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
-                "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
-                "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
-                "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
-                "Ramanathapuram, Tamil Nadu"
-            ]
-    all_tutor=TutorRegistration.objects.filter(available_for_online_teaching="yes")
-    return render(request,"all_teacher.html",{"tutors":all_tutor,"locations":l,"heading":"Online Tutors"})
+# #__________________________________________________________________________________
+# def online_tutor(request):
+#     l=[
+#                 "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
+#                 "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
+#                 "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
+#                 "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
+#                 "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
+#                 "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
+#                 "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
+#                 "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
+#                 "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
+#                 "Ramanathapuram, Tamil Nadu"
+#             ]
+#     all_tutor=TutorRegistration.objects.filter(available_for_online_teaching="yes")
+#     return render(request,"all_teacher.html",{"tutors":all_tutor,"locations":l,"heading":"Online Tutors"})
 
-def home_tutor(request):
-    l=[
-                "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
-                "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
-                "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
-                "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
-                "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
-                "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
-                "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
-                "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
-                "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
-                "Ramanathapuram, Tamil Nadu"
-            ]
-    all_tutor=TutorRegistration.objects.filter(willing_to_travel="yes")
-    return render(request,"all_teacher.html",{"tutors":all_tutor,"locations":l,"heading":"Home Tutors"})
+# def home_tutor(request):
+#     l=[
+#                 "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
+#                 "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
+#                 "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
+#                 "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
+#                 "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
+#                 "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
+#                 "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
+#                 "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
+#                 "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
+#                 "Ramanathapuram, Tamil Nadu"
+#             ]
+#     all_tutor=TutorRegistration.objects.filter(willing_to_travel="yes")
+#     return render(request,"all_teacher.html",{"tutors":all_tutor,"locations":l,"heading":"Home Tutors"})
 
-def search_teachers(request,email):
-    l=[
-                "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
-                "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
-                "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
-                "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
-                "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
-                "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
-                "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
-                "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
-                "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
-                "Ramanathapuram, Tamil Nadu"
-            ]
-    student=TutorRequest.objects.get(email=email)
+# def search_teachers(request,email):
+#     l=[
+#                 "Chennai, Tamil Nadu", "Coimbatore, Tamil Nadu", "Madurai, Tamil Nadu", "Salem, Tamil Nadu",
+#                 "Tiruchirappalli, Tamil Nadu", "Tirunelveli, Tamil Nadu", "Vellore, Tamil Nadu", "Erode, Tamil Nadu",
+#                 "Kanchipuram, Tamil Nadu", "Thanjavur, Tamil Nadu", "Tiruppur, Tamil Nadu", "Nagapattinam, Tamil Nadu",
+#                 "Kumbakonam, Tamil Nadu", "Dharmapuri, Tamil Nadu", "Karur, Tamil Nadu", "Sivakasi, Tamil Nadu",
+#                 "Dindigul, Tamil Nadu", "Ramanathapuram, Tamil Nadu", "Tuticorin, Tamil Nadu", "Cuddalore, Tamil Nadu",
+#                 "Vellore, Tamil Nadu", "Ariyalur, Tamil Nadu", "Perambalur, Tamil Nadu", "Nagercoil, Tamil Nadu",
+#                 "Theni, Tamil Nadu", "Kodaikanal, Tamil Nadu", "Pollachi, Tamil Nadu", "Pudukkottai, Tamil Nadu",
+#                 "Tiruvallur, Tamil Nadu", "Tiruvannamalai, Tamil Nadu", "Chengalpattu, Tamil Nadu", "Tirupathur, Tamil Nadu",
+#                 "Sankarankovil, Tamil Nadu", "Kovilpatti, Tamil Nadu", "Manapparai, Tamil Nadu", "Thiruthuraipoondi, Tamil Nadu",
+#                 "Ramanathapuram, Tamil Nadu"
+#             ]
+#     student=TutorRequest.objects.get(email=email)
     
-    all_tutor=TutorRegistration.objects.all()
-    account=Requestpost.objects.filter(email=email).first()
-    accounts=TutorRequest.objects.filter(email=email).first()
-    if request.method=="POST":
+#     all_tutor=TutorRegistration.objects.all()
+#     account=Requestpost.objects.filter(email=email).first()
+#     accounts=TutorRequest.objects.filter(email=email).first()
+#     if request.method=="POST":
         
-        subject=request.POST.get('subject')
-        location=request.POST.get('location')
-        if TutorRegistration.objects.filter(subject=subject,location=location).exists():
+#         subject=request.POST.get('subject')
+#         location=request.POST.get('location')
+#         if TutorRegistration.objects.filter(subject=subject,location=location).exists():
           
-            tutors = TutorRegistration.objects.filter(subject=subject,location=location).values()
+#             tutors = TutorRegistration.objects.filter(subject=subject,location=location).values()
            
-        elif TutorRegistration.objects.filter(subject=subject).exists():
-            tutors=TutorRegistration.objects.filter(subject=subject).values()
-        elif TutorRegistration.objects.filter(location=location).exists():
-            tutors=TutorRegistration.objects.filter(location=location).values()
-        d={"tutors":tutors,"locations":l,"account":account,"accounts":accounts}
-        return render(request,"all_teacher.html",d)
+#         elif TutorRegistration.objects.filter(subject=subject).exists():
+#             tutors=TutorRegistration.objects.filter(subject=subject).values()
+#         elif TutorRegistration.objects.filter(location=location).exists():
+#             tutors=TutorRegistration.objects.filter(location=location).values()
+#         d={"tutors":tutors,"locations":l,"account":account,"accounts":accounts}
+#         return render(request,"all_teacher.html",d)
    
     
-    return render(request,"all_teacher.html",{"tutors":all_tutor,"locations":l,"name":student.name,"email":student.email,"account":account,"accounts":accounts})
+#     return render(request,"all_teacher.html",{"tutors":all_tutor,"locations":l,"name":student.name,"email":student.email,"account":account,"accounts":accounts})
 
 
 def online_tutor(request,email):
@@ -1350,19 +1350,18 @@ def t_basic(request,email):
         return render(request,"t_basic_detail.html",{"account":a,"msg":"succfully updated your deatils"})
     return render(request,"t_basic_detail.html",{"account":a})
 
-def t_photo(request,email):
-    a=TutorRegistration.objects.filter(email=email).first()
-    if request.method=="POST":
+def t_photo(request, email):
+    a = TutorRegistration.objects.filter(email=email).first()
+    
+    if request.method == "POST":
         profile_photo = request.FILES['profile']
-        filename=f'images/{profile_photo}'
-        a.profile_photo=profile_photo
-        TutorRegistration.objects.filter(email=email).update(filename=filename)
-        a=TutorRegistration.objects.filter(email=email).first()
-        messages.success(request, f"photos are updated")
+        a.profile_photo = profile_photo
+        a.save()  # Save the instance after updating the photo
+
+        messages.success(request, "Photo has been updated successfully.")
         return redirect('teacher_dashboard')
 
-    return render(request,"t_photo_change.html",{"account":a})
-
+    return render(request, "t_photo_change.html", {"account": a})
 def t_subject(request,email):
     a=TutorRegistration.objects.filter(email=email).first()
     if request.method=="POST":
@@ -1440,6 +1439,7 @@ def change_p(request,email):
     message.content_subtype='html'
     message.send()
     return render(request,"t_contact.html",{"account":a})
+
 
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -1536,63 +1536,64 @@ def t_experience(request,email):
 from django.db.models import Q  
 
 # job search
-def search_job(request):
+# def search_job(request):
   
-    if request.method=="POST":
-        subject=request.POST.get('subject')
-        location=request.POST.get('location')
-        if Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).exists():
+#     if request.method=="POST":
+#         subject=request.POST.get('subject')
+#         location=request.POST.get('location')
+#         if Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).exists():
           
-            tutors = Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).values()
-            d={"all":tutors}
+#             tutors = Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).values()
+#             d={"all":tutors}
            
-        elif Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).exists():
-            tutors=Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).values()
-            d={"all":tutors}
-        elif Requestpost.objects.filter(Q(location__icontains=location)).exists():
-            tutors=Requestpost.objects.filter(Q(location__icontains=location)).values()
-            d={"all":tutors}
+#         elif Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).exists():
+#             tutors=Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).values()
+#             d={"all":tutors}
+#         elif Requestpost.objects.filter(Q(location__icontains=location)).exists():
+#             tutors=Requestpost.objects.filter(Q(location__icontains=location)).values()
+#             d={"all":tutors}
 
         
-        else:
+#         else:
             
-            d={"t":"All Job","msg":"There is no Data Found"}
+#             d={"t":"All Job","msg":"There is no Data Found"}
         
       
-        d={"all":tutors}
-        return render(request,"tutors_job.html",d)
-    all_tutor=TutorRegistration.objects.all()
-    return render(request,"tutors_job.html",{"all":all_tutor})
+#         print(d)
+#         return render(request,"tutors_job.html",d)
+#     all_tutor=TutorRegistration.objects.all()
+#     return render(request,"tutors_job.html",{"all":all_tutor})
 
-def search_jobs(request,email):
+# def search_jobs(request,email):
   
-    if request.method=="POST":
-        a = TutorRegistration.objects.filter(email=email).first()
+#     if request.method=="POST":
+#         a = TutorRegistration.objects.filter(email=email).first()
 
-        all=Requestpost.objects.all()
-        subject=request.POST.get('subject')
-        location=request.POST.get('location')
-        if Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).exists():
+#         all=Requestpost.objects.all()
+#         subject=request.POST.get('subject')
+#         location=request.POST.get('location')
+#         if Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).exists():
           
-            tutors = Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).values()
-            d={"all":tutors,"account":a,"t":"All Job"}
+#             tutors = Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject),location=location).values()
+#             d={"all":tutors,"account":a,"t":"All Job"}
            
-        elif Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).exists():
-            tutors=Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).values()
-            d={"all":tutors,"account":a,"t":"All Job"}
-        elif Requestpost.objects.filter(Q(location__icontains=location)).exists():
-            tutors=Requestpost.objects.filter(Q(location__icontains=location)).values()
-            d={"all":tutors,"account":a,"t":"All Job"}
+#         elif Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).exists():
+#             tutors=Requestpost.objects.filter( Q(subject=subject) | Q(two_subject=subject) | Q(three_subject=subject) | Q(four_subject=subject) | Q(five_subject=subject)).values()
+#             d={"all":tutors,"account":a,"t":"All Job"}
+#         elif Requestpost.objects.filter(Q(location__icontains=location)).exists():
+#             tutors=Requestpost.objects.filter(Q(location__icontains=location)).values()
+#             d={"all":tutors,"account":a,"t":"All Job"}
 
-        else:
+#         else:
             
-            d={"account":a,"t":"All Job","msg":"There is no Data Found"}
+#             d={"account":a,"t":"All Job","msg":"There is no Data Found"}
 
        
-       
-        return render(request,"tutors_job.html",d)
-    all_tutor=TutorRegistration.objects.all()
-    return render(request,"tutors_job.html",{"all":all_tutor})
+#         print("d-",d)
+#         return render(request,"tutors_job.html",d)
+#     print("n-")
+#     all_tutor=TutorRegistration.objects.all()
+#     return render(request,"tutors_job.html",{"all":all_tutor})
 
 def tutors_job(request,email):
 
@@ -1634,6 +1635,7 @@ def search_jobs(request):
             query &= Q(location__icontains=location)
 
         tutors = Requestpost.objects.filter(query).values()
+        print("tutor",tutors)
 
         if tutors:
              if request.user.is_authenticated:
@@ -1643,7 +1645,7 @@ def search_jobs(request):
                     return render(request,"tutors_job.html",{"all":tutors,"account":a,"h":"all"})
                 else:
                     all=Requestpost.objects.all()
-                    return render(request,"tutors_job.html",{"t":"You are not a tutor","all":all,"h":"all"})
+                    return render(request,"tutors_job.html",{"t":"You are not a tutor","all":tutors,"h":"all"})
              else:
                 all=Requestpost.objects.all()
                 return render(request,"tutors_job.html",{"all":tutors,"h":"all"})
@@ -1656,7 +1658,7 @@ def search_jobs(request):
                     return render(request,"tutors_job.html",{"t": "There is no Data Found","account":a,"h":"all"})
                 else:
                     all=Requestpost.objects.all()
-                    return render(request,"tutors_job.html",{"t":"You are not a tutor","all":all,"h":"all"})
+                    return render(request,"tutors_job.html",{"t":"You are not a tutor","h":"all"})
             else:
                 all=Requestpost.objects.all()
                 return render(request,"tutors_job.html",{"t":"You are not a tutor","h":"all"})
@@ -1698,11 +1700,13 @@ def h_home_job(request):
     if request.user.is_authenticated:
         if TutorRegistration.objects.filter(email=request.user.email).exists():
             a = TutorRegistration.objects.filter(email=request.user.email).first()
+
             all=Requestpost.objects.filter(meeting_option="Offline").values
+            print(all)
             return render(request,"tutors_job.html",{"all":all,"account":a,"h":"home"})
         else:
-            all=Requestpost.objects.all()
-            return render(request,"tutors_job.html",{"t":"You are not a tutor","all":all,"h":"home"})
+            all=Requestpost.objects.filter(meeting_option="Offline").values
+            return render(request,"tutors_job.html",{"msg":"You are not a tutor","all":all,"h":"home"})
     else:
         all=Requestpost.objects.filter(meeting_option="Offline").values
         return render(request,"tutors_job.html",{"all":all,"h":"home"})

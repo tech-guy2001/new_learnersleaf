@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 def upload_to(instance, filename):
     return os.path.join('kovai_app/static/images/', filename)
+
+
 def upload_to_stu(instance, filename):
     return os.path.join('kovai_app/static/stu_images/', filename)
 

@@ -1,658 +1,5 @@
-<!-- 
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mypost</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <style>
-       /* Body and general settings */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar{
-		background-color: white;
-		}
-        .navbar-brand h2 {
-            font-weight: bold;
-            color: #007BFF;
-            font-size: 36px;
-        }
-		
-
-        .navbar-nav .nav-item .nav-link {
-            font-weight: bold;
-            color: #555;
-        }
-       
-        .dropdown-menu .dropdown-item {
-            color: #0a0606;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f1f1f1;
-        }
-
-        .navbar-nav .btn {
-            font-weight: bold;
-            
-        }
-
-        .btn-info {
-            background-color: #007BFF;
-            border-color: #007BFF;
-        }
-/* Post button styles */
-.post-btn {
-    position: fixed;
-    right: 20px;
-    top: 100px;
-    font-size: 18px;
-    padding: 10px 20px;
-    background-color:#0056b3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.post-btn:hover {
-    background-color: #5a6268;
-    transform: scale(1.05);
-}
-
-/* Section Heading */
-.section-heading {
-    margin: 70px 0 20px;
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    color: #007bff;
-    animation: fadeInDown 1s ease;
-}
-
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Requirements list and item styling */
-.requirements-list {
-    padding: 20px;
-}
-
-.requirements-item {
-    background-color: #bdf1fb;
-    border-radius: 8px;
-    padding: 40px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    animation: fadeInUp 0.7s ease forwards;
-    opacity: 0;
-}
-
-.requirements-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-.requirements-item h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.requirements-item p {
-    font-size: 16px;
-    color: #555;
-}
-
-.requirements-item i.fa-solid {
-    margin-right: 10px;
-    font-size: 22px;
-}
-
-.location-info {
-    padding-left: 50px;
-}
-
-.actions {
-    list-style: none;
-    padding-left: 0;
-    margin: 15px 0;
-    display: flex;
-    gap: 20px;
-}
-
-.actions li a {
-    text-decoration: none;
-    color: #f3f5f7;
-    font-size: 16px;
-    position: relative;
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.actions li a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background: #007bff;
-    left: 0;
-    bottom: -2px;
-    transition: width 0.3s ease;
-}
-
-.actions li a:hover {
-    color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.actions li a:hover::after {
-    width: 100%;
-}
-
-.view-all {
-    text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-    padding: 10px 20px;
-    border-radius: 6px;
-    display: inline-block;
-    margin-top: 10px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-requirements-list a{
-    color: #fff;
-}
-
-.view-all:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-
-
-/* Fade-in animation for items */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .post-btn {
-        right: 10px;
-        top: 60px;
-        font-size: 16px;
-        padding: 8px 15px;
-    }
-
-    .section-heading {
-        font-size: 24px;
-    }
-
-    .requirements-item {
-        padding: 15px;
-    }
-
-    .requirements-item h3 {
-        font-size: 20px;
-    }
-
-    .requirements-item i.fa-solid {
-        font-size: 20px;
-    }
-
-    .location-info {
-        padding-left: 20px;
-    }
-
-    .actions li a {
-        font-size: 14px;
-    }
-}
-.footer{
-    background-color: #060606;
-    padding: 20px;
-    color: #fff;
-    margin-bottom: 0;
-}
-
-        /* You can add custom styles for the mobile dropdown if needed */
-    </style>
-</head>
-<body> -->
-
-    <!-- <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #bdf1fb;">
-        <div class="container-fluid">
-            <a class="navbar-brand " href="#">Learnersleaf</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active " href="/myposts/{{post.email}}/">My Post</a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="/s_wallet/{{post.email}}">Wallet</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/stu_settings/{{post.email}}" >Settings</a>
-                    </li>
-                   
-                    <li class="nav-item">
-                        <a class="nav-link" href="/student_inbox/{{post.email}}">
-                            <span > <i class="fa-solid fa-envelope"  style="font-size: 18px;"> </i>
-                            Message</span>
-                        </a>
-                    </li>
-                    <li class="nav-item"></li>
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                                Find tutor
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/tutor_request">Tutor Request</a></li>
-                                <li><a class="dropdown-item" href="/search_teachers/{{post.email}}">All Tutors</a></li>
-                                <li><a class="dropdown-item" href="/online_tutors/{{post.email}}">Online Tutors</a></li>
-                                <li><a class="dropdown-item" href="/home_tutors/{{post.email}}">Home Tutors</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    &nbsp;&nbsp;&nbsp;
-                    <li class="nav-item active">
-                        <div class="dropdown">
-                            <div class="btn dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-id-badge" style="font-size: 20px;"></i> {{post.name|title}}
-                            </div>
-                             <li class="nav-item">
-                        <a class="nav-link" href="/student_inbox/{{post.email}}">
-                            <span > <i class="fa-solid fa-envelope"  style="font-size: 18px;"> </i>
-                            Message</span>
-                        </a>
-                    </li>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-                                <li><a class="dropdown-item" href="/stu_settings/{{post.email}}"><i class="fa-solid fa-gear"></i> Settings</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-<!-- 
-   
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mypost</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <style>
-        /* Body and general settings */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar{
-            background-color: white;
-        }
-        .navbar-brand h2 {
-            font-weight: bold;
-            color: #007BFF;
-            font-size: 36px;
-        }
-        
-
-        .navbar-nav .nav-item .nav-link {
-            font-weight: bold;
-            color: #555;
-        }
-       
-        .dropdown-menu .dropdown-item {
-            color: #0a0606;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f1f1f1;
-        }
-
-        .navbar-nav .btn {
-            font-weight: bold;
-            
-        }
-
-        .btn-info {
-            background-color: #007BFF;
-            border-color: #007BFF;
-        }
-        /* Post button styles */
-        .post-btn {
-            position: fixed;
-            right: 20px;
-            top: 100px;
-            font-size: 18px;
-            padding: 10px 20px;
-            background-color:#0056b3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .post-btn:hover {
-            background-color: #5a6268;
-            transform: scale(1.05);
-        }
-
-        /* Section Heading */
-        .section-heading {
-            margin: 70px 0 20px;
-            font-size: 28px;
-            text-align: center;
-            font-weight: bold;
-            color: #007bff;
-            animation: fadeInDown 1s ease;
-        }
-
-        @keyframes fadeInDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Requirements list and item styling */
-        .requirements-list {
-            padding: 20px;
-        }
-
-        .requirements-item {
-            background-color: #bdf1fb;
-            border-radius: 8px;
-            padding: 40px;
-            margin-bottom: 20px;
-            margin-left: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.7s ease forwards;
-            opacity: 0;
-        }
-
-        .requirements-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .requirements-item h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .requirements-item p {
-            font-size: 16px;
-            color: #555;
-        }
-
-        .requirements-item i.fa-solid {
-            margin-right: 10px;
-            font-size: 22px;
-        }
-
-        .location-info {
-            padding-left: 50px;
-        }
-
-        .actions {
-            list-style: none;
-            padding-left: 0;
-            margin: 15px 0;
-            display: flex;
-            gap: 20px;
-        }
-
-        .actions li a {
-            text-decoration: none;
-            color: #f3f5f7;
-            font-size: 16px;
-            position: relative;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .actions li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: #007bff;
-            left: 0;
-            bottom: -2px;
-            transition: width 0.3s ease;
-        }
-
-        .actions li a:hover {
-            color: #0056b3;
-            transform: translateY(-2px);
-        }
-
-        .actions li a:hover::after {
-            width: 100%;
-        }
-
-        .view-all {
-            text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-top: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-        requirements-list a{
-            color: #fff;
-        }
-
-        .view-all:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-
-        /* Fade-in animation for items */
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .post-btn {
-                right: 10px;
-                top: 80px;
-                font-size: 16px;
-                padding: 8px 15px;
-            }
-
-            .section-heading {
-                font-size: 24px;
-            }
-
-            .requirements-item {
-                padding: 15px;
-            }
-
-            .requirements-item h3 {
-                font-size: 20px;
-            }
-
-            .requirements-item i.fa-solid {
-                font-size: 20px;
-            }
-
-            .location-info {
-                padding-left: 20px;
-            }
-
-            .actions li a {
-                font-size: 14px;
-            }
-        }
-        .footer{
-            background-color: #060606;
-            padding: 20px;
-            color: #fff;
-            margin-bottom: 0;
-        }
-
-    </style>
-</head>
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-light  fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand active" href="#">
-                <h2>LearnersLeaf</h2>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active " href="/myposts/{{post.email}}/">My Post</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/s_wallet/{{post.email}}">Wallet</a>
-                    </li>
-
-
-                    <li class="nav-item dropdown">
-                        <button class="btn dropdown-toggle" style="color: #555" data-bs-toggle="dropdown">
-                            Find Tutor
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/tutor_request">Tutor Request</a></li>
-                                <li><a class="dropdown-item" href="/search_teachers/{{post.email}}">All Tutors</a></li>
-                                <li><a class="dropdown-item" href="/online_tutors/{{post.email}}">Online Tutors</a></li>
-                                <li><a class="dropdown-item" href="/home_tutors/{{post.email}}">Home Tutors</a></li>
-                        </ul>
-                    </li>
-
-                   
-                    <li class="nav-item">
-                        <a class="nav-link" href="/stu_settings/{{post.email}}" >Settings</a>
-                    </li>
-                 
-
-                    <li class="nav-item active">
-                        <div class="dropdown" style="color: #555">
-                            <div class="btn dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa-solid fa-user"></i> {{post.name|title}}
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-                                <li><a class="dropdown-item" href="/stu_settings/{{post.email}}"><i class="fa-solid fa-gear"></i> Settings</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav> <br> <br>
-    {% if msg %}
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>Success!{{msg}}</strong> 
-      </div>
-      {% endif %}
-    
-    <a class="btn btn-success post-btn" style="z-index: 1;" href="/add_post/{{post.email}}"> <i class="fa-solid fa-circle-plus"></i> Post</a>
-    <h2 class="section-heading">My Requirements</h2>
-    
-    <div class="requirements-list">
-        {% for i in all %}
-        <div class="requirements-item">
-            <h3>{{i.meeting_option}} {{i.subject}} Teacher in {{i.location}}</h3>
-            <p>{{ i.dates|timesince }} ago</p>
-            <p>{{i.dyr}}</p>
-            <p>
-                <span><i class="fa-solid fa-indian-rupee-sign"></i> {{i.budget}}</span> ({{i.budget_need}})
-                <span class="location-info">
-                    <i class="fa-solid fa-location-dot"></i> Location {{i.location}}
-                </span>
-            </p>
-            <ul class="actions">
-                <li><a class="btn btn-success" href="/student_post/{{post.email}}/{{i.id}}">View</a></li>
-                <li><a class="btn btn-warning" href="/student_update/{{post.email}}/{{i.id}}">Edit</a></li>
-                <li><a class="btn btn-danger" href="/delete_post/{{i.id}}">Delete</a></li>
-                
-            </ul>
-            
-        </div>
-        {% endfor %}
-    </div>
-    <div class="footer">
-        <p>&copy; 2023 All rights reserved | This website is made with <i
-            class="fa-solid fa-heart"></i> by <a href="https://www.linkedin.com
-            /in/krishnachandra-9a8a3a1a5/"> call me</a>
-            </p>
-    </div>
-
-</body>
-</html> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -816,6 +163,26 @@ requirements-list a{
         .teacher-dashboard-menu-item:nth-child(4) { animation-delay: 0.4s; }
         
         .teacher-dashboard-menu-button {
+            width: 100%;
+            text-align: left;
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px;
+            margin: 0 8px;
+            width: calc(100% - 16px);
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .teacher-dashboard-menu-buttons {
             width: 100%;
             text-align: left;
             padding: 12px 20px;
@@ -1674,7 +1041,7 @@ function updateValue(value) {
                         <button class="teacher-dashboard-menu-button teacher-dashboard-active-menu" data-menu="create-post">My Post</button>
                     </li>
                     <li class="teacher-dashboard-menu-item">
-                        <a   style="text-decoration: none;" href="/h_all_teachers">  <button class="teacher-dashboard-menu-button" data-menu="logout"> Find Tutors</button></a>
+                        <a   style="text-decoration: none;" href="/h_all_teachers">  <button class="teacher-dashboard-menu-buttons" > Find Tutors</button></a>
                     </li>
                     <!-- Wallet Menu -->
                     <li class="teacher-dashboard-menu-item">
@@ -2015,409 +1382,391 @@ function updateValue(value) {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Variables to keep track of active elements
-            let activeMenu = 'wallet';
-            
-            // Menu item click handlers
-            const menuButtons = document.querySelectorAll('.teacher-dashboard-menu-button');
-            menuButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const menuName = this.getAttribute('data-menu');
-                    setActiveContent(menuName);
-                    
-                    // Close mobile menu if open
-                    if (window.innerWidth <= 768) {
-                        toggleMobileMenu();
-                    }
-                });
-            });
-            
-            // Mobile menu toggle
-            const menuToggle = document.getElementById('teacher-dashboard-menu-toggle');
-            const sidebar = document.getElementById('teacher-dashboard-sidebar');
-            const overlay = document.getElementById('teacher-dashboard-overlay');
-            
-            function toggleMobileMenu() {
-                sidebar.classList.toggle('teacher-dashboard-active');
-                overlay.classList.toggle('teacher-dashboard-active');
-                document.body.style.overflow = sidebar.classList.contains('teacher-dashboard-active') ? 'hidden' : '';
-            }
-            
-            menuToggle.addEventListener('click', toggleMobileMenu);
-            overlay.addEventListener('click', toggleMobileMenu);
-            
-            // Function to set active content with animation
-            function setActiveContent(menuName) {
-                // Hide all content sections
-                const contentSections = document.querySelectorAll('.teacher-dashboard-content-section');
-                contentSections.forEach(section => {
-                    if (section.classList.contains('teacher-dashboard-active')) {
-                        section.style.opacity = '0';
-                        section.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            section.classList.remove('teacher-dashboard-active');
-                        }, 300);
-                    }
-                });
-                
-                // Show the selected content section with a delay for animation
-                setTimeout(() => {
-                    const selectedContent = document.getElementById(`${menuName}-content`);
-                    if (selectedContent) {
-                        selectedContent.classList.add('teacher-dashboard-active');
-                    }
-                }, 300);
-                
-                // Update active menu
-                activeMenu = menuName;
-                
-                // Update menu button styles
-                menuButtons.forEach(button => {
-                    button.classList.remove('teacher-dashboard-active-menu');
-                    if (button.getAttribute('data-menu') === menuName) {
-                        button.classList.add('teacher-dashboard-active-menu');
-                    }
-                });
-            }
-            
-            // Handle window resize for responsive behavior
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768 && sidebar.classList.contains('teacher-dashboard-active')) {
-                    sidebar.classList.remove('teacher-dashboard-active');
-                    overlay.classList.remove('teacher-dashboard-active');
-                    document.body.style.overflow = '';
-                }
-            });
-        });
+    // Posts Array
+    let posts = [];
 
-          // Sample data
-   
-        
-        // DOM Elements
-        const menuButtons = document.querySelectorAll('.teacher-dashboard-menu-button');
-        const contentSections = document.querySelectorAll('.teacher-dashboard-content-section');
-        const menuToggle = document.getElementById('teacher-dashboard-menu-toggle');
-        const sidebar = document.getElementById('teacher-dashboard-sidebar');
-        const overlay = document.getElementById('teacher-dashboard-overlay');
-        const createPostBtn = document.getElementById('create-post-btn');
-        const emptyStateCreateBtn = document.getElementById('empty-state-create-btn');
-        const postModal = document.getElementById('post-modal');
-        const postModalTitle = document.getElementById('post-modal-title');
-        const postModalClose = document.getElementById('post-modal-close');
-        const postModalCancel = document.getElementById('post-modal-cancel');
-        const postForm = document.getElementById('post-form');
-        const postSubmit = document.getElementById('post-submit');
-        const viewModal = document.getElementById('view-modal');
-        const viewModalClose = document.getElementById('view-modal-close');
-        const viewModalCloseBtn = document.getElementById('view-modal-close-btn');
-        const viewModalBody = document.getElementById('view-modal-body');
-        const deleteModal = document.getElementById('delete-modal');
-        const deleteModalClose = document.getElementById('delete-modal-close');
-        const deleteModalCancel = document.getElementById('delete-modal-cancel');
-        const deleteConfirm = document.getElementById('delete-confirm');
-        const postsContainer = document.getElementById('posts-container');
-        const emptyState = document.getElementById('empty-state');
+    // DOM Elements
+    const menuButtons = document.querySelectorAll('.teacher-dashboard-menu-button');
+    const contentSections = document.querySelectorAll('.teacher-dashboard-content-section');
+    const menuToggle = document.getElementById('teacher-dashboard-menu-toggle');
+    const sidebar = document.getElementById('teacher-dashboard-sidebar');
+    const overlay = document.getElementById('teacher-dashboard-overlay');
+    const createPostBtn = document.getElementById('create-post-btn');
+    const emptyStateCreateBtn = document.getElementById('empty-state-create-btn');
+    const postModal = document.getElementById('post-modal');
+    const postModalTitle = document.getElementById('post-modal-title');
+    const postModalClose = document.getElementById('post-modal-close');
+    const postModalCancel = document.getElementById('post-modal-cancel');
+    const postForm = document.getElementById('post-form');
+    const postSubmit = document.getElementById('post-submit');
+    const viewModal = document.getElementById('view-modal');
+    const viewModalClose = document.getElementById('view-modal-close');
+    const viewModalCloseBtn = document.getElementById('view-modal-close-btn');
+    const viewModalBody = document.getElementById('view-modal-body');
+    const deleteModal = document.getElementById('delete-modal');
+    const deleteModalClose = document.getElementById('delete-modal-close');
+    const deleteModalCancel = document.getElementById('delete-modal-cancel');
+    const deleteConfirm = document.getElementById('delete-confirm');
+    const postsContainer = document.getElementById('posts-container');
+    const emptyState = document.getElementById('empty-state');
+
+    // Render Posts Function
+    function renderPosts() {
+        // Clear existing posts
+        postsContainer.innerHTML = '';
         
         // Check if posts are empty
-  
-        // Navigation Menu
-        menuButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all buttons
-                menuButtons.forEach(btn => {
-                    btn.classList.remove('teacher-dashboard-active-menu');
-                });
-                
-                // Add active class to clicked button
-                button.classList.add('teacher-dashboard-active-menu');
-                
-                // Show corresponding content
-                const menuId = button.getAttribute('data-menu');
-                contentSections.forEach(section => {
-                    section.classList.remove('teacher-dashboard-active');
-                    if (section.id === `${menuId}-content`) {
-                        section.classList.add('teacher-dashboard-active');
-                    }
-                });
-                
-                // Close sidebar on mobile
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.remove('teacher-dashboard-active');
-                    overlay.classList.remove('teacher-dashboard-active');
-                }
-            });
-        });
-        
-        // Mobile Menu Toggle
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('teacher-dashboard-active');
-            overlay.classList.toggle('teacher-dashboard-active');
-        });
-        
-        // Close sidebar when clicking on overlay
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('teacher-dashboard-active');
-            overlay.classList.remove('teacher-dashboard-active');
-        });
-        
-        // Open Create Post Modal
-        createPostBtn.addEventListener('click', () => {
-            openCreateModal();
-        });
-        
-        // Open Create Post Modal from Empty State
-        if (emptyStateCreateBtn) {
-            emptyStateCreateBtn.addEventListener('click', () => {
-                openCreateModal();
-            });
-        }
-        
-        // Close Post Modal
-        postModalClose.addEventListener('click', () => {
-            postModal.classList.remove('active');
-        });
-        
-        postModalCancel.addEventListener('click', () => {
-            postModal.classList.remove('active');
-        });
-        
-        // Close View Modal
-        viewModalClose.addEventListener('click', () => {
-            viewModal.classList.remove('active');
-        });
-        
-        viewModalCloseBtn.addEventListener('click', () => {
-            viewModal.classList.remove('active');
-        });
-        
-        // Close Delete Modal
-        deleteModalClose.addEventListener('click', () => {
-            deleteModal.classList.remove('active');
-        });
-        
-        deleteModalCancel.addEventListener('click', () => {
-            deleteModal.classList.remove('active');
-        });
-        
-        // Submit Post Form
-        postSubmit.addEventListener('click', () => {
-            const postId = document.getElementById('post-id').value;
-            const postTitle = document.getElementById('post-title').value;
-            const postSubject = document.getElementById('post-subject').value;
-            const postClass = document.getElementById('post-class').value;
-            const postDescription = document.getElementById('post-description').value;
-            const postBudget = document.getElementById('post-budget').value;
-            const postAvailability = document.getElementById('post-availability').value;
-            const modeOnline = document.getElementById('mode-online').checked;
-            const modeHome = document.getElementById('mode-home').checked;
-            const modePlace = document.getElementById('mode-place').checked;
+        if (posts.length === 0) {
+            emptyState.style.display = 'block';
+            postsContainer.style.display = 'none';
+        } else {
+            emptyState.style.display = 'none';
+            postsContainer.style.display = 'grid';
             
-            // Validate form
-            if (!postTitle || !postSubject || !postClass || !postDescription || !postBudget || !postAvailability) {
-                alert('Please fill in all required fields');
-                return;
-            }
-            
-            if (!modeOnline && !modeHome && !modePlace) {
-                alert('Please select at least one teaching mode');
-                return;
-            }
-            
-            const postData = {
-                id: postId ? parseInt(postId) : Date.now(),
-                title: postTitle,
-                subject: postSubject,
-                class: postClass,
-                description: postDescription,
-                budget: postBudget,
-                availability: postAvailability,
-                mode: {
-                    online: modeOnline,
-                    home: modeHome,
-                    place: modePlace
-                }
-            };
-            
-            if (postId) {
-                // Update existing post
-                const index = posts.findIndex(post => post.id === parseInt(postId));
-                if (index !== -1) {
-                    posts[index] = postData;
-                }
-            } else {
-                // Add new post
-                posts.push(postData);
-            }
-            
-            // Refresh posts display
-            renderPosts();
-            
-            // Close modal
-            postModal.classList.remove('active');
-            
-            // Reset form
-            postForm.reset();
-        });
-        
-        // Delete Post
-        deleteConfirm.addEventListener('click', () => {
-            const postId = document.getElementById('delete-post-id').value;
-            
-            if (postId) {
-                posts = posts.filter(post => post.id !== parseInt(postId));
-                renderPosts();
-            }
-            
-            deleteModal.classList.remove('active');
-        });
-        
-        // Open Create Post Modal
-        function openCreateModal() {
-            postModalTitle.textContent = 'Create New Post';
-            document.getElementById('post-id').value = '';
-            postForm.reset();
-            postModal.classList.add('active');
-        }
-        
-        // Open Edit Post Modal
-        function openEditModal(postId) {
-            const post = posts.find(p => p.id === postId);
-            
-            if (post) {
-                postModalTitle.textContent = 'Edit Post';
-                document.getElementById('post-id').value = post.id;
-                document.getElementById('post-title').value = post.title;
-                document.getElementById('post-subject').value = post.subject;
-                document.getElementById('post-class').value = post.class;
-                document.getElementById('post-description').value = post.description;
-                document.getElementById('post-budget').value = post.budget;
-                document.getElementById('post-availability').value = post.availability;
-                document.getElementById('mode-online').checked = post.mode.online;
-                document.getElementById('mode-home').checked = post.mode.home;
-                document.getElementById('mode-place').checked = post.mode.place;
-                
-                postModal.classList.add('active');
-            }
-        }
-        
-        // Open View Post Modal
-        function openViewModal(postId) {
-            const post = posts.find(p => p.id === postId);
-            
-            if (post) {
-                document.getElementById('view-modal-title').textContent = post.title;
+            // Generate posts HTML
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post-card');
                 
                 let modes = [];
                 if (post.mode.online) modes.push('Online');
                 if (post.mode.home) modes.push('Student\'s Home');
                 if (post.mode.place) modes.push('Public Place');
                 
-                viewModalBody.innerHTML = `
-                    <div class="view-post-detail">
-                        <div class="view-detail-label">Subject</div>
-                        <div class="view-detail-value">${post.subject}</div>
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <h3>${post.title}</h3>
+                        <div class="post-actions">
+                            <button onclick="openEditModal(${post.id})" class="edit-btn">Edit</button>
+                            <button onclick="confirmDelete(${post.id})" class="delete-btn">Delete</button>
+                        </div>
                     </div>
-                    <div class="view-post-detail">
-                        <div class="view-detail-label">Class/Grade</div>
-                        <div class="view-detail-value">${post.class}</div>
+                    <div class="post-details">
+                        <p><strong>Subject:</strong> ${post.subject}</p>
+                        <p><strong>Class:</strong> ${post.class}</p>
+                        <p><strong>Teaching Modes:</strong> ${modes.join(', ')}</p>
                     </div>
-                    <div class="view-post-detail">
-                        <div class="view-detail-label">Description</div>
-                        <div class="view-detail-value">${post.description}</div>
-                    </div>
-                    <div class="view-post-detail">
-                        <div class="view-detail-label">Budget</div>
-                        <div class="view-detail-value">${post.budget}</div>
-                    </div>
-                    <div class="view-post-detail">
-                        <div class="view-detail-label">Availability</div>
-                        <div class="view-detail-value">${post.availability}</div>
-                    </div>
-                    <div class="view-post-detail">
-                        <div class="view-detail-label">Teaching Mode</div>
-                        <div class="view-detail-value">${modes.join(', ')}</div>
+                    <div class="post-footer">
+                        <button onclick="openViewModal(${post.id})" class="view-btn">View Details</button>
                     </div>
                 `;
                 
-                viewModal.classList.add('active');
-            }
+                postsContainer.appendChild(postElement);
+            });
         }
-        
-        // Open Delete Confirmation Modal
-        function confirmDelete(postId) {
-            document.getElementById('delete-post-id').value = postId;
-            deleteModal.classList.add('active');
-        }
-        
-        // Render Posts
-       
-            // Check if posts are empty
-     
+    }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Phone verification flow
-            const changePhoneBtn = document.getElementById('change-phone-btn');
-            const phoneVerification = document.getElementById('phone-verification');
-            const phoneSuccess = document.getElementById('phone-success');
+    // Mobile menu handling
+    function toggleMobileMenu() {
+        const isActive = sidebar.classList.contains('teacher-dashboard-active');
+        
+        if (!isActive) {
+            sidebar.classList.add('teacher-dashboard-active');
+            overlay.classList.add('teacher-dashboard-active');
+            document.body.style.overflow = 'hidden';
+            sidebar.style.transform = 'translateX(0)';
+        } else {
+            sidebar.classList.remove('teacher-dashboard-active');
+            overlay.classList.remove('teacher-dashboard-active');
+            document.body.style.overflow = '';
+            sidebar.style.transform = 'translateX(-100%)';
+        }
+    }
+
+    // Open Create Post Modal
+    function openCreateModal() {
+        postModalTitle.textContent = 'Create New Post';
+        document.getElementById('post-id').value = '';
+        postForm.reset();
+        postModal.classList.add('active');
+        if (window.innerWidth <= 768) {
+            toggleMobileMenu();
+        }
+    }
+
+    // Open Edit Post Modal
+    function openEditModal(postId) {
+        const post = posts.find(p => p.id === postId);
+        
+        if (post) {
+            postModalTitle.textContent = 'Edit Post';
+            document.getElementById('post-id').value = post.id;
+            document.getElementById('post-title').value = post.title;
+            document.getElementById('post-subject').value = post.subject;
+            document.getElementById('post-class').value = post.class;
+            document.getElementById('post-description').value = post.description;
+            document.getElementById('post-budget').value = post.budget;
+            document.getElementById('post-availability').value = post.availability;
+            document.getElementById('mode-online').checked = post.mode.online;
+            document.getElementById('mode-home').checked = post.mode.home;
+            document.getElementById('mode-place').checked = post.mode.place;
             
-            changePhoneBtn.addEventListener('click', function() {
-                const newPhone = document.getElementById('new-phone').value;
-                if (newPhone.trim() !== '') {
-                    phoneVerification.classList.add('active');
-                    
-                    // Simulate verification process for demo
-                    const phoneVerifyBtn = phoneVerification.querySelector('.settings-verification-button');
-                    phoneVerifyBtn.addEventListener('click', function() {
-                        phoneVerification.classList.remove('active');
-                        phoneSuccess.style.display = 'block';
-                        setTimeout(() => {
-                            phoneSuccess.style.display = 'none';
-                        }, 5000);
-                    });
+            postModal.classList.add('active');
+        }
+    }
+
+    // Open View Post Modal
+    function openViewModal(postId) {
+        const post = posts.find(p => p.id === postId);
+        
+        if (post) {
+            document.getElementById('view-modal-title').textContent = post.title;
+            
+            let modes = [];
+            if (post.mode.online) modes.push('Online');
+            if (post.mode.home) modes.push('Student\'s Home');
+            if (post.mode.place) modes.push('Public Place');
+            
+            viewModalBody.innerHTML = `
+                <div class="view-post-detail">
+                    <div class="view-detail-label">Subject</div>
+                    <div class="view-detail-value">${post.subject}</div>
+                </div>
+                <div class="view-post-detail">
+                    <div class="view-detail-label">Class/Grade</div>
+                    <div class="view-detail-value">${post.class}</div>
+                </div>
+                <div class="view-post-detail">
+                    <div class="view-detail-label">Description</div>
+                    <div class="view-detail-value">${post.description}</div>
+                </div>
+                <div class="view-post-detail">
+                    <div class="view-detail-label">Budget</div>
+                    <div class="view-detail-value">${post.budget}</div>
+                </div>
+                <div class="view-post-detail">
+                    <div class="view-detail-label">Availability</div>
+                    <div class="view-detail-value">${post.availability}</div>
+                </div>
+                <div class="view-post-detail">
+                    <div class="view-detail-label">Teaching Mode</div>
+                    <div class="view-detail-value">${modes.join(', ')}</div>
+                </div>
+            `;
+            
+            viewModal.classList.add('active');
+        }
+    }
+
+    // Open Delete Confirmation Modal
+    function confirmDelete(postId) {
+        document.getElementById('delete-post-id').value = postId;
+        deleteModal.classList.add('active');
+    }
+
+    // Menu toggle click handler
+    menuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleMobileMenu();
+    });
+
+    // Overlay click handler
+    overlay.addEventListener('click', function() {
+        toggleMobileMenu();
+    });
+
+    // Navigation menu handling
+    menuButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            // Don't prevent default for links
+            if (!button.querySelector('a')) {
+                e.preventDefault();
+            }
+            
+            const menuId = this.getAttribute('data-menu');
+            
+            // Update active menu button
+            menuButtons.forEach(btn => btn.classList.remove('teacher-dashboard-active-menu'));
+            this.classList.add('teacher-dashboard-active-menu');
+            
+            // Update content sections
+            contentSections.forEach(section => {
+                if (section.id === `${menuId}-content`) {
+                    section.classList.add('teacher-dashboard-active');
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                } else {
+                    section.style.opacity = '0';
+                    section.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        section.classList.remove('teacher-dashboard-active');
+                    }, 300);
                 }
             });
+
+            // Close mobile menu if open
+            if (window.innerWidth <= 768 && sidebar.classList.contains('teacher-dashboard-active')) {
+                toggleMobileMenu();
+            }
+        });
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove('teacher-dashboard-active');
+            overlay.classList.remove('teacher-dashboard-active');
+            document.body.style.overflow = '';
+            sidebar.style.transform = 'translateX(0)';
+        } else if (!sidebar.classList.contains('teacher-dashboard-active')) {
+            sidebar.style.transform = 'translateX(-100%)';
+        }
+    });
+
+    // Create Post Button Listeners
+    createPostBtn.addEventListener('click', openCreateModal);
+    if (emptyStateCreateBtn) {
+        emptyStateCreateBtn.addEventListener('click', openCreateModal);
+    }
+
+    // Close Modals
+    postModalClose.addEventListener('click', () => postModal.classList.remove('active'));
+    postModalCancel.addEventListener('click', () => postModal.classList.remove('active'));
+    viewModalClose.addEventListener('click', () => viewModal.classList.remove('active'));
+    viewModalCloseBtn.addEventListener('click', () => viewModal.classList.remove('active'));
+    deleteModalClose.addEventListener('click', () => deleteModal.classList.remove('active'));
+    deleteModalCancel.addEventListener('click', () => deleteModal.classList.remove('active'));
+
+    // Submit Post Form
+    postSubmit.addEventListener('click', () => {
+        const postId = document.getElementById('post-id').value;
+        const postTitle = document.getElementById('post-title').value;
+        const postSubject = document.getElementById('post-subject').value;
+        const postClass = document.getElementById('post-class').value;
+        const postDescription = document.getElementById('post-description').value;
+        const postBudget = document.getElementById('post-budget').value;
+        const postAvailability = document.getElementById('post-availability').value;
+        const modeOnline = document.getElementById('mode-online').checked;
+        const modeHome = document.getElementById('mode-home').checked;
+        const modePlace = document.getElementById('mode-place').checked;
+        
+        // Validate form
+        if (!postTitle || !postSubject || !postClass || !postDescription || !postBudget || !postAvailability) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        if (!modeOnline && !modeHome && !modePlace) {
+            alert('Please select at least one teaching mode');
+            return;
+        }
+        
+        const postData = {
+            id: postId ? parseInt(postId) : Date.now(),
+            title: postTitle,
+            subject: postSubject,
+            class: postClass,
+            description: postDescription,
+            budget: postBudget,
+            availability: postAvailability,
+            mode: {
+                online: modeOnline,
+                home: modeHome,
+                place: modePlace
+            }
+        };
+        
+        if (postId) {
+            // Update existing post
+            const index = posts.findIndex(post => post.id === parseInt(postId));
+            if (index !== -1) {
+                posts[index] = postData;
+            }
+        } else {
+            // Add new post
+            posts.push(postData);
+        }
+        
+        // Refresh posts display
+        renderPosts();
+        
+        // Close modal
+        postModal.classList.remove('active');
+        
+        // Reset form
+        postForm.reset();
+    });
+
+    // Delete Post
+    deleteConfirm.addEventListener('click', () => {
+        const postId = document.getElementById('delete-post-id').value;
+        
+        if (postId) {
+            posts = posts.filter(post => post.id !== parseInt(postId));
+            renderPosts();
+        }
+        
+        deleteModal.classList.remove('active');
+    });
+
+    // Phone verification flow
+    const changePhoneBtn = document.getElementById('change-phone-btn');
+    const phoneVerification = document.getElementById('phone-verification');
+    const phoneSuccess = document.getElementById('phone-success');
+    
+    changePhoneBtn.addEventListener('click', function() {
+        const newPhone = document.getElementById('new-phone').value;
+        if (newPhone.trim() !== '') {
+            phoneVerification.classList.add('active');
             
-            // Email verification flow
-            const changeEmailBtn = document.getElementById('change-email-btn');
-            const emailVerification = document.getElementById('email-verification');
-            const emailSuccess = document.getElementById('email-success');
-            
-            changeEmailBtn.addEventListener('click', function() {
-                const newEmail = document.getElementById('new-email').value;
-                if (newEmail.trim() !== '') {
-                    emailVerification.classList.add('active');
-                    
-                    // Simulate verification process for demo
-                    const emailVerifyBtn = emailVerification.querySelector('.settings-verification-button');
-                    emailVerifyBtn.addEventListener('click', function() {
-                        emailVerification.classList.remove('active');
-                        emailSuccess.style.display = 'block';
-                        setTimeout(() => {
-                            emailSuccess.style.display = 'none';
-                        }, 5000);
-                    });
-                }
+            // Simulate verification process for demo
+            const phoneVerifyBtn = phoneVerification.querySelector('.settings-verification-button');
+            phoneVerifyBtn.addEventListener('click', function() {
+                phoneVerification.classList.remove('active');
+                phoneSuccess.style.display = 'block';
+                setTimeout(() => {
+                    phoneSuccess.style.display = 'none';
+                }, 5000);
             });
+        }
+    });
+    
+    // Email verification flow
+    const changeEmailBtn = document.getElementById('change-email-btn');
+    const emailVerification = document.getElementById('email-verification');
+    const emailSuccess = document.getElementById('email-success');
+    
+    changeEmailBtn.addEventListener('click', function() {
+        const newEmail = document.getElementById('new-email').value;
+        if (newEmail.trim() !== '') {
+            emailVerification.classList.add('active');
             
-            // Auto-focus next input in verification code
-            const codeInputs = document.querySelectorAll('.settings-verification-input');
-            codeInputs.forEach((input, index) => {
-                input.addEventListener('input', function() {
-                    if (input.value && index < codeInputs.length - 1) {
-                        codeInputs[index + 1].focus();
-                    }
-                });
-                
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Backspace' && !input.value && index > 0) {
-                        codeInputs[index - 1].focus();
-                    }
-                });
+            // Simulate verification process for demo
+            const emailVerifyBtn = emailVerification.querySelector('.settings-verification-button');
+            emailVerifyBtn.addEventListener('click', function() {
+                emailVerification.classList.remove('active');
+                emailSuccess.style.display = 'block';
+                setTimeout(() => {
+                    emailSuccess.style.display = 'none';
+                }, 5000);
             });
+        }
+    });
+    
+    // Auto-focus next input in verification code
+    const codeInputs = document.querySelectorAll('.settings-verification-input');
+    codeInputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+            if (input.value && index < codeInputs.length - 1) {
+                codeInputs[index + 1].focus();
+            }
         });
         
-        // Initialize
-        renderPosts();
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !input.value && index > 0) {
+                codeInputs[index - 1].focus();
+            }
+        });
+    });
+
+    // Initialize
+    if (window.innerWidth <= 768) {
+        sidebar.style.transform = 'translateX(-100%)';
+    }
+
+    // Initialize posts rendering
+    renderPosts();
+});
     </script>
 </body>
 </html>
