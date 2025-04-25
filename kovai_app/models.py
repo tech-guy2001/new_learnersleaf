@@ -10,7 +10,6 @@ def upload_to(instance, filename):
 def upload_to_stu(instance, filename):
     return os.path.join('kovai_app/static/stu_images/', filename)
 
-
 # Create your models here.
 class TutorRequest(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,null=True,blank=True)
