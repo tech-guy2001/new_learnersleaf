@@ -2432,4 +2432,5 @@ def common_dashboard(request):
 
 
 
-    
+def policy(request):
+    return render(request,"policy.html")

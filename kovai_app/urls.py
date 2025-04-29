@@ -127,6 +127,8 @@ path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'
  path('buy_coin_teacher/<int:amount>',views.buy_coin_teacher, name='buy_coin_teacher'),
  path('payment/verify_teacher/', views.verify_payment_teacher, name='verify_payment'),
   path('common_dashboard', views.common_dashboard, name='Dashboard'),
+  
+ path('policy', views.policy, name='Dashboard'),
 
 
 
